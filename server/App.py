@@ -6,12 +6,12 @@ from flask_sqlalchemy import SQLAlchemy;
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLAlCHEMY.DATABASE.URI'] = 'postgresql://username:password@localhost:5432/fantast_stock_trading'
-db = SQLAlchemy(app)
+#app.config['SQLAlCHEMY.DATABASE.URI'] = 'postgresql://username:password@localhost:5432/fantast_stock_trading'
+#db = SQLAlchemy(app)
 
-@app.route('/')
-def hello():
-    return "Hello from Flask!"
+@app.route('/test')
+def test_route():
+    return {'message': 'Hello from Flask!'}
 
 if __name__ == '__main__':
     app.run(debug=True)
