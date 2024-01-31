@@ -50,6 +50,10 @@ const Login = () => {
     setModalOpen(true);
   };
 
+  const handleModalClose = () => {
+    setModalOpen(false);
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -63,7 +67,7 @@ const Login = () => {
         />
         <InputField
           type="password"
-          name="Sign Up Password"
+          name="password"
           value={signUpPassword}
           onChange={handlePasswordChange}
           placeholder="Password"
@@ -72,7 +76,7 @@ const Login = () => {
         <Button text="Login" onClick={() => {}} />
         <Button text="Sign Up" onClick={handleModalOpen} type="button" />
       </form>
-      <Modal show={modalOpen} onClose={handleModalOpen}>
+      <Modal show={modalOpen} onClose={handleModalClose}>
         <form onSubmit={handleSignUpSubmit}>
           <InputField
             type="text"
@@ -84,8 +88,8 @@ const Login = () => {
           />
           <InputField
             type="password"
-            name="password"
-            value={password}
+            name="Sign Up Password"
+            value={signUpPassword}
             onChange={handleSignUpPasswordChange}
             placeholder="Password"
             required={true}
