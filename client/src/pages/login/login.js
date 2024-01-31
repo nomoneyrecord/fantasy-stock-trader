@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
+import Modal from "../../components/Modal";
 import { useState } from 'react';
 
 
@@ -10,6 +11,7 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -25,6 +27,10 @@ const Login = () => {
     event.preventDefault();
     console.log("Form Submitted. Email: ", email, " Password: ", password);
   }
+
+  const handleModalOpen = () => {
+    setModalOpen(true); 
+  };
 
   return (
     <div>
@@ -49,7 +55,13 @@ const Login = () => {
           text='Login'
           onClick={() => {}}
         />
+        <Button
+          text='Sign Up'
+          onClick={handleModalOpen}  
+          type='button'
+        />
       </form>
+      <Modal onClose={handleModalOpen}/>
     </div>
   );
 };

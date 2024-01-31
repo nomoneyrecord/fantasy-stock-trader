@@ -20,7 +20,7 @@ const Modal = ({ children, show, onClose }) => {
   );
 };
 
-Modal.proptypes = {
+Modal.propTypes = {
   children: PropTypes.node,
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
