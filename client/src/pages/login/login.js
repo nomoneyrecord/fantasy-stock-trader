@@ -37,9 +37,14 @@ const Login = () => {
   };
 
   const handleSignUpSubmit = (event) => {
-    event.preventDefault(); 
-    console.log("Sign Up Form Submitted. SignUpEmail: ", signUpEmail, " SignUpPassword ", signUpPassword);
-  }
+    event.preventDefault();
+    console.log(
+      "Sign Up Form Submitted. SignUpEmail: ",
+      signUpEmail,
+      " SignUpPassword ",
+      signUpPassword
+    );
+  };
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -67,26 +72,27 @@ const Login = () => {
         <Button text="Login" onClick={() => {}} />
         <Button text="Sign Up" onClick={handleModalOpen} type="button" />
       </form>
-        <Modal show={modalOpen} onClose={handleModalOpen}>
-          <form onSubmit={handleSignUpSubmit}>
+      <Modal show={modalOpen} onClose={handleModalOpen}>
+        <form onSubmit={handleSignUpSubmit}>
           <InputField
-          type="text"
-          name="Sign Up Email"
-          value={signUpEmail}
-          onChange={handleSignUpEmailChange}
-          placeholder="Email"
-          required={true}
-        />
-        <InputField
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleSignUpPasswordChange}
-          placeholder="Password"
-          required={true}
-        />
-          </form>
-        </Modal>
+            type="text"
+            name="Sign Up Email"
+            value={signUpEmail}
+            onChange={handleSignUpEmailChange}
+            placeholder="Email"
+            required={true}
+          />
+          <InputField
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleSignUpPasswordChange}
+            placeholder="Password"
+            required={true}
+          />
+          <Button text="Submit" type="submit" />
+        </form>
+      </Modal>
     </div>
   );
 };
