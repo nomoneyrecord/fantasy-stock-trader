@@ -6,8 +6,8 @@ from flask_sqlalchemy import SQLAlchemy;
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLAlCHEMY_DATABASE_URI'] = 'postgresql://nomoneyrecord:4RkreatoR2%40@localhost:5432/fantasy_stock_trader'
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:4RkreatoR2%40@localhost:5432/fantasy_stock_trader'
+#db = SQLAlchemy(app)
 
 @app.route('/test')
 def test_route():
