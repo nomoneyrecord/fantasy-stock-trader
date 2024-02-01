@@ -24,6 +24,9 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Form Submitted. Email: ", email, " Password: ", password);
+
+    setEmail("");
+    setPassword("");
   };
 
   const handleSignUpEmailChange = (event) => {
@@ -44,6 +47,9 @@ const Login = () => {
       " SignUpPassword ",
       signUpPassword
     );
+
+    setSignUpEmail("");
+    setSignUpPassword("");
   };
 
   const handleModalOpen = () => {
@@ -52,7 +58,7 @@ const Login = () => {
 
   const handleModalClose = () => {
     setModalOpen(false);
-  }
+  };
 
   return (
     <div>
@@ -68,7 +74,7 @@ const Login = () => {
         <InputField
           type="password"
           name="password"
-          value={signUpPassword}
+          value={password}
           onChange={handlePasswordChange}
           placeholder="Password"
           required={true}
