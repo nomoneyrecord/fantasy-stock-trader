@@ -1,7 +1,7 @@
 from flask import Flask;
 from flask_cors import CORS; 
 from flask_sqlalchemy import SQLAlchemy;
-from flask_jwt_extended import JWTManager, create_acces_token;
+from flask_jwt_extended import JWTManager, create_access_token;
 from flask_bcrypt import Bcrypt;
 
 
