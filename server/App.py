@@ -17,24 +17,24 @@ jwt = JWTManager(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(128))
+    password = db.Column(db.String(128))
 
 @app.route('/api/register', methods=['POST'])
 def register_user():
     try:
       new_user_data = request.get_json()
       email = new_user_data['email']
-      password_hash = new_user_data['password_hash']
+      password = new_user_data['password']
 
       existing_user = User.query.filter_by(email=email).first()
       if existing_user:
           return jsonify({'msg': 'This email already exists'}), 400
 
-      hashed_password = bcrypt.generate_password_hash(password_hash).decode('utf-8')
+      hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
       new_user = User(email=email, password=hashed_password)
       db.session.add(new_user)
       db.session.commit()
-      
+
       return jsonify({'id': new_user.id, 'email': new_user.email}), 201
 
     except Exception as e:
