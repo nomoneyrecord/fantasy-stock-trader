@@ -41,6 +41,28 @@ def register_user():
         print(e)
         return jsonify({'msg': 'Error creating user'}), 500
 
+@app.route('/api/login', methods=['POST'])
+def login():
+    if not request.is_json:
+        return jsonify({'msg': 'Missing JSON in request'}), 400
+
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+
+    if not email or not password:
+        return jsonify({'msg': 'Missing username or password'}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    if user and bcrypt.check_password_hash(user.password, password):
+        access_token = create_access_token(identity={'email': email})
+        return jsonify(acces_token=access_token), 200
+
+    return jsonify({'msg': 'Please use valid email and password'}), 401
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
