@@ -4,7 +4,7 @@ import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
 import { useState } from "react";
 
-const Login = () => {
+const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
@@ -107,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AuthPage;

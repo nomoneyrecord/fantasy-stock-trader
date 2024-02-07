@@ -1,5 +1,5 @@
 import './App.css';
-import Login from './pages/login/login';
+import AuthPage from './pages/authpage/authpage';
 import React, { useEffect } from 'react';
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <Login />
+      <AuthPage />
     </>
   );
 }
