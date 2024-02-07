@@ -3,14 +3,16 @@ from flask_cors import CORS;
 from flask_sqlalchemy import SQLAlchemy;
 from flask_jwt_extended import JWTManager, create_access_token;
 from flask_bcrypt import Bcrypt;
+from dotenv import load_dotenv;
+import os
 
-
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:4RkreatoR2%40@localhost:5432/fantasy_stock_trader'
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 db = SQLAlchemy(app)
-
 bcrypt=Bcrypt(app)
 jwt = JWTManager(app)
 
@@ -56,7 +58,7 @@ def login():
 
     if user and bcrypt.check_password_hash(user.password, password):
         access_token = create_access_token(identity={'email': email})
-        return jsonify(acces_token=access_token), 200
+        return jsonify(access_token=access_token, user_id=user.id), 200
 
     return jsonify({'msg': 'Please use valid email and password'}), 401
 
