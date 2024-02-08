@@ -10,6 +10,7 @@ const AuthPage = () => {
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -58,12 +59,13 @@ const AuthPage = () => {
         body: JSON.stringify({ signUpEmail, signUpPassword })
       });
       if (!response.ok) {
-        throw new Error('Sign up failed')
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Sign up failed');
       }
-      const data = await response.json();
-      localStorage.setItem('token', data.access_token);
+      console.log('Registration successful');
+      setErrorMessage('');
     } catch (error) {
-      console.log('Sign up error:', error);
+      setErrorMessage(error.message);
     }
 
     setSignUpEmail("");
@@ -121,6 +123,7 @@ const AuthPage = () => {
           <Button text="Submit" type="submit" />
         </form>
       </Modal>
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
 };
