@@ -1,6 +1,6 @@
 import './App.css';
 import AuthPage from './pages/authpage/authpage';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 function App() {
 

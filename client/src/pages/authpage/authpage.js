@@ -11,42 +11,60 @@ const AuthPage = () => {
   const [signUpPassword, setSignUpPassword] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+      if (!response.ok) {
+        throw new Error('Login failed')
+      }
+      const data = await response.json();
+      localStorage.setItem('token', data.access_token);
+    } catch (error) {
+      console.log('Login error:', error);
+    }
+  };
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-    console.log("Email: ", event.target.value);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-    console.log("Password: ", event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log("Form Submitted. Email: ", email, " Password: ", password);
-
-    setEmail("");
-    setPassword("");
   };
 
   const handleSignUpEmailChange = (event) => {
     setSignUpEmail(event.target.value);
-    console.log("Sign Up Email: ", event.target.value);
   };
 
   const handleSignUpPasswordChange = (event) => {
     setSignUpPassword(event.target.value);
-    console.log("Sign Up Password: ", event.target.value);
   };
 
-  const handleSignUpSubmit = (event) => {
+  const handleSignUpSubmit = async (event) => {
     event.preventDefault();
-    console.log(
-      "Sign Up Form Submitted. SignUpEmail: ",
-      signUpEmail,
-      " SignUpPassword ",
-      signUpPassword
-    );
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ signUpEmail, signUpPassword })
+      });
+      if (!response.ok) {
+        throw new Error('Sign up failed')
+      }
+      const data = await response.json();
+      localStorage.setItem('token', data.access_token);
+    } catch (error) {
+      console.log('Sign up error:', error);
+    }
 
     setSignUpEmail("");
     setSignUpPassword("");
@@ -62,7 +80,7 @@ const AuthPage = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <InputField
           type="text"
           name="email"
@@ -79,7 +97,7 @@ const AuthPage = () => {
           placeholder="Password"
           required={true}
         />
-        <Button text="Login" onClick={() => {}} />
+        <Button text="Login" type="submit" />
         <Button text="Sign Up" onClick={handleModalOpen} type="button" />
       </form>
       <Modal show={modalOpen} onClose={handleModalClose}>
