@@ -11,9 +11,11 @@ const AuthPage = () => {
   const [signUpPassword, setSignUpPassword] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setErrorMessage('');
     try {
       const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
@@ -25,10 +27,11 @@ const AuthPage = () => {
       if (!response.ok) {
         throw new Error('Login failed')
       }
+      setSuccessMessage('You\'ve successfully registered! Let\'s log in!')
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
     } catch (error) {
-      console.log('Login error:', error);
+      setErrorMessage(error.message);
     }
   };
 
@@ -50,6 +53,7 @@ const AuthPage = () => {
 
   const handleSignUpSubmit = async (event) => {
     event.preventDefault();
+    setErrorMessage("");
     try {
       const response = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
@@ -121,6 +125,7 @@ const AuthPage = () => {
             required={true}
           />
           <Button text="Submit" type="submit" />
+          {successMessage && <div className="success-message">{successMessage}</div>}
         </form>
       </Modal>
       {errorMessage && <div className="error-message">{errorMessage}</div>}
