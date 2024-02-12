@@ -16,6 +16,7 @@ const AuthPage = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     setErrorMessage('');
+    setSuccessMessage("");
     try {
       const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
@@ -27,7 +28,6 @@ const AuthPage = () => {
       if (!response.ok) {
         throw new Error('Login failed')
       }
-      setSuccessMessage('You\'ve successfully registered! Let\'s log in!')
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
     } catch (error) {
@@ -54,6 +54,7 @@ const AuthPage = () => {
   const handleSignUpSubmit = async (event) => {
     event.preventDefault();
     setErrorMessage("");
+    setSuccessMessage("");
     try {
       const response = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
@@ -66,7 +67,7 @@ const AuthPage = () => {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Sign up failed');
       }
-      console.log('Registration successful');
+      setSuccessMessage('You\'ve successfully registered! Let\'s log in!')
       setErrorMessage('');
     } catch (error) {
       setErrorMessage(error.message);
@@ -82,6 +83,10 @@ const AuthPage = () => {
 
   const handleModalClose = () => {
     setModalOpen(false);
+    setSignUpEmail("");
+    setSignUpPassword("");
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   return (

@@ -25,10 +25,12 @@ class User(db.Model):
 def register_user():
     try:
       new_user_data = request.get_json()
-      email = new_user_data['email']
-      password = new_user_data['password']
+      print("Recieved data:", new_user_data)
+      email = new_user_data['signUpEmail']
+      password = new_user_data['signUpPassword']
 
       existing_user = User.query.filter_by(email=email).first()
+      print("Existing user check:", existing_user)
       if existing_user:
           return jsonify({'msg': 'This email already exists'}), 400
 
@@ -36,11 +38,12 @@ def register_user():
       new_user = User(email=email, password=hashed_password)
       db.session.add(new_user)
       db.session.commit()
+      print("New user added:", new_user)
 
       return jsonify({'id': new_user.id, 'email': new_user.email}), 201
 
     except Exception as e:
-        print(e)
+        print("Error:", e)
         return jsonify({'msg': 'Error creating user'}), 500
 
 @app.route('/api/login', methods=['POST'])
