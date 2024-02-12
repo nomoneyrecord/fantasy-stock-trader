@@ -21,6 +21,12 @@ class User(db.Model):
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(128))
 
+class Account(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    balance = db.Column(db.Float, nullable=False, default=100000.00)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref=db.backref('account', lazy=True))
+
 @app.route('/api/register', methods=['POST'])
 def register_user():
     try:
