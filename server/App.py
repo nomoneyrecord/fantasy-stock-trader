@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify;
 from flask_cors import CORS; 
 from flask_sqlalchemy import SQLAlchemy;
-from flask_jwt_extended import JWTManager, create_access_token;
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity;
 from flask_bcrypt import Bcrypt;
 from dotenv import load_dotenv;
 import os
@@ -77,6 +77,24 @@ def login():
         return jsonify(access_token=access_token, user_id=user.id), 200
 
     return jsonify({'msg': 'Please use valid email and password'}), 401
+
+
+@app.route('/api/account', methods=['GET'])
+@jwt_required()
+def account():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user['email']).first()
+
+    if user:
+        account = Account.query.filter_by(user_id=user.id).first()
+        if account:
+            return jsonify({
+                'balance': account.balance,
+            }), 200
+        return jsonify({'msg': 'Account not found'}), 404
+    return jsonify({'msg': 'User not found'}), 404
+
+
 
 
 
