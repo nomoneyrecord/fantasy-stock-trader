@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,8 @@ const AuthPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -30,6 +33,7 @@ const AuthPage = () => {
       }
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
+      navigate('/home');
     } catch (error) {
       setErrorMessage(error.message);
     }

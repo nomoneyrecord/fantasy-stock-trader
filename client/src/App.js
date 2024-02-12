@@ -1,15 +1,20 @@
-import './App.css';
-import AuthPage from './pages/authpage/authpage';
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import HomePage from './pages/homepage/homepage';
+import AuthPage from './pages/authpage/authpage';
 
 function App() {
 
 
   return (
-    <>
-      <AuthPage />
-    </>
+    <Router>
+      <Routes>
+        <Route path='/' element={<AuthPage />} />
+        <Route path='/home' element={<HomePage />} />
+        <Route path='*' element={<Navigate to='/' replace />} />
+      </Routes>
+    </Router>
   );
 }
 
