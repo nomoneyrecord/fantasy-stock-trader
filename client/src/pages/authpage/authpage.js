@@ -13,6 +13,12 @@ const AuthPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailRegex.test(email); 
+  }
 
   const navigate = useNavigate();
 
@@ -41,7 +47,13 @@ const AuthPage = () => {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+    if(!validateEmail(event.target.value)) {
+      setEmailError('Invalid email format');
+    } else {
+      setEmailError('');
+    }
   };
+
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -57,6 +69,11 @@ const AuthPage = () => {
 
   const handleSignUpSubmit = async (event) => {
     event.preventDefault();
+    if(!validateEmail(signUpEmail)) {
+      setErrorMessage("Invalid email format")
+      return; 
+    }
+    
     setErrorMessage("");
     setSuccessMessage("");
     try {
@@ -125,6 +142,7 @@ const AuthPage = () => {
             placeholder="Email"
             required={true}
           />
+          {emailError && <div className='error'>{emailError}</div>}
           <InputField
             type="password"
             name="Sign Up Password"
