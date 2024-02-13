@@ -5,6 +5,7 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from flask_bcrypt import Bcrypt;
 from dotenv import load_dotenv;
 import os
+import re
 
 load_dotenv()
 
@@ -41,6 +42,10 @@ def register_user():
       print("Recieved data:", new_user_data)
       email = new_user_data['signUpEmail']
       password = new_user_data['signUpPassword']
+
+      pattern = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w+$'
+      if not re.match(pattern, email):
+        return jsonify({'msg': 'Invalid email format'}), 400
 
       existing_user = User.query.filter_by(email=email).first()
       print("Existing user check:", existing_user)
@@ -107,10 +112,14 @@ def account():
         print("user not found for email:", current_user('email'))
         return jsonify({'msg': 'User not found'}), 404
 
+@app.route('/api/holdings', methods=['GET'])
+@jwt_required()
+def holdings():
+    current_user = get_jwt_identity()
+    print("Current user idnetity:", current_user)
 
 
-
-
+    user = User.query.filter_by(email=current_user['email']).first()
 
 if __name__ == '__main__':
     app.run(debug=True)
