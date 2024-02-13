@@ -53,6 +53,10 @@ def register_user():
       db.session.commit()
       print("New user added:", new_user)
 
+      new_account = Account(user_id=new_user.id)
+      db.session.add(new_account)
+      db.session.commit()
+
       return jsonify({'id': new_user.id, 'email': new_user.email}), 201
 
     except Exception as e:
@@ -83,16 +87,25 @@ def login():
 @jwt_required()
 def account():
     current_user = get_jwt_identity()
+    print("Current user identity:", current_user)
+
     user = User.query.filter_by(email=current_user['email']).first()
+    print("Fetched user:", user)
 
     if user:
         account = Account.query.filter_by(user_id=user.id).first()
+        print("Fetched account:", account)
+
         if account:
             return jsonify({
                 'balance': account.balance,
             }), 200
-        return jsonify({'msg': 'Account not found'}), 404
-    return jsonify({'msg': 'User not found'}), 404
+        else:
+            print("Account not found for user:", user.id)
+            return jsonify({'msg': 'Account not found'}), 404
+    else:
+        print("user not found for email:", current_user('email'))
+        return jsonify({'msg': 'User not found'}), 404
 
 
 
