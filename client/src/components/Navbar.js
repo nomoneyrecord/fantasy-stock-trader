@@ -1,12 +1,21 @@
 import React from 'react';
-import { Navlink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = ({ onLogout }) => {
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    onLogout();
+  }
+
+  const getNavLinkClass = (isActive) => {
+    return isActive ? 'active' : '';
+  };
+
   return (
     <nav className='navbar'>
-      <Navlink to='/home' activeClassName='active'>Home</Navlink>
-      <Navlink too='/trade' activeClassName='active'>Trade</Navlink>
-      <button onClick={onLogout}>Logout</button>
+      <NavLink to='/home' className={({ isActive }) => getNavLinkClass(isActive)}>Home</NavLink>
+      <NavLink to='/trade' className={({ isActive }) => getNavLinkClass(isActive)}>Trade</NavLink>
+      <button onClick={handleLogout}>Logout</button>
     </nav>
   );
 };
