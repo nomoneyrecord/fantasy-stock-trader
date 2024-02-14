@@ -34,13 +34,17 @@ const AuthPage = () => {
         },
         body: JSON.stringify({ email, password })
       });
+
       if (!response.ok) {
         throw new Error('Login failed')
-      }
+      } 
+
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
+      console.log("Login successful, token set:", data.access_token);
       navigate('/home');
     } catch (error) {
+      console.log("Login error:", error);
       setErrorMessage(error.message);
     }
   };
