@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import HomePage from './pages/homepage/homepage';
@@ -7,31 +7,29 @@ import TradePage from './pages/tradepage/tradepage';
 import Navbar from './components/Navbar';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token)
-  }, []);
+  const isLoggedIn = localStorage.getItem('token'); // Check for token to determine login status
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setIsLoggedIn(false);
+    window.location.reload();
   };
-  
-
 
   return (
     <Router>
       {isLoggedIn && <Navbar onLogout={handleLogout} />}
       <Routes>
-        <Route path='/' element={!isLoggedIn ? <AuthPage /> : <Navigate to='/home' replace />} />
-        <Route path='/home' element={isLoggedIn ? <HomePage /> : <Navigate to='/' replace />} />
-        <Route path='trade' element={isLoggedIn ? <TradePage /> : <Navigate to='/' replace />} />
-        <Route path='*' element={<Navigate to={isLoggedIn ? '/home' : '/'} replace />} />
+        <Route path='/' element={<AuthPage />} />
+        {isLoggedIn ? (
+          <>
+            <Route path='/home' element={<HomePage />} />
+            <Route path='/trade' element={<TradePage />} />
+          </>
+        ) : (
+          <Route path='*' element={<Navigate to='/' replace />} />
+        )}
       </Routes>
     </Router>
   );
-};
+}
 
 export default App;
