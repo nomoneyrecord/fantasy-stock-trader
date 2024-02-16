@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
-import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
@@ -35,19 +34,20 @@ const AuthPage = () => {
         body: JSON.stringify({ email, password })
       });
 
-      if (!response.ok) {
-        throw new Error('Login failed')
-      } 
-
-      const data = await response.json();
-      localStorage.setItem('token', data.access_token);
-      console.log("Login successful, token set:", data.access_token);
-      navigate('/home');
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.access_token);
+        console.log("Login successful, token set:", data.access_token);
+        navigate('/home');
+      } else {
+        throw new Error('Login failed');
+      }
     } catch (error) {
       console.log("Login error:", error);
       setErrorMessage(error.message);
     }
   };
+  
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);

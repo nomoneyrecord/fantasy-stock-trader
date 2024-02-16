@@ -83,6 +83,12 @@ def login():
 
     return jsonify({'msg': 'Please use valid email and password'}), 401
 
+@jwt.expired_token_loader
+def my_expired_token_callback(jwt_header, jwt_payload):
+    return jsonify({
+        'msg': 'Token has expired'
+    }), 401
+
 
 @app.route('/api/account', methods=['GET'])
 @jwt_required()
