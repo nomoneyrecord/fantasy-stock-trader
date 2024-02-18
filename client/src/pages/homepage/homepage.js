@@ -47,13 +47,13 @@ const HomePage = () => {
     <div>
       <h1>Welcome to the Home Page</h1>
       <p>Account Balance: {accountData.accountBalance}</p>
-      <p>Current Value of Stocks: {accountData.stockValue}</p>
+     {/* <p>Current Value of Stocks: {accountData.stockValue}</p>
       <p>Your Holdings:</p>
       <ul>
         {accountData.holdings.map(stock => (
           <li key={stock}>{stock}</li>
         ))}
-      </ul>
+        </ul> */}
     </div>
   );
 }

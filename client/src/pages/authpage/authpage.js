@@ -4,7 +4,7 @@ import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
 import { useNavigate } from 'react-router-dom';
 
-const AuthPage = () => {
+const AuthPage = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
@@ -33,21 +33,17 @@ const AuthPage = () => {
         },
         body: JSON.stringify({ email, password })
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.access_token);
-        console.log("Login successful, token set:", data.access_token);
-        navigate('/home');
-      } else {
+      if (!response.ok) {
         throw new Error('Login failed');
       }
+      const data = await response.json();
+      localStorage.setItem('token', data.access_token);
+      props.onLoginSuccess();  // <-- Update the state in App.js
+      navigate('/home');
     } catch (error) {
-      console.log("Login error:", error);
       setErrorMessage(error.message);
     }
   };
-  
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);

@@ -13,11 +13,15 @@ function App() {
     setIsLoggedIn(false);
   };
 
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <Router>
       {isLoggedIn && <Navbar onLogout={handleLogout} />}
       <Routes>
-        <Route path='/' element={!isLoggedIn ? <AuthPage /> : <Navigate to="/home" />} />
+        <Route path='/' element={!isLoggedIn ? <AuthPage onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/home" />} />
         <Route path='/home' element={isLoggedIn ? <HomePage /> : <Navigate to="/" />} />
         <Route path='/trade' element={isLoggedIn ? <TradePage /> : <Navigate to="/" />} />
         {/* other routes as necessary */}
