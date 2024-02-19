@@ -24,7 +24,6 @@ function App() {
         <Route path='/' element={!isLoggedIn ? <AuthPage onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/home" />} />
         <Route path='/home' element={isLoggedIn ? <HomePage /> : <Navigate to="/" />} />
         <Route path='/trade' element={isLoggedIn ? <TradePage /> : <Navigate to="/" />} />
-        {/* other routes as necessary */}
       </Routes>
     </Router>
   );

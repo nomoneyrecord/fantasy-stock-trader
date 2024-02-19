@@ -118,11 +118,24 @@ def account():
 @jwt_required()
 def holdings():
     current_user = get_jwt_identity()
-    print("Current user idnetity:", current_user)
+    user = User.query.filter_by(email=current_user)['email'].first()
 
+    if user:
+        holdings = StockHoldings.query.filter_by(user_id=user.id).all()
+        holding_data = []
 
-    user = User.query.filter_by(email=current_user['email']).first()
+        for holding in holdings:
+            current_value = 100 * holding.quantity
+            holding_data.append({
+                'symbol': holding.symbol,
+                'quantity': holdings.quantity,
+                'currentValue': current_value
+            })
 
+        return jsonify(holdings_data), 200
+
+    return jsonify({'msg': 'User not found'}), 404
+     
 if __name__ == '__main__':
     app.run(debug=True)
 
