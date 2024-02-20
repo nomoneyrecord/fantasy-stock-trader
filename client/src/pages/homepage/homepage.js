@@ -25,7 +25,7 @@ const HomePage = () => {
   }, []);
 
 
-  const calculateStockValues = useCallback(async (holdings) => {
+  /*const calculateStockValues = useCallback(async (holdings) => {
     let totalValue = 0;
     try {
       for (const holding of holdings) {
@@ -40,7 +40,7 @@ const HomePage = () => {
     } catch (error) {
       handleError(error);
     }
-  }, [handleError]);
+  }, [handleError]);*/
 
 
   useEffect(() => {
@@ -65,11 +65,11 @@ const HomePage = () => {
     .then(handleResponse)
     .then(holdingsData => {
       setAccountData(prevData => ({ ...prevData, stockHoldings: holdingsData }));
-      calculateStockValues(holdingsData);
+      //calculateStockValues(holdingsData);
     })
     .catch(handleError);
 
-  }, [navigate, handleResponse, handleError, calculateStockValues]);
+  }, [navigate, handleResponse, handleError, /*calculateStockValues*/]);
 
   return (
     <div>
