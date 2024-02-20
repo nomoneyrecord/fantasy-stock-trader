@@ -121,20 +121,39 @@ def holdings():
     user = User.query.filter_by(email=current_user['email']).first()
 
     if user:
-        holdings = StockHoldings.query.filter_by(user_id=user.id).all()
-        holdings_data = []
+        # Mock data for testing
+        mock_holdings = [
+            {"symbol": "AAPL", "quantity": 10, "currentValue": 1000},
+            {"symbol": "MSFT", "quantity": 5, "currentValue": 500},
+            {"symbol": "TSLA", "quantity": 2, "currentValue": 200}
+        ]
 
-        for holding in holdings:
-            current_value = 100 * holding.quantity
-            holdings_data.append({
-                'symbol': holding.symbol,
-                'quantity': holding.quantity,
-                'currentValue': current_value
-            })
-
-        return jsonify(holdings_data), 200
+        return jsonify(mock_holdings), 200
 
     return jsonify({'msg': 'User not found'}), 404
+
+
+#@app.route('/api/holdings', methods=['GET'])
+#@jwt_required()
+#def holdings():
+#    current_user = get_jwt_identity()
+#    user = User.query.filter_by(email=current_user['email']).first()
+#
+#    if user:
+#        holdings = StockHoldings.query.filter_by(user_id=user.id).all()
+#        holdings_data = []
+#
+#        for holding in holdings:
+#            current_value = 100 * holding.quantity
+#            holdings_data.append({
+#                'symbol': holding.symbol,
+#                'quantity': holding.quantity,
+#                'currentValue': current_value
+#            })
+#
+#        return jsonify(holdings_data), 200
+#
+#    return jsonify({'msg': 'User not found'}), 404 /*}
      
 if __name__ == '__main__':
     app.run(debug=True)
