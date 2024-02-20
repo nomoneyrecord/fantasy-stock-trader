@@ -24,7 +24,7 @@ const TradePage = () => {
       return;
     }
 
-    fetch(`https://financialmodelingprep.com/api/v3/search?query=${searchSymbol}`)
+    fetch(`https://financialmodelingprep.com/api/v3/search?query=${searchSymbol}&apikey=${process.env.REACT_APP_API_KEY}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch stock data');
