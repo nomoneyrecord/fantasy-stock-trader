@@ -118,17 +118,17 @@ def account():
 @jwt_required()
 def holdings():
     current_user = get_jwt_identity()
-    user = User.query.filter_by(email=current_user)['email'].first()
+    user = User.query.filter_by(email=current_user['email']).first()
 
     if user:
         holdings = StockHoldings.query.filter_by(user_id=user.id).all()
-        holding_data = []
+        holdings_data = []
 
         for holding in holdings:
             current_value = 100 * holding.quantity
-            holding_data.append({
+            holdings_data.append({
                 'symbol': holding.symbol,
-                'quantity': holdings.quantity,
+                'quantity': holding.quantity,
                 'currentValue': current_value
             })
 
