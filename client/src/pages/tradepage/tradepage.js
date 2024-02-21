@@ -27,7 +27,7 @@ const TradePage = () => {
       alert('Please enter a stock symbol or name');
       return;
     }
-  
+
     fetch(`https://financialmodelingprep.com/api/v3/stock/list?apikey=${process.env.REACT_APP_API_KEY}`)
       .then(response => {
         if (!response.ok) {
@@ -36,11 +36,12 @@ const TradePage = () => {
         return response.json();
       })
       .then(data => {
-        const filteredResults = data.filter(stock => 
-          stock.symbol.toLowerCase().includes(searchQuery.toLowerCase()) || 
-          stock.name.toLowerCase().includes(searchQuery.toLowerCase())
+        console.log(data);
+        const filteredResults = data.filter(stock =>
+          stock.symbol?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          stock.name?.toLowerCase().includes(searchQuery.toLowerCase())
         );
-  
+
         if (filteredResults.length === 0) {
           alert('No stock found with that symbol or name');
           setSearchResults([]);
@@ -49,11 +50,11 @@ const TradePage = () => {
         }
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Error during fetch:', error);
         alert('An error occurred while fetching stock data');
       });
   };
-  
+
 
   const openBuyModal = (stock) => {
     setSelectedStock(stock);
@@ -67,24 +68,71 @@ const TradePage = () => {
   const handleBuyChange = (e) => {
     setBuyQuantity(e.target.value);
   };
-  
+
   const handleSellChange = (e) => {
     setSellQuantity(e.target.value);
   };
-  
+
   const confirmPurchase = () => {
-    try{
-      
-    }
+    const totalCost = selectedStock.price * buyQuantity;
+
+    fetch('http://localhost:5000/api/buy_stock', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        symbol: selectedStock.symbol,
+        quantity: buyQuantity,
+        price: selectedStock.price
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Purchase failed');
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert(data.msg);
+        setShowBuyModal(false);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while purchasing stock');
+      });
   };
-  
+
   const confirmSale = () => {
-    // Implement sell logic here
-    // - Validate if the user has enough shares to sell
-    // - Update user's stock holdings and account balance
-    // - Close the modal and refresh the data
+    fetch('http://localhost:5000/api/sell_stock', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({
+        symbol: selectedStock.symbol,
+        quantity: sellQuantity,
+        price: selectedStock.price
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Sale failed');
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert(data.msg);
+        setShowSellModal(false);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occured while selling stock');
+      });
   };
-  
+
 
   return (
     <div>
@@ -97,10 +145,20 @@ const TradePage = () => {
       />
       <Button text='Search' onClick={handleSearch} />
 
+      {
+        searchResults.map((stock) => (
+          <div key={stock.symbol}>
+            <p>Symbol: {stock.symbol}, Name: {stock.name}</p>
+            <Button text='Buy' onClick={() => openBuyModal(stock)} />
+            <Button text='Sell' onClick={() => openSellModal(stock)} />
+          </div>
+        ))
+      }
+
       {showBuyModal && (
         <Modal show={showBuyModal} onClose={() => setShowBuyModal(false)}>
           <h2>Buy {selectedStock?.symbol}</h2>
-          <p>Price: {/* Display current price here */}</p>
+          <p>Price: {selectedStock?.price}</p>
           <InputField
             type='number'
             name='buyQuantity'
