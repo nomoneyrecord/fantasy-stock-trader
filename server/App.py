@@ -132,29 +132,63 @@ def holdings():
 
     return jsonify({'msg': 'User not found'}), 404
 
+@app.route('/api/buy_stock', methods=['POST'])
+@jwt_required()
+def buy_stocks():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user['email']).first()
 
-#@app.route('/api/holdings', methods=['GET'])
-#@jwt_required()
-#def holdings():
-#    current_user = get_jwt_identity()
-#    user = User.query.filter_by(email=current_user['email']).first()
-#
-#    if user:
-#        holdings = StockHoldings.query.filter_by(user_id=user.id).all()
-#        holdings_data = []
-#
-#        for holding in holdings:
-#            current_value = 100 * holding.quantity
-#            holdings_data.append({
-#                'symbol': holding.symbol,
-#                'quantity': holding.quantity,
-#                'currentValue': current_value
-#            })
-#
-#        return jsonify(holdings_data), 200
-#
-#    return jsonify({'msg': 'User not found'}), 404 /*}
-     
+    if not user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    data = request.get_json()
+    stock_symbol = data['symbol']
+    quantity = data['quantity']
+    stock_price = data['price']
+
+    total_cost = stock_price * quantity
+
+    if user.account.balance < total_cost:
+        return jsonify({'msg': "Insufficient funds"}), 400
+
+    existing_holding = StockHoldings.query.filter_by(user_id=user.id, symbol=stock_symbol).first()
+    if existing_holding:
+        existing_holding.quantity += quantity
+    else:
+        new_holding = StockHoldings(symbol=stock_symbol, quantity=quantity, user_id=user.id)
+        db.session.add(new_holding)
+
+    user.account.balance -= total_cost
+    db.session.commit()
+
+    return jsonify({'msg': 'Stock purchased successfully'}), 200
+
+@app.route('/api/sell_stock', methods=['POST'])
+@jwt_required()
+def sell_stock():
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user['email']).first()
+
+    if not user:
+        return jsonify({'msg': 'User not found'}), 404
+
+    data = request.get_json()
+    stock_symbol = data['symbol']
+    quantity = data['quantity']
+    stock_price = data['price']
+
+    existing_holding = StockHoldings.query.filter_by(user_id=user.id, symbol=stock_symbol).first()
+    if not existing_holding or existing_holding.quantity < quantity:
+        return jsonify({'msg': 'Insufficient stock holdings'}), 400
+
+    total_revenue = stock_price * quantity
+    existing_holding.quantity -= quantity
+    if existing_holding.quantity == 0:
+        db.session.delete(existing_holding)
+
+    user.account.balance += total_revenue
+    db.session.commit()
+
 if __name__ == '__main__':
     app.run(debug=True)
 
