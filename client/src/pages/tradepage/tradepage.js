@@ -7,7 +7,7 @@ import Modal from '../../components/Modal';
 const TradePage = () => {
   const navigate = useNavigate();
   const [searchSymbol, setSearchSymbol] = useState('');
-  const [searchResults, setSearchResults] = useState(null); 
+  const [searchResults, setSearchResults] = useState([]); 
   const [showBuyModal, setShowBuyModal] = useState(false);
   const [showSellModal, setShowSellModal] = useState(false);
 
@@ -34,9 +34,9 @@ const TradePage = () => {
       .then(data => {
         if (data.length === 0) {
           alert('No stock found with that symbol');
-          setSearchResults(null);
+          setSearchResults([]);
         } else {
-          setSearchResults(data[0]);
+          setSearchResults(data);
         }
       })
       .catch(error => {
@@ -59,12 +59,13 @@ const TradePage = () => {
       />
       <Button text='Search' onClick={handleSearch} />
 
-      {searchResults && (
+      {searchResults.map((stock, index) => (
         <div>
-          <Button text='Buy' onClick={openBuyModal} />
-          <Button text='Sell' onClick={openSellModal} />
+          <p>Symbol: {stock.symbol}, Name: {stock.name}</p>
+          <Button text='Buy' onClick={() => openBuyModal(stock)} />
+          <Button text='Sell' onClick={() => openSellModal(stock)} />
         </div>
-      )}
+      ))}
 
       {showBuyModal && (
         <Modal show={showBuyModal} onClose={() => setShowBuyModal(false)}>
