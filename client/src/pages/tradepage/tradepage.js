@@ -66,28 +66,54 @@ const TradePage = () => {
   };
 
   const handleBuyChange = (e) => {
-    setBuyQuantity(e.target.value);
+    setBuyQuantity(Number(e.target.value));
   };
 
   const handleSellChange = (e) => {
-    setSellQuantity(e.target.value);
+    setSellQuantity(Number(e.target.value));
   };
 
   const confirmPurchase = () => {
-    const totalCost = selectedStock.price * buyQuantity;
-
-    fetch('http://localhost:5000/api/buy_stock', {
-      method: 'POST',
+    const quantityNumber = Number(buyQuantity);
+    console.log('Selected Stock:', selectedStock);
+    console.log('Buy Quantity:', quantityNumber);
+  
+    // Fetch user's current account balance
+    fetch('http://localhost:5000/api/account', {
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify({
-        symbol: selectedStock.symbol,
-        quantity: buyQuantity,
-        price: selectedStock.price
-      })
+      }
     })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch account data');
+      }
+      return response.json();
+    })
+    .then(accountData => {
+      const userAccountBalance = accountData.balance;
+      console.log('User Account Balance:', userAccountBalance);
+  
+      const totalCost = selectedStock.price * quantityNumber;
+      console.log('Total Cost:', totalCost);
+  
+      if (totalCost > userAccountBalance) {
+        alert('Insufficient funds to complete the purchase.');
+        return;
+      }
+  
+      fetch('http://localhost:5000/api/buy_stock', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({
+          symbol: selectedStock.symbol,
+          quantity: quantityNumber,
+          price: selectedStock.price
+        })
+      })
       .then(response => {
         if (!response.ok) {
           throw new Error('Purchase failed');
@@ -97,12 +123,19 @@ const TradePage = () => {
       .then(data => {
         alert(data.msg);
         setShowBuyModal(false);
+        // Optionally, refresh account and holdings data here
       })
       .catch(error => {
         console.error('Error:', error);
         alert('An error occurred while purchasing stock');
       });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred while fetching account data');
+    });
   };
+   
 
   const confirmSale = () => {
     fetch('http://localhost:5000/api/sell_stock', {
@@ -162,7 +195,7 @@ const TradePage = () => {
           <InputField
             type='number'
             name='buyQuantity'
-            value={buyQuantity}
+            value={buyQuantity.toString()}
             onChange={handleBuyChange}
             placeholder="Enter quantity"
           />
@@ -178,7 +211,7 @@ const TradePage = () => {
           <InputField
             type='number'
             name='sellQuantity'
-            value={sellQuantity}
+            value={sellQuantity.toString()}
             onChange={handleSellChange}
             placeholder="Enter quantity"
           // Add change handler

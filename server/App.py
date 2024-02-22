@@ -10,7 +10,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:4RkreatoR2%40@localhost:5432/fantasy_stock_trader'
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 db = SQLAlchemy(app)
@@ -121,20 +121,27 @@ def holdings():
     user = User.query.filter_by(email=current_user['email']).first()
 
     if user:
-        # Mock data for testing
-        mock_holdings = [
-            {"symbol": "AAPL", "quantity": 10, "currentValue": 1000},
-            {"symbol": "MSFT", "quantity": 5, "currentValue": 500},
-            {"symbol": "TSLA", "quantity": 2, "currentValue": 200}
-        ]
+        holdings = StockHoldings.query.filter_by(user_id=user.id).all()
+        holdings_data = []
 
-        return jsonify(mock_holdings), 200
+        for holding in holdings:
+            # Fetch current stock price (Assuming you have a way to get the current price)
+            current_price = get_current_stock_price(holding.symbol)  # Implement this function
+            holdings_data.append({
+                'symbol': holding.symbol,
+                'quantity': holding.quantity,
+                'currentValue': current_price * holding.quantity
+            })
+
+        return jsonify(holdings_data), 200
 
     return jsonify({'msg': 'User not found'}), 404
 
+
+
 @app.route('/api/buy_stock', methods=['POST'])
 @jwt_required()
-def buy_stocks():
+def buy_stock():
     current_user = get_jwt_identity()
     user = User.query.filter_by(email=current_user['email']).first()
 
@@ -143,14 +150,18 @@ def buy_stocks():
 
     data = request.get_json()
     stock_symbol = data['symbol']
-    quantity = data['quantity']
-    stock_price = data['price']
+    quantity = int(data['quantity'])
+    stock_price = float(data['price'])
 
     total_cost = stock_price * quantity
 
     if user.account.balance < total_cost:
         return jsonify({'msg': "Insufficient funds"}), 400
 
+    # Update user's account balance
+    user.account.balance -= total_cost
+
+    # Update or add stock holdings
     existing_holding = StockHoldings.query.filter_by(user_id=user.id, symbol=stock_symbol).first()
     if existing_holding:
         existing_holding.quantity += quantity
@@ -158,10 +169,9 @@ def buy_stocks():
         new_holding = StockHoldings(symbol=stock_symbol, quantity=quantity, user_id=user.id)
         db.session.add(new_holding)
 
-    user.account.balance -= total_cost
     db.session.commit()
+    return jsonify({'msg': 'Stock purchased successfully', 'new_balance': user.account.balance}), 200
 
-    return jsonify({'msg': 'Stock purchased successfully'}), 200
 
 @app.route('/api/sell_stock', methods=['POST'])
 @jwt_required()
@@ -174,8 +184,8 @@ def sell_stock():
 
     data = request.get_json()
     stock_symbol = data['symbol']
-    quantity = data['quantity']
-    stock_price = data['price']
+    quantity = int(data['quantity'])
+    stock_price = float(data['price'])
 
     existing_holding = StockHoldings.query.filter_by(user_id=user.id, symbol=stock_symbol).first()
     if not existing_holding or existing_holding.quantity < quantity:
