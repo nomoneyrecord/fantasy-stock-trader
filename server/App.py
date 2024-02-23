@@ -5,7 +5,7 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from flask_bcrypt import Bcrypt;
 from dotenv import load_dotenv;
 import os
-
+import requests
 
 load_dotenv()
 
@@ -113,6 +113,35 @@ def account():
     else:
         print("user not found for email:", current_user('email'))
         return jsonify({'msg': 'User not found'}), 404
+
+@app.route('/api/search_stocks', methods=['GET'])
+@jwt_required()
+def search_stocks():
+    search_query = request.arg.get('query', '')
+    if not search_query:
+        return jsonify({'msh': 'No search query provided'}), 400
+
+    api_key = os.getenv('REACT_APP_API_KEY')
+    api_url = f"https://financialmodelingprep.com/api/v3/stock/list?apikey={api_key}"
+
+    response = requests.get(api_url)
+    if response.status_code != 200: 
+        return jsonify({'msg': 'Failed to fetch stock data'}), response.status_code
+
+    stocks = response.json()
+    filtered_stocks = [stock for stock in stocks if search_query.lower() in stock['symbol'].lower() or search_query.lower() in stock['name'].lower()]
+
+    return jsonify(filtered_stocks), 200
+
+def get_current_stock_price(symbol):
+    api_key = os.getenv('REACT_APP_API_KEY')
+    api_url = f"https://financialmodelingprep.com/api/v3/quote/{symbol}?apikey={api_key}"
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        data = response.json()
+        return data[0]['price']
+    else:
+        return None
 
 @app.route('/api/holdings', methods=['GET'])
 @jwt_required()
