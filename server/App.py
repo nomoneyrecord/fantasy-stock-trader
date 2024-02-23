@@ -117,7 +117,7 @@ def account():
 @app.route('/api/search_stocks', methods=['GET'])
 @jwt_required()
 def search_stocks():
-    search_query = request.arg.get('query', '')
+    search_query = request.args.get('query', '')
     if not search_query:
         return jsonify({'msh': 'No search query provided'}), 400
 
@@ -129,7 +129,11 @@ def search_stocks():
         return jsonify({'msg': 'Failed to fetch stock data'}), response.status_code
 
     stocks = response.json()
-    filtered_stocks = [stock for stock in stocks if search_query.lower() in stock['symbol'].lower() or search_query.lower() in stock['name'].lower()]
+    filtered_stocks = [
+        stock for stock in stocks 
+        if (stock['symbol'] and search_query.lower() in stock['symbol'].lower())
+        or (stock['name'] and search_query.lower() in stock['name'].lower())
+    ]
 
     return jsonify(filtered_stocks), 200
 
@@ -184,11 +188,14 @@ def buy_stock():
 
     total_cost = stock_price * quantity
 
-    if user.account.balance < total_cost:
+    # Access the first account of the user
+    user_account = user.account[0]
+
+    if user_account.balance < total_cost:
         return jsonify({'msg': "Insufficient funds"}), 400
 
     # Update user's account balance
-    user.account.balance -= total_cost
+    user_account.balance -= total_cost
 
     # Update or add stock holdings
     existing_holding = StockHoldings.query.filter_by(user_id=user.id, symbol=stock_symbol).first()
@@ -199,7 +206,8 @@ def buy_stock():
         db.session.add(new_holding)
 
     db.session.commit()
-    return jsonify({'msg': 'Stock purchased successfully', 'new_balance': user.account.balance}), 200
+    return jsonify({'msg': 'Stock purchased successfully', 'new_balance': user_account.balance}), 200
+
 
 
 @app.route('/api/sell_stock', methods=['POST'])

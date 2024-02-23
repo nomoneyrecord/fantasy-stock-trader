@@ -28,32 +28,32 @@ const TradePage = () => {
       return;
     }
 
-    fetch(`https://financialmodelingprep.com/api/v3/stock/list?apikey=${process.env.REACT_APP_API_KEY}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch stock data');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        const filteredResults = data.filter(stock =>
-          stock.symbol?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          stock.name?.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+    // Use your backend endpoint to search for stocks
+    fetch(`http://localhost:5000/api/search_stocks?query=${searchQuery}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch stock data');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.length === 0) {
+        alert('No stock found with that symbol or name');
+        setSearchResults([]);
+      } else {
+        setSearchResults(data);
+      }
+    })
+    .catch(error => {
+      console.error('Error during fetch:', error);
+      alert('An error occurred while fetching stock data');
+    });
+};
 
-        if (filteredResults.length === 0) {
-          alert('No stock found with that symbol or name');
-          setSearchResults([]);
-        } else {
-          setSearchResults(filteredResults);
-        }
-      })
-      .catch(error => {
-        console.error('Error during fetch:', error);
-        alert('An error occurred while fetching stock data');
-      });
-  };
 
 
   const openBuyModal = (stock) => {
