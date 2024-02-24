@@ -143,9 +143,16 @@ def get_current_stock_price(symbol):
     response = requests.get(api_url)
     if response.status_code == 200:
         data = response.json()
-        return data[0]['price']
+        if data and 'price' in data[0]:
+            print(f"Current price of {symbol}: {data[0]['price']}")
+            return data[0]['price']
+        else:
+            print(f"Data or 'price' key missing in response for {symbol}: {data}")
     else:
-        return None
+        print(f"API call failed with status code {response.status_code} for symbol {symbol}")
+    return None
+
+
 
 @app.route('/api/holdings', methods=['GET'])
 @jwt_required()
@@ -160,10 +167,15 @@ def holdings():
         for holding in holdings:
             # Fetch current stock price (Assuming you have a way to get the current price)
             current_price = get_current_stock_price(holding.symbol)  # Implement this function
+            if current_price is not None:
+                currentValue = current_price *holding.quantity
+            else:
+                currentValue = 0
+
             holdings_data.append({
                 'symbol': holding.symbol,
                 'quantity': holding.quantity,
-                'currentValue': current_price * holding.quantity
+                'currentValue': currentValue
             })
 
         return jsonify(holdings_data), 200
