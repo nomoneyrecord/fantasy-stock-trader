@@ -24,25 +24,6 @@ const HomePage = () => {
     console.error('Error:', error);
   }, []);
 
-
-  /*const calculateStockValues = useCallback(async (holdings) => {
-    let totalValue = 0;
-    try {
-      for (const holding of holdings) {
-        // Fetch current stock price for each holding
-        const stockResponse = await fetch(`https://financialmodelingprep.com/api/v3/search?query=${holding.symbol}`);
-        const stockData = await stockResponse.json();
-        // Calculate total value for the holding
-        const currentValue = stockData[0].price * holding.quantity; // Adjust based on the actual API response format
-        totalValue += currentValue;
-      }
-      setAccountData(prevData => ({ ...prevData, totalStockValue: totalValue }));
-    } catch (error) {
-      handleError(error);
-    }
-  }, [handleError]);*/
-
-
   useEffect(() => {
     console.log('useEffect triggered in HomePage');
     

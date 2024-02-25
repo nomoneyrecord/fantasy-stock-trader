@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy;
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity;
 from flask_bcrypt import Bcrypt;
 from dotenv import load_dotenv;
+from datetime import timedelta;
 import os
 import requests
 
@@ -78,7 +79,7 @@ def login():
     user = User.query.filter_by(email=email).first()
 
     if user and bcrypt.check_password_hash(user.password, password):
-        access_token = create_access_token(identity={'email': email})
+        access_token = create_access_token(identity={'email': email}, expires_delta=timedelta(minutes=30))
         return jsonify(access_token=access_token, user_id=user.id), 200
 
     return jsonify({'msg': 'Please use valid email and password'}), 401
