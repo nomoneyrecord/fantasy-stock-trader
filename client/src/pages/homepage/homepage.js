@@ -25,9 +25,19 @@ const HomePage = () => {
     alert(`Alert error occurred: ${error.message}`);
   }, []);
 
+  const calculateTotalStockValue = (holdings) => {
+    const totalValue = holdings.reduce((acc, holding) => acc + holding.currentValue, 0);
+    setAccountData(prevData => ({ ...prevData, totalStockValue: totalValue }));
+  };
+
   useEffect(() => {
     console.log('useEffect triggered in HomePage');
-    
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/');
+      return; 
+    }
+
     // Fetch account balance
     fetch('http://localhost:5000/api/account', {
       headers: {
@@ -47,11 +57,11 @@ const HomePage = () => {
     .then(handleResponse)
     .then(holdingsData => {
       setAccountData(prevData => ({ ...prevData, stockHoldings: holdingsData }));
-      //calculateStockValues(holdingsData);
+      calculateTotalStockValue(holdingsData);
     })
     .catch(handleError);
 
-  }, [navigate, handleResponse, handleError, /*calculateStockValues*/]);
+  }, [navigate, handleResponse, handleError]);
 
   return (
     <div>
