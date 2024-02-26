@@ -13,7 +13,9 @@ const HomePage = () => {
     if (!response.ok) {
       if (response.status === 401) {
         localStorage.removeItem('token');
+        alert('Session has expired, please log in again.')
         navigate('/');
+        return;
       }
       throw new Error('Network response was not ok');
     }
@@ -72,7 +74,7 @@ const HomePage = () => {
       <ul>
         {accountData.stockHoldings.map((holding, index) => (
           <li key={index}>
-            Symbol: {holding.symbol}, Quantity: {holding.quantity}
+            Symbol: {holding.symbol}, Quantity: {holding.quantity}, Price: {holding.price}
           </li>
         ))}
       </ul>
