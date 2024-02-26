@@ -22,6 +22,7 @@ const HomePage = () => {
 
   const handleError = useCallback(error => {
     console.error('Error:', error);
+    alert(`Alert error occurred: ${error.message}`);
   }, []);
 
   useEffect(() => {
