@@ -22,11 +22,19 @@ const HomePage = () => {
     return response.json();
   }, [navigate]);
 
-  const handleError = useCallback(error => {
-    console.error('Error:', error);
-    alert(`Alert error occurred: ${error.message}`);
-  }, []);
-
+  const handleError = useCallback((error) => {
+    if (error.message === "401") {
+      // If the error message is "401", it indicates an unauthorized request
+      console.error('Session expired or unauthorized access. Redirecting to login.');
+      localStorage.removeItem('token'); // Clear the token from local storage
+      navigate('/'); // Redirect to the login page
+    } else {
+      // Handle other types of errors
+      console.error('Error:', error);
+      alert(`An error occurred: ${error.message}`);
+    }
+  }, [navigate]); // Make sure to include 'navigate' in the dependency array
+  
   const calculateTotalStockValue = (holdings) => {
     const totalValue = holdings.reduce((acc, holding) => acc + holding.currentValue, 0);
     setAccountData(prevData => ({ ...prevData, totalStockValue: totalValue }));
@@ -74,7 +82,7 @@ const HomePage = () => {
       <ul>
         {accountData.stockHoldings.map((holding, index) => (
           <li key={index}>
-            Symbol: {holding.symbol}, Quantity: {holding.quantity}, Price: {holding.price}
+            Symbol: {holding.symbol}, Quantity: {holding.quantity}
           </li>
         ))}
       </ul>

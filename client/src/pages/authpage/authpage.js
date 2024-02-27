@@ -33,6 +33,11 @@ const AuthPage = (props) => {
         },
         body: JSON.stringify({ email, password })
       });
+
+      if (response.status === 401) {
+        throw new Error('Session expired. Please log in again.')
+      }
+
       if (!response.ok) {
         throw new Error('Login failed');
       }

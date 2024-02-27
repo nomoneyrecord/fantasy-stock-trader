@@ -169,7 +169,7 @@ def holdings():
             # Fetch current stock price (Assuming you have a way to get the current price)
             current_price = get_current_stock_price(holding.symbol)  # Implement this function
             if current_price is not None:
-                currentValue = current_price *holding.quantity
+                currentValue = current_price * holding.quantity
             else:
                 currentValue = 0
 
