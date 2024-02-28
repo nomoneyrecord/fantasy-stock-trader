@@ -10,6 +10,7 @@ const HomePage = () => {
   });
 
   const handleResponse = useCallback(response => {
+    console.log('API response received with status: ', response.status);
     if (!response.ok) {
       if (response.status === 401) {
         localStorage.removeItem('token');
@@ -23,9 +24,10 @@ const HomePage = () => {
   }, [navigate]);
 
   const handleError = useCallback((error) => {
+    console.error('Error occurred: ', error);
     if (error.message === "401") {
       // If the error message is "401", it indicates an unauthorized request
-      console.error('Session expired or unauthorized access. Redirecting to login.');
+      console.log('Handling 401 error, redirecting to login');
       localStorage.removeItem('token'); // Clear the token from local storage
       navigate('/'); // Redirect to the login page
     } else {
@@ -38,10 +40,10 @@ const HomePage = () => {
   const calculateTotalStockValue = (holdings) => {
     const totalValue = holdings.reduce((acc, holding) => acc + holding.currentValue, 0);
     setAccountData(prevData => ({ ...prevData, totalStockValue: totalValue }));
-  };
+  }; 
 
   useEffect(() => {
-    console.log('useEffect triggered in HomePage');
+    console.log('Checking token in HomePage useEffect');
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/');
