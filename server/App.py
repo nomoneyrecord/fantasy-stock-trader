@@ -79,7 +79,7 @@ def login():
     user = User.query.filter_by(email=email).first()
 
     if user and bcrypt.check_password_hash(user.password, password):
-        access_token = create_access_token(identity={'email': email}, expires_delta=timedelta(minutes=1))
+        access_token = create_access_token(identity={'email': email}, expires_delta=timedelta(minutes=15))
         return jsonify(access_token=access_token, user_id=user.id), 200
 
     return jsonify({'msg': 'Please use valid email and password'}), 401
@@ -152,6 +152,24 @@ def get_current_stock_price(symbol):
     else:
         print(f"API call failed with status code {response.status_code} for symbol {symbol}")
     return None
+
+@app.route('/api/stock_price', methods=['GET'])
+@jwt_required()
+def stock_price():
+    symbol = request.args.get('symbol', None)
+    if not symbol:
+        return jsonify({'msg': 'Stock symbol is required'}), 400
+
+    try:
+        price = get_current_stock_price(symbol)
+        if price is not None:
+            return jsonify({'currentPrice': price}), 200
+        else:
+            return jsonify({'msg': 'Failed to fetch stock price'}), 500
+    except Exception as e:
+        print(f"Error fetching price for symbol {symbol}: {e}")
+        return jsonify({'msg': 'Internal server error'}), 500
+
 
 
 

@@ -15,12 +15,34 @@ const TradePage = () => {
   const [sellQuantity, setSellQuantity] = useState(0);
 
   useEffect(() => {
+    // Fetch user's stock holdings on component load
+    const fetchHoldings = async () => {
+      const response = await fetch('http://localhost:5000/api/holdings', {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      if (response.ok) {
+        const holdingsData = await response.json();
+        // Update searchResults to include holdings info
+        setSearchResults(prevResults =>
+          prevResults.map(stock => ({
+            ...stock,
+            ownedQuantity: holdingsData.find(holding => holding.symbol === stock.symbol)?.quantity || 0
+          }))
+        );
+      }
+    };
+
+    fetchHoldings().catch(console.error);
+  }, [/* dependencies if any */]);
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       navigate("/");
     }
   }, [navigate]);
 
+  
   const handleError = useCallback(
     (error) => {
       if (error.message === "401") {
@@ -76,10 +98,32 @@ const TradePage = () => {
     setSelectedStock(stock);
     setShowBuyModal(true);
   };
+
   const openSellModal = (stock) => {
-    setSelectedStock(stock);
-    setShowSellModal(true);
+    fetch(`http://localhost:5000/api/stock_price?symbol=${stock.symbol}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch current stock price');
+      }
+      return response.json();
+    })
+    .then(data => {
+      setSelectedStock({ ...stock, price: data.currentPrice, ownedQuantity: stock.ownedQuantity });
+      setShowSellModal(true);
+    })
+    .catch(error => {
+      console.error('Error fetching current price:', error);
+      alert('An error occurred while fetching current stock price');
+    });
   };
+  
+  
+
+
 
   const handleBuyChange = (e) => {
     setBuyQuantity(Number(e.target.value));
@@ -153,33 +197,27 @@ const TradePage = () => {
   };
 
   const confirmSale = () => {
-    fetch("http://localhost:5000/api/sell_stock", {
-      method: "POST",
+    fetch('http://localhost:5000/api/sell_stock', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({
         symbol: selectedStock.symbol,
         quantity: sellQuantity,
-        price: selectedStock.price,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Sale failed");
-        }
-        return response.json();
+        price: selectedStock.price
       })
-      .then((data) => {
+    })
+    .then(handleResponse)
+    .then(data => {
         alert(data.msg);
         setShowSellModal(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("An error occured while selling stock");
-      });
-  };
+        // Optionally, refresh account and holdings data here
+    })
+    .catch(handleError);
+};
+
 
   return (
     <div>
@@ -220,8 +258,8 @@ const TradePage = () => {
       {showSellModal && (
         <Modal show={showSellModal} onClose={() => setShowSellModal(false)}>
           <h2>Sell {selectedStock?.symbol}</h2>
-          <p>Price: {/* Display current price here */}</p>
-          <p>Owned Shares: {/* Display owned shares here */}</p>
+          <p>Price: {selectedStock?.price}</p>
+          <p>Owned Shares: {selectedStock?.ownedQuantity}</p>
           <InputField
             type="number"
             name="sellQuantity"
