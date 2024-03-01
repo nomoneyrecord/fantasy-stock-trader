@@ -120,7 +120,7 @@ def account():
 def search_stocks():
     search_query = request.args.get('query', '')
     if not search_query:
-        return jsonify({'msh': 'No search query provided'}), 400
+        return jsonify({'msg': 'No search query provided'}), 400
 
     api_key = os.getenv('REACT_APP_API_KEY')
     api_url = f"https://financialmodelingprep.com/api/v3/stock/list?apikey={api_key}"
@@ -131,12 +131,19 @@ def search_stocks():
 
     stocks = response.json()
     filtered_stocks = [
-        stock for stock in stocks 
+        {
+            'symbol': stock['symbol'],
+            'name': stock['name'],
+            'price': stock['price'],
+            'exchange': stock.get('exchange', 'N/A')  # 'N/A' as a default value if 'exchange' is not present
+        }
+        for stock in stocks 
         if (stock['symbol'] and search_query.lower() in stock['symbol'].lower())
         or (stock['name'] and search_query.lower() in stock['name'].lower())
     ]
 
     return jsonify(filtered_stocks), 200
+
 
 def get_current_stock_price(symbol):
     api_key = os.getenv('REACT_APP_API_KEY')
