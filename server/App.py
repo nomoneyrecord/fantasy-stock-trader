@@ -144,22 +144,6 @@ def search_stocks():
 
     return jsonify(filtered_stocks), 200
 
-
-def get_current_stock_price(symbol):
-    api_key = os.getenv('REACT_APP_API_KEY')
-    api_url = f"https://financialmodelingprep.com/api/v3/quote/{symbol}?apikey={api_key}"
-    response = requests.get(api_url)
-    if response.status_code == 200:
-        data = response.json()
-        if data and 'price' in data[0]:
-            print(f"Current price of {symbol}: {data[0]['price']}")
-            return data[0]['price']
-        else:
-            print(f"Data or 'price' key missing in response for {symbol}: {data}")
-    else:
-        print(f"API call failed with status code {response.status_code} for symbol {symbol}")
-    return None
-
 @app.route('/api/stock_price', methods=['GET'])
 @jwt_required()
 def stock_price():
@@ -168,14 +152,22 @@ def stock_price():
         return jsonify({'msg': 'Stock symbol is required'}), 400
 
     try:
-        price = get_current_stock_price(symbol)
-        if price is not None:
-            return jsonify({'currentPrice': price}), 200
+        # Call your updated stock search endpoint
+        response = requests.get(f"http://localhost:5000/api/search_stocks?query={symbol}")
+        if response.status_code == 200:
+            data = response.json()
+            # Filter out the specific stock data
+            stock_data = next((item for item in data if item['symbol'] == symbol), None)
+            if stock_data:
+                return jsonify({'currentPrice': stock_data['price']}), 200
+            else:
+                return jsonify({'msg': 'Stock not found'}), 404
         else:
-            return jsonify({'msg': 'Failed to fetch stock price'}), 500
+            return jsonify({'msg': 'Failed to fetch stock data'}), response.status_code
     except Exception as e:
         print(f"Error fetching price for symbol {symbol}: {e}")
         return jsonify({'msg': 'Internal server error'}), 500
+
 
 
 
