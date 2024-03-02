@@ -117,8 +117,8 @@ def account():
 
 @app.route('/api/search_stocks', methods=['GET'])
 @jwt_required()
-def search_stocks():
-    search_query = request.args.get('query', '')
+def search_stocks(query=None):
+    search_query = query if query is not None else request.args.get('query', '')
     if not search_query:
         return jsonify({'msg': 'No search query provided'}), 400
 
@@ -152,25 +152,22 @@ def stock_price():
         return jsonify({'msg': 'Stock symbol is required'}), 400
 
     try:
-        # Call your updated stock search endpoint
-        response = requests.get(f"http://localhost:5000/api/search_stocks?query={symbol}")
-        if response.status_code == 200:
-            data = response.json()
-            # Filter out the specific stock data
-            stock_data = next((item for item in data if item['symbol'] == symbol), None)
-            if stock_data:
-                return jsonify({'currentPrice': stock_data['price']}), 200
-            else:
-                return jsonify({'msg': 'Stock not found'}), 404
+        # Call 'search_stocks' directly and get the JSON response
+        search_response, status_code = search_stocks(symbol)
+        if status_code != 200:
+            return search_response
+
+        stocks = search_response.get_json()
+
+        # Filter out the specific stock data
+        stock_data = next((item for item in stocks if item['symbol'] == symbol), None)
+        if stock_data:
+            return jsonify({'currentPrice': stock_data['price']}), 200
         else:
-            return jsonify({'msg': 'Failed to fetch stock data'}), response.status_code
+            return jsonify({'msg': 'Stock not found'}), 404
     except Exception as e:
         print(f"Error fetching price for symbol {symbol}: {e}")
         return jsonify({'msg': 'Internal server error'}), 500
-
-
-
-
 
 @app.route('/api/holdings', methods=['GET'])
 @jwt_required()
