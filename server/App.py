@@ -115,29 +115,35 @@ def account():
         print("user not found for email:", current_user('email'))
         return jsonify({'msg': 'User not found'}), 404
 
+def fetch_all_stock_data():
+    api_key = os.getenv('REACT_APP_API_KEY')
+    api_url = f"https://financialmodelingprep.com/api/v3/stock/list?apikey={api_key}"
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Failed to fetch stock data from external API")
+        return None
+
 @app.route('/api/search_stocks', methods=['GET'])
 @jwt_required()
-def search_stocks(query=None):
-    search_query = query if query is not None else request.args.get('query', '')
+def search_stocks():
+    search_query = request.args.get('query', '')
     if not search_query:
         return jsonify({'msg': 'No search query provided'}), 400
 
-    api_key = os.getenv('REACT_APP_API_KEY')
-    api_url = f"https://financialmodelingprep.com/api/v3/stock/list?apikey={api_key}"
+    all_stocks_data = fetch_all_stock_data()
+    if all_stocks_data is None:
+        return jsonify({'msg': 'Failed to fetch stock data'}), 500
 
-    response = requests.get(api_url)
-    if response.status_code != 200: 
-        return jsonify({'msg': 'Failed to fetch stock data'}), response.status_code
-
-    stocks = response.json()
     filtered_stocks = [
         {
             'symbol': stock['symbol'],
             'name': stock['name'],
             'price': stock['price'],
-            'exchange': stock.get('exchange', 'N/A')  # 'N/A' as a default value if 'exchange' is not present
+            'exchange': stock.get('exchange', 'N/A')
         }
-        for stock in stocks 
+        for stock in all_stocks_data 
         if (stock['symbol'] and search_query.lower() in stock['symbol'].lower())
         or (stock['name'] and search_query.lower() in stock['name'].lower())
     ]
@@ -151,23 +157,16 @@ def stock_price():
     if not symbol:
         return jsonify({'msg': 'Stock symbol is required'}), 400
 
-    try:
-        # Call 'search_stocks' directly and get the JSON response
-        search_response, status_code = search_stocks(symbol)
-        if status_code != 200:
-            return search_response
+    all_stocks_data = fetch_all_stock_data()
+    if all_stocks_data is None:
+        return jsonify({'msg': 'Failed to fetch stock data'}), 500
 
-        stocks = search_response.get_json()
+    stock_data = next((item for item in all_stocks_data if item['symbol'] == symbol), None)
+    if stock_data:
+        return jsonify({'currentPrice': stock_data['price']}), 200
+    else:
+        return jsonify({'msg': 'Stock not found'}), 404
 
-        # Filter out the specific stock data
-        stock_data = next((item for item in stocks if item['symbol'] == symbol), None)
-        if stock_data:
-            return jsonify({'currentPrice': stock_data['price']}), 200
-        else:
-            return jsonify({'msg': 'Stock not found'}), 404
-    except Exception as e:
-        print(f"Error fetching price for symbol {symbol}: {e}")
-        return jsonify({'msg': 'Internal server error'}), 500
 
 @app.route('/api/holdings', methods=['GET'])
 @jwt_required()
@@ -176,16 +175,17 @@ def holdings():
     user = User.query.filter_by(email=current_user['email']).first()
 
     if user:
-        holdings = StockHoldings.query.filter_by(user_id=user.id).all()
+        all_stocks_data = fetch_all_stock_data()
+        if all_stocks_data is None:
+            return jsonify({'msg': 'Failed to fetch stock data'}), 500
+
+        user_holdings = StockHoldings.query.filter_by(user_id=user.id).all()
         holdings_data = []
 
-        for holding in holdings:
-            # Fetch current stock price (Assuming you have a way to get the current price)
-            current_price = get_current_stock_price(holding.symbol)  # Implement this function
-            if current_price is not None:
-                currentValue = current_price * holding.quantity
-            else:
-                currentValue = 0
+        for holding in user_holdings:
+            stock_data = next((item for item in all_stocks_data if item['symbol'] == holding.symbol), None)
+            current_price = stock_data['price'] if stock_data else 0
+            currentValue = current_price * holding.quantity
 
             holdings_data.append({
                 'symbol': holding.symbol,
@@ -194,8 +194,10 @@ def holdings():
             })
 
         return jsonify(holdings_data), 200
+    else:
+        return jsonify({'msg': 'User not found'}), 404
 
-    return jsonify({'msg': 'User not found'}), 404
+
 
 
 
@@ -252,11 +254,13 @@ def sell_stock():
     stock_price = float(data['price'])
 
     existing_holding = StockHoldings.query.filter_by(user_id=user.id, symbol=stock_symbol).first()
+    
     if not existing_holding or existing_holding.quantity < quantity:
         return jsonify({'msg': 'Insufficient stock holdings'}), 400
 
     total_revenue = stock_price * quantity
     existing_holding.quantity -= quantity
+
     if existing_holding.quantity == 0:
         db.session.delete(existing_holding)
 
