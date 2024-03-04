@@ -264,8 +264,13 @@ def sell_stock():
     if existing_holding.quantity == 0:
         db.session.delete(existing_holding)
 
-    user.account.balance += total_revenue
+    # Access the user's account assuming they have only one account
+    user_account = user.account[0]
+    user_account.balance += total_revenue
     db.session.commit()
+
+    return jsonify({'msg': 'Stock sold successfully', 'new_balance': user_account.balance}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
