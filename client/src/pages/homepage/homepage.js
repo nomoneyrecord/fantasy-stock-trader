@@ -57,7 +57,7 @@ const HomePage = () => {
       }
     })
     .then(handleResponse)
-    .then(data => setAccountData(prevData => ({ ...prevData, accountBalance: data.balance })))
+    .then(data => setAccountData(prevData => ({ ...prevData, accountBalance: data.balance.toFixed(2) })))
     .catch(handleError);
 
     // Fetch stock holdings
@@ -78,13 +78,16 @@ const HomePage = () => {
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
-      <p>Account Balance: {accountData.accountBalance.toFixed(2)}</p>
+      <p>Account Balance: {accountData.accountBalance}</p>
       <p>Total Value of Stocks: {accountData.totalStockValue.toFixed(2)}</p>
       <h2>Your Stock Holdings</h2>
       <ul>
         {accountData.stockHoldings.map((holding, index) => (
           <li key={index}>
-            Symbol: {holding.symbol}, Quantity: {holding.quantity}
+            Symbol: {holding.symbol}, 
+            Price: ${(holding.currentValue / holding.quantity).toFixed(2)}, 
+            Quantity: {holding.quantity},
+            Total Value: ${(holding.currentValue).toFixed(2)}
           </li>
         ))}
       </ul>

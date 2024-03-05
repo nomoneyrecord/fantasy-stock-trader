@@ -13,27 +13,30 @@ const TradePage = () => {
   const [selectedStock, setSelectedStock] = useState(null);
   const [buyQuantity, setBuyQuantity] = useState(0);
   const [sellQuantity, setSellQuantity] = useState(0);
+  const [userHoldings, setUserHoldings] = useState([]);
 
-  useEffect(() => {
-    // Fetch user's stock holdings on component load
+  
+
     const fetchHoldings = async () => {
-      const response = await fetch('http://localhost:5000/api/holdings', {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-      });
-      if (response.ok) {
+      try {
+        const response = await fetch('http://localhost:5000/api/holdings', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user holdings');
+        }
         const holdingsData = await response.json();
-        // Update searchResults to include holdings info
-        setSearchResults(prevResults =>
-          prevResults.map(stock => ({
-            ...stock,
-            ownedQuantity: holdingsData.find(holding => holding.symbol === stock.symbol)?.quantity || 0
-          }))
-        );
+        setUserHoldings(holdingsData);
+      } catch (error) {
+        console.error('Error fetching user holdings:', error);
       }
     };
-
-    fetchHoldings().catch(console.error);
-  }, [/* dependencies if any */]);
+  
+    useEffect(() => {
+      fetchHoldings();
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -95,36 +98,19 @@ const TradePage = () => {
   };
 
   const openBuyModal = (stock) => {
-    setSelectedStock(stock);
+    // Find owned quantity from userHoldings
+    const ownedQuantity = userHoldings.find(holding => holding.symbol === stock.symbol)?.quantity || 0;
+    setSelectedStock({ ...stock, ownedQuantity });
     setShowBuyModal(true);
   };
-
+  
   const openSellModal = (stock) => {
-    fetch(`http://localhost:5000/api/stock_price?symbol=${stock.symbol}`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch current stock price');
-      }
-      return response.json();
-    })
-    .then(data => {
-      setSelectedStock({ ...stock, price: data.currentPrice, ownedQuantity: stock.ownedQuantity });
-      setShowSellModal(true);
-    })
-    .catch(error => {
-      console.error('Error fetching current price:', error);
-      alert('An error occurred while fetching current stock price');
-    });
+    // Find owned quantity from userHoldings
+    const ownedQuantity = userHoldings.find(holding => holding.symbol === stock.symbol)?.quantity || 0;
+    setSelectedStock({ ...stock, ownedQuantity });
+    setShowSellModal(true);
   };
   
-  
-
-
-
   const handleBuyChange = (e) => {
     setBuyQuantity(Number(e.target.value));
   };
@@ -158,7 +144,7 @@ const TradePage = () => {
         console.log("Total Cost:", totalCost);
 
         if (totalCost > userAccountBalance) {
-          alert("Insufficient funds to complete the purchase.");
+          alert("Insufficient funds to complete the transaction.");
           return;
         }
 
@@ -183,7 +169,7 @@ const TradePage = () => {
           .then((data) => {
             alert(data.msg);
             setShowBuyModal(false);
-            // Optionally, refresh account and holdings data here
+            fetchHoldings();
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -211,12 +197,18 @@ const TradePage = () => {
     })
     .then(handleResponse)
     .then(data => {
-        alert(data.msg);
-        setShowSellModal(false);
-        // Optionally, refresh account and holdings data here
+      alert(data.msg);
+      setShowSellModal(false);
+  
+      fetchHoldings();
     })
-    .catch(handleError);
-};
+    .catch(error => {
+      console.error("Error:", error);
+      alert(error.message);
+    });
+  };
+  
+  
 
 
   return (
@@ -244,6 +236,7 @@ const TradePage = () => {
         <Modal show={showBuyModal} onClose={() => setShowBuyModal(false)}>
           <h2>Buy {selectedStock?.symbol}</h2>
           <p>Price: {selectedStock?.price}</p>
+          <p>Owned Shares: {selectedStock?.ownedQuantity}</p>
           <InputField
             type="number"
             name="buyQuantity"
