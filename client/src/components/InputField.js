@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const InputField = ({ type, name, value, onChange, placeholder, required}) => {
+const InputField = ({ type, name, value, onChange, placeholder, required, min}) => {
   return (
     <input
       type={type}
@@ -11,6 +11,7 @@ const InputField = ({ type, name, value, onChange, placeholder, required}) => {
       placeholder={placeholder}
       required={required}
       className="form-control"
+      min={min}
     />
   );
 };
@@ -21,7 +22,8 @@ InputField.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  min: PropTypes.string
 };
 
 export default InputField; 

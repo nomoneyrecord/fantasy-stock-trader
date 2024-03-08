@@ -4,6 +4,8 @@ import AuthPage from './pages/authpage/authpage';
 import HomePage from './pages/homepage/homepage';
 import TradePage from './pages/tradepage/tradepage';
 import Navbar from './components/Navbar';
+import './App.css';
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));

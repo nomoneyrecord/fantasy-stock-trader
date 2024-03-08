@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import Backdrop from "../../components/Backdrop";
+
 
 const TradePage = () => {
   const navigate = useNavigate();
@@ -14,7 +16,6 @@ const TradePage = () => {
   const [buyQuantity, setBuyQuantity] = useState(0);
   const [sellQuantity, setSellQuantity] = useState(0);
   const [userHoldings, setUserHoldings] = useState([]);
-
 
   const fetchHoldings = async () => {
     try {
@@ -43,6 +44,21 @@ const TradePage = () => {
       navigate("/");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    const body = document.body;
+    const hasModalOpen = showBuyModal || showSellModal;
+
+    if (hasModalOpen) {
+      body.style.overflow = "hidden";
+    } else {
+      body.style.overflow = "auto";
+    }
+
+    return () => {
+      body.style.overflow = "auto";
+    };
+  }, [showBuyModal, showSellModal]);
 
   const handleError = useCallback(
     (error) => {
@@ -96,24 +112,28 @@ const TradePage = () => {
   };
 
   const openBuyModal = (stock) => {
-  // Close sell modal if open
-  setShowSellModal(false);
+    // Close sell modal if open
+    setShowSellModal(false);
 
-  // Find owned quantity and open buy modal
-  const ownedQuantity = userHoldings.find(holding => holding.symbol === stock.symbol)?.quantity || 0;
-  setSelectedStock({ ...stock, ownedQuantity });
-  setShowBuyModal(true);
-};
+    // Find owned quantity and open buy modal
+    const ownedQuantity =
+      userHoldings.find((holding) => holding.symbol === stock.symbol)
+        ?.quantity || 0;
+    setSelectedStock({ ...stock, ownedQuantity });
+    setShowBuyModal(true);
+  };
 
-const openSellModal = (stock) => {
-  // Close buy modal if open
-  setShowBuyModal(false);
+  const openSellModal = (stock) => {
+    // Close buy modal if open
+    setShowBuyModal(false);
 
-  // Find owned quantity and open sell modal
-  const ownedQuantity = userHoldings.find(holding => holding.symbol === stock.symbol)?.quantity || 0;
-  setSelectedStock({ ...stock, ownedQuantity });
-  setShowSellModal(true);
-};
+    // Find owned quantity and open sell modal
+    const ownedQuantity =
+      userHoldings.find((holding) => holding.symbol === stock.symbol)
+        ?.quantity || 0;
+    setSelectedStock({ ...stock, ownedQuantity });
+    setShowSellModal(true);
+  };
 
   const handleBuyChange = (e) => {
     setBuyQuantity(Number(e.target.value));
@@ -127,6 +147,11 @@ const openSellModal = (stock) => {
     const quantityNumber = Number(buyQuantity);
     console.log("Selected Stock:", selectedStock);
     console.log("Buy Quantity:", quantityNumber);
+
+    if(quantityNumber <= 0) {
+      alert("Please enter a quantity greater than 0");
+      return; 
+    }
 
     // Fetch user's current account balance
     fetch("http://localhost:5000/api/account", {
@@ -187,6 +212,13 @@ const openSellModal = (stock) => {
   };
 
   const confirmSale = () => {
+    const quantityNumber = Number(sellQuantity);
+
+    if (quantityNumber <= 0) {
+      alert("Please enter a quantity greater than 0");
+      return; 
+    }
+
     fetch("http://localhost:5000/api/sell_stock", {
       method: "POST",
       headers: {
@@ -212,26 +244,41 @@ const openSellModal = (stock) => {
       });
   };
 
+  const disableInteractionClass =
+    showBuyModal || showSellModal ? "disable-interaction" : "";
+
   return (
     <div>
-      <InputField
-        type="text"
-        name="searchSymbol"
-        value={searchSymbol}
-        onChange={(e) => setSearchSymbol(e.target.value)}
-        placeholder="Enter Stock Symbol"
-      />
-      <Button text="Search" onClick={handleSearch} />
+      {showBuyModal ||
+        (showSellModal && (
+          <Backdrop
+            onClick={() => {
+              setShowBuyModal(false);
+              setShowSellModal(false);
+            }}
+          />
+        ))}
 
-      {searchResults.map((stock) => (
-        <div key={stock.symbol}>
-          <p>
-            Symbol: {stock.symbol}, Name: {stock.name}
-          </p>
-          <Button text="Buy" onClick={() => openBuyModal(stock)} />
-          <Button text="Sell" onClick={() => openSellModal(stock)} />
-        </div>
-      ))}
+      <div className={disableInteractionClass}>
+        <InputField
+          type="text"
+          name="searchSymbol"
+          value={searchSymbol}
+          onChange={(e) => setSearchSymbol(e.target.value)}
+          placeholder="Enter Stock Symbol"
+        />
+        <Button text="Search" onClick={handleSearch} />
+
+        {searchResults.map((stock) => (
+          <div key={stock.symbol}>
+            <p>
+              Symbol: {stock.symbol}, Name: {stock.name}
+            </p>
+            <Button text="Buy" onClick={() => openBuyModal(stock)} />
+            <Button text="Sell" onClick={() => openSellModal(stock)} />
+          </div>
+        ))}
+      </div>
 
       {showBuyModal && (
         <Modal show={showBuyModal} onClose={() => setShowBuyModal(false)}>
@@ -244,6 +291,7 @@ const openSellModal = (stock) => {
             value={buyQuantity.toString()}
             onChange={handleBuyChange}
             placeholder="Enter quantity"
+            min="0"
           />
           <Button text="Confirm Purchase" onClick={confirmPurchase} />
         </Modal>
@@ -260,7 +308,7 @@ const openSellModal = (stock) => {
             value={sellQuantity.toString()}
             onChange={handleSellChange}
             placeholder="Enter quantity"
-            // Add change handler
+            min="0"
           />
           <Button text="Confirm Sale" onClick={confirmSale} />
         </Modal>

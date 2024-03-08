@@ -3,6 +3,7 @@ import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
 import { useNavigate } from 'react-router-dom';
+import Backdrop from "../../components/Backdrop";
 
 const AuthPage = (props) => {
   const [email, setEmail] = useState("");
@@ -117,26 +118,31 @@ const AuthPage = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleLogin}>
-        <InputField
-          type="text"
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-          placeholder="Email"
-          required={true}
-        />
-        <InputField
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePasswordChange}
-          placeholder="Password"
-          required={true}
-        />
-        <Button text="Login" type="submit" />
-        <Button text="Sign Up" onClick={handleModalOpen} type="button" />
-      </form>
+      {modalOpen && <Backdrop onClick={handleModalClose} />}
+  
+      {!modalOpen && (
+        <form onSubmit={handleLogin}>
+          <InputField
+            type="text"
+            name="email"
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="Email"
+            required={true}
+          />
+          <InputField
+            type="password"
+            name="password"
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder="Password"
+            required={true}
+          />
+          <Button text="Login" type="submit" />
+          <Button text="Sign Up" onClick={handleModalOpen} type="button" />
+        </form>
+      )}
+  
       <Modal show={modalOpen} onClose={handleModalClose}>
         <form onSubmit={handleSignUpSubmit}>
           <InputField
@@ -160,6 +166,7 @@ const AuthPage = (props) => {
           {successMessage && <div className="success-message">{successMessage}</div>}
         </form>
       </Modal>
+  
       {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );

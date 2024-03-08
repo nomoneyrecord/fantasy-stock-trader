@@ -18,3 +18,5 @@ const Backdrop = ({ show, onClick }) => {
     />
   );
 };
+
+export default Backdrop; 
