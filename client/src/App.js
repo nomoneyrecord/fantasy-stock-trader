@@ -4,8 +4,6 @@ import AuthPage from './pages/authpage/authpage';
 import HomePage from './pages/homepage/homepage';
 import TradePage from './pages/tradepage/tradepage';
 import Navbar from './components/Navbar';
-import './App.css';
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
@@ -19,12 +17,17 @@ function App() {
     setIsLoggedIn(true);
   };
 
+
+  const updateLoginStatus = (status) => {
+    setIsLoggedIn(status);
+  };
+
   return (
     <Router>
       {isLoggedIn && <Navbar onLogout={handleLogout} />}
       <Routes>
         <Route path="/" element={!isLoggedIn ? <AuthPage onLoginSuccess={handleLoginSuccess} /> : <Navigate replace to="/home" />} />
-        <Route path="/home" element={isLoggedIn ? <HomePage /> : <Navigate replace to="/" />} />
+        <Route path="/home" element={isLoggedIn ? <HomePage onLogout={() => updateLoginStatus(false)}/> : <Navigate replace to="/" />} />
         <Route path="/trade" element={isLoggedIn ? <TradePage /> : <Navigate replace to="/" />} />
       </Routes>
     </Router>
