@@ -79,7 +79,7 @@ def login():
     user = User.query.filter_by(email=email).first()
 
     if user and bcrypt.check_password_hash(user.password, password):
-        access_token = create_access_token(identity={'email': email}, expires_delta=timedelta(seconds=10))
+        access_token = create_access_token(identity={'email': email}, expires_delta=timedelta(seconds=60))
         return jsonify(access_token=access_token, user_id=user.id), 200
 
     return jsonify({'msg': 'Please use valid email and password'}), 401

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
 import { useNavigate } from 'react-router-dom';
 import Backdrop from "../../components/Backdrop";
 
-const AuthPage = (props) => {
+const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
@@ -14,6 +14,12 @@ const AuthPage = (props) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [emailError, setEmailError] = useState("");
+
+  useEffect(() => {
+    if (sessionExpired) {
+      alert("Your session has expired, please log in again.")
+    }
+  }, [sessionExpired]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -44,7 +50,7 @@ const AuthPage = (props) => {
       }
       const data = await response.json();
       localStorage.setItem('token', data.access_token);
-      props.onLoginSuccess();  // <-- Update the state in App.js
+      onLoginSuccess();  // <-- Update the state in App.js
       navigate('/home');
     } catch (error) {
       setErrorMessage(error.message);

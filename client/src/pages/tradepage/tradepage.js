@@ -18,9 +18,7 @@ const TradePage = () => {
   const [userHoldings, setUserHoldings] = useState([]);
 
   const fetchHoldings = async () => {
-    console.log("Starting fetchHoldings");
     try {
-      console.log("Fetching user holdings");
       const response = await fetch("http://localhost:5000/api/holdings", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -30,9 +28,7 @@ const TradePage = () => {
         throw new Error("Failed to fetch user holdings");
       }
       const holdingsData = await response.json();
-      console.log("Successfully fetched user holdings", holdingsData);
       setUserHoldings(holdingsData);
-      console.log("Successfully fetched user holdings", holdingsData);
     } catch (error) {
       console.error("Error fetching user holdings:", error);
     }
@@ -43,10 +39,8 @@ const TradePage = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Checking token in TradePage");
     const token = localStorage.getItem("token");
     if (!token) {
-      console.log("No token found, nabigating to login")
       navigate("/");
     }
   }, [navigate]);
@@ -93,7 +87,6 @@ const TradePage = () => {
   }, []);
 
   const handleSearch = () => {
-    console.log("Handle search called with symbol:", searchSymbol);
     const searchQuery = searchSymbol.trim();
     if (!searchQuery) {
       alert("Please enter a stock symbol or name");
@@ -108,7 +101,6 @@ const TradePage = () => {
     })
       .then(handleResponse)
       .then((data) => {
-        console.log("Search results:", data);
         if (data.length === 0) {
           alert("No stock found with that symbol or name");
           setSearchResults([]);
@@ -120,7 +112,6 @@ const TradePage = () => {
   };
 
   const openBuyModal = (stock) => {
-    console.log("Opening buy modal for stock:", stock.symbol);
     // Close sell modal if open
     setShowSellModal(false);
 
@@ -133,7 +124,6 @@ const TradePage = () => {
   };
 
   const openSellModal = (stock) => {
-    console.log("Opening sell modal for stokc:", stock.symbol);
     // Close buy modal if open
     setShowBuyModal(false);
 
@@ -154,7 +144,6 @@ const TradePage = () => {
   };
 
   const confirmPurchase = () => {
-    console.log("Confirming purchase");
     const quantityNumber = Number(buyQuantity);
     console.log("Selected Stock:", selectedStock);
     console.log("Buy Quantity:", quantityNumber);
@@ -223,7 +212,6 @@ const TradePage = () => {
   };
 
   const confirmSale = () => {
-    console.log("Confirming sale");
     const quantityNumber = Number(sellQuantity);
 
     if (quantityNumber <= 0) {

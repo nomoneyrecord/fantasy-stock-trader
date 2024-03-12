@@ -1,80 +1,80 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from "jwt-decode"; // Ensure you have installed jwt-decode
 
-const HomePage = ({ onLogout }) => {
+const HomePage = () => {
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState({
     accountBalance: '',
     stockHoldings: [],
-    totalStockValue: 0,
+    totalStockValue: 0
   });
 
-  // Function to check if the token is valid
-  const isTokenValid = (token) => {
-    try {
-      const decoded = jwtDecode(token);
-      return decoded.exp > Date.now() / 1000;
-    } catch (error) {
-      return false;
-    }
-  };
-
-  const fetchData = useCallback(async () => {
-    const token = localStorage.getItem('token');
-    if (!token || !isTokenValid(token)) {
-      console.log("Invalid or no token, navigating to login");
-      localStorage.removeItem('token');
-      onLogout();
-      navigate('/');
-      return;
-    }
-
-    try {
-      console.log("Fetching account data");
-      const accountResponse = await fetch("http://localhost:5000/api/account", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (!accountResponse.ok) {
-        throw new Error("Session expired");
-      }
-      const accountData = await accountResponse.json();
-
-      console.log("Fetching holdings data");
-      const holdingsResponse = await fetch("http://localhost:5000/api/holdings", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (!holdingsResponse.ok) {
-        throw new Error("Session expired");
-      }
-      const holdingsData = await holdingsResponse.json();
-
-      const totalValue = holdingsData.reduce(
-        (acc, holding) => acc + holding.currentValue,
-        0
-      );
-
-      setAccountData({
-        accountBalance: accountData.balance.toFixed(2),
-        stockHoldings: holdingsData,
-        totalStockValue: totalValue,
-      });
-    } catch (error) {
-      console.error("Error occurred:", error);
-      if (error.message === "Session expired" || error.message === "Failed to fetch") {
+  const handleResponse = useCallback(response => {
+    console.log('API response received with status: ', response.status);
+    if (!response.ok) {
+      if (response.status === 401) {
         localStorage.removeItem('token');
-        onLogout();
+        alert('Session has expired, please log in again.')
         navigate('/');
+        return;
       }
+      throw new Error('Network response was not ok');
     }
-  }, [navigate, onLogout]);
+    return response.json();
+  }, [navigate]);
+
+  const handleError = useCallback((error) => {
+    console.error('Error occurred: ', error);
+    if (error.message === "401") {
+      // If the error message is "401", it indicates an unauthorized request
+      console.log('Handling 401 error, redirecting to login');
+      localStorage.removeItem('token'); // Clear the token from local storage
+      navigate('/'); // Redirect to the login page
+    } else {
+      // Handle other types of errors
+      console.error('Error:', error);
+      alert(`An error occurred: ${error.message}`);
+    }
+  }, [navigate]); // Make sure to include 'navigate' in the dependency array
+  
+  const calculateTotalStockValue = (holdings) => {
+    const totalValue = holdings.reduce((acc, holding) => acc + holding.currentValue, 0);
+    setAccountData(prevData => ({ ...prevData, totalStockValue: totalValue }));
+  }; 
 
   useEffect(() => {
-    console.log('useEffect triggered');
-    fetchData();
-  }, [fetchData]);
+    console.log('Checking token in HomePage useEffect');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/');
+      return; 
+    }
+
+    // Fetch account balance
+    fetch('http://localhost:5000/api/account', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(handleResponse)
+    .then(data => setAccountData(prevData => ({ ...prevData, accountBalance: data.balance.toFixed(2) })))
+    .catch(handleError);
+
+    // Fetch stock holdings
+    fetch('http://localhost:5000/api/holdings', {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(handleResponse)
+    .then(holdingsData => {
+      setAccountData(prevData => ({ ...prevData, stockHoldings: holdingsData }));
+      calculateTotalStockValue(holdingsData);
+    })
+    .catch(handleError);
+
+  }, [navigate, handleResponse, handleError]);
+
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
@@ -84,12 +84,15 @@ const HomePage = ({ onLogout }) => {
       <ul>
         {accountData.stockHoldings.map((holding, index) => (
           <li key={index}>
-            Symbol: {holding.symbol}, Price: ${(holding.currentValue / holding.quantity).toFixed(2)}, Quantity: {holding.quantity}, Total Value: ${holding.currentValue.toFixed(2)}
+            Symbol: {holding.symbol}, 
+            Price: ${(holding.currentValue / holding.quantity).toFixed(2)}, 
+            Quantity: {holding.quantity},
+            Total Value: ${(holding.currentValue).toFixed(2)}
           </li>
         ))}
       </ul>
     </div>
   );
-};
+}
 
 export default HomePage;
