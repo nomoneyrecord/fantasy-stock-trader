@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoadingAnimation from '../../components/LoadingAnimation';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [accountData, setAccountData] = useState({
     accountBalance: '',
     stockHoldings: [],
@@ -43,37 +45,42 @@ const HomePage = () => {
   }; 
 
   useEffect(() => {
-    console.log('Checking token in HomePage useEffect');
     const token = localStorage.getItem('token');
     if (!token) {
       navigate('/');
-      return; 
+      return;
     }
 
     // Fetch account balance
     fetch('http://localhost:5000/api/account', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(handleResponse)
-    .then(data => setAccountData(prevData => ({ ...prevData, accountBalance: data.balance.toFixed(2) })))
+    .then(data => {
+      setAccountData(prevData => ({ ...prevData, accountBalance: data.balance.toFixed(2) }));
+    })
     .catch(handleError);
 
     // Fetch stock holdings
     fetch('http://localhost:5000/api/holdings', {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: { 'Authorization': `Bearer ${token}` }
     })
     .then(handleResponse)
     .then(holdingsData => {
       setAccountData(prevData => ({ ...prevData, stockHoldings: holdingsData }));
-      calculateTotalStockValue(holdingsData);
+      calculateTotalStockValue(holdingsData);  // Call this function here
+      setIsLoading(false);  // Set loading to false after data is fetched
     })
-    .catch(handleError);
+    .catch(error => {
+      handleError(error);
+      setIsLoading(false);  // Set loading to false even if there is an error
+    });
 
   }, [navigate, handleResponse, handleError]);
+
+  if (isLoading) {
+    return <LoadingAnimation />; // Display loading animation while isLoading is true
+  }
 
   return (
     <div>

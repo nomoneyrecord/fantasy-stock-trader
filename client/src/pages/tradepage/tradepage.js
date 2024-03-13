@@ -4,6 +4,7 @@ import InputField from "../../components/InputField";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Backdrop from "../../components/Backdrop";
+import LoadingAnimation from "../../components/LoadingAnimation";
 
 
 const TradePage = () => {
@@ -16,6 +17,7 @@ const TradePage = () => {
   const [buyQuantity, setBuyQuantity] = useState(0);
   const [sellQuantity, setSellQuantity] = useState(0);
   const [userHoldings, setUserHoldings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchHoldings = async () => {
     try {
