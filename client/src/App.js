@@ -18,7 +18,7 @@ function App() {
 
     try {
       const decodedToken = jwtDecode(token);
-      return decodedToken.exp > Date.now() / 150000;
+      return decodedToken.exp > Date.now() / 1000;
     } catch (error) {
       return false;
     }
@@ -32,7 +32,7 @@ function App() {
         setIsLoggedIn(false);
         setSessionExpired(true);
       }
-    }, 60000);
+    }, 900000);
 
     return () => clearInterval(interval);
   }, [isLoggedIn]);

@@ -6,7 +6,6 @@ import Modal from "../../components/Modal";
 import Backdrop from "../../components/Backdrop";
 import LoadingAnimation from "../../components/LoadingAnimation";
 
-
 const TradePage = () => {
   const navigate = useNavigate();
   const [searchSymbol, setSearchSymbol] = useState("");
@@ -17,7 +16,7 @@ const TradePage = () => {
   const [buyQuantity, setBuyQuantity] = useState(0);
   const [sellQuantity, setSellQuantity] = useState(0);
   const [userHoldings, setUserHoldings] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchHoldings = async () => {
     try {
@@ -95,6 +94,8 @@ const TradePage = () => {
       return;
     }
 
+    setIsLoading(true);
+
     // Use your backend endpoint to search for stocks
     fetch(`http://localhost:5000/api/search_stocks?query=${searchQuery}`, {
       headers: {
@@ -110,7 +111,10 @@ const TradePage = () => {
           setSearchResults(data);
         }
       })
-      .catch(handleError);
+      .catch(handleError)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const openBuyModal = (stock) => {
@@ -150,9 +154,9 @@ const TradePage = () => {
     console.log("Selected Stock:", selectedStock);
     console.log("Buy Quantity:", quantityNumber);
 
-    if(quantityNumber <= 0) {
+    if (quantityNumber <= 0) {
       alert("Please enter a quantity greater than 0");
-      return; 
+      return;
     }
 
     // Fetch user's current account balance
@@ -218,7 +222,7 @@ const TradePage = () => {
 
     if (quantityNumber <= 0) {
       alert("Please enter a quantity greater than 0");
-      return; 
+      return;
     }
 
     fetch("http://localhost:5000/api/sell_stock", {
@@ -245,6 +249,10 @@ const TradePage = () => {
         alert(error.message);
       });
   };
+
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
 
   const disableInteractionClass =
     showBuyModal || showSellModal ? "disable-interaction" : "";
