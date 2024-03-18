@@ -5,6 +5,7 @@ import Modal from "../../components/Modal";
 import { useNavigate } from 'react-router-dom';
 import Backdrop from "../../components/Backdrop";
 
+
 const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

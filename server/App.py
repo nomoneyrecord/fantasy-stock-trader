@@ -38,6 +38,10 @@ class StockHoldings(db.Model):
 
 @app.route('/api/register', methods=['POST'])
 def register_user():
+    """
+    Fetches complete stock data from an external API. This centralized function is used to avoid multiple API calls across different routes.
+    Consider implementing caching to enhance performance as this data does not change frequently.
+    """
     try:
       new_user_data = request.get_json()
       print("Recieved data:", new_user_data)
