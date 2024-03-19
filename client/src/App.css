@@ -24,15 +24,31 @@
 }
 
 .form-container {
+  background-color: rgba(255, 255, 255, 0.8); 
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 200px;
 }
 
 .login-form {
-  /* Additional styling for the form elements */
+  width: 100%; /* Adjust as necessary */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Continue with styles for the modal, backdrop, and error message as needed */
+.login-button, .create-account-button {
+  margin-top: 10px;
+  width: 100%; /* Makes buttons full width of form */
+  /* Additional styling */
+}
+
+.or-text {
+  margin: 20px 0;
+  /* Styling for 'or' text */
+}
+
 

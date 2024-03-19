@@ -162,9 +162,10 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
               placeholder="Password"
               required={true}
             />
-            <Button text="Login" type="submit" />
+            <Button text="Login" type="submit" className="login-button" />
+            <div className="or-text" >or</div>
+            <Button text="Create Account" onClick={handleModalOpen} type="button" className="create-account-button"/>
           </form>
-          <Button text="Sign Up" onClick={handleModalOpen} type="button" />
         </div>
       )}
 
