@@ -4,6 +4,7 @@ import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
 import { useNavigate } from 'react-router-dom';
 import Backdrop from "../../components/Backdrop";
+import backgroundImage from "../../Images/backgroundImage.webp";
 
 
 const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
@@ -124,7 +125,12 @@ const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
   };
 
   return (
-    <div>
+    <div style={{ 
+      backgroundImage: `url(${backgroundImage})`, 
+      backgroundSize: 'cover', 
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      width: '100%' }}>
       {modalOpen && <Backdrop onClick={handleModalClose} />}
   
       {!modalOpen && (
