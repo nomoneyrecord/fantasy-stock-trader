@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Backdrop from "../../components/Backdrop";
 import backgroundImage from "../../Images/backgroundImage.webp";
 
-
-const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
+const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
@@ -19,41 +18,41 @@ const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
 
   useEffect(() => {
     if (sessionExpired) {
-      alert("Your session has expired, please log in again.")
+      alert("Your session has expired, please log in again.");
     }
   }, [sessionExpired]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return emailRegex.test(email); 
-  }
+    return emailRegex.test(email);
+  };
 
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    setErrorMessage('');
+    setErrorMessage("");
     setSuccessMessage("");
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       if (response.status === 401) {
-        throw new Error('Session expired. Please log in again.')
+        throw new Error("Session expired. Please log in again.");
       }
 
       if (!response.ok) {
-        throw new Error('Login failed');
+        throw new Error("Login failed");
       }
       const data = await response.json();
-      localStorage.setItem('token', data.access_token);
-      onLoginSuccess();  // <-- Update the state in App.js
-      navigate('/home');
+      localStorage.setItem("token", data.access_token);
+      onLoginSuccess(); // <-- Update the state in App.js
+      navigate("/home");
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -61,13 +60,12 @@ const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-    if(!validateEmail(event.target.value)) {
-      setEmailError('Invalid email format');
+    if (!validateEmail(event.target.value)) {
+      setEmailError("Invalid email format");
     } else {
-      setEmailError('');
+      setEmailError("");
     }
   };
-
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -83,27 +81,27 @@ const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
 
   const handleSignUpSubmit = async (event) => {
     event.preventDefault();
-    if(!validateEmail(signUpEmail)) {
-      setErrorMessage("Invalid email format")
-      return; 
+    if (!validateEmail(signUpEmail)) {
+      setErrorMessage("Invalid email format");
+      return;
     }
-    
+
     setErrorMessage("");
     setSuccessMessage("");
     try {
-      const response = await fetch('http://localhost:5000/api/register', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ signUpEmail, signUpPassword })
+        body: JSON.stringify({ signUpEmail, signUpPassword }),
       });
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Sign up failed');
+        throw new Error(errorData.message || "Sign up failed");
       }
-      setSuccessMessage('You\'ve successfully registered! Let\'s log in!')
-      setErrorMessage('');
+      setSuccessMessage("You've successfully registered! Let's log in!");
+      setErrorMessage("");
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -125,37 +123,51 @@ const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
   };
 
   return (
-    <div style={{ 
-      backgroundImage: `url(${backgroundImage})`, 
-      backgroundSize: 'cover', 
-      backgroundPosition: 'center',
-      minHeight: '100vh',
-      width: '100%' }}>
+    <div
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column", // Stack children vertically
+        justifyContent: "space-between", // Center children vertically
+        alignItems: "center", // Center children horizontally
+      }}
+    >
       {modalOpen && <Backdrop onClick={handleModalClose} />}
-  
+
+      <div className="description-container">
+        Welcome to StockLab! A simple stock trading simulator to test the basics
+        of buying and selling stocks with realtime market data.
+      </div>
+
       {!modalOpen && (
-        <form onSubmit={handleLogin}>
-          <InputField
-            type="text"
-            name="email"
-            value={email}
-            onChange={handleEmailChange}
-            placeholder="Email"
-            required={true}
-          />
-          <InputField
-            type="password"
-            name="password"
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="Password"
-            required={true}
-          />
-          <Button text="Login" type="submit" />
+        <div className="form-container">
+          <form onSubmit={handleLogin} className="login-form">
+            <InputField
+              type="text"
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+              placeholder="Email"
+              required={true}
+            />
+            <InputField
+              type="password"
+              name="password"
+              value={password}
+              onChange={handlePasswordChange}
+              placeholder="Password"
+              required={true}
+            />
+            <Button text="Login" type="submit" />
+          </form>
           <Button text="Sign Up" onClick={handleModalOpen} type="button" />
-        </form>
+        </div>
       )}
-  
+
       <Modal show={modalOpen} onClose={handleModalClose}>
         <form onSubmit={handleSignUpSubmit}>
           <InputField
@@ -166,7 +178,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
             placeholder="Email"
             required={true}
           />
-          {emailError && <div className='error'>{emailError}</div>}
+          {emailError && <div className="error">{emailError}</div>}
           <InputField
             type="password"
             name="Sign Up Password"
@@ -176,10 +188,12 @@ const AuthPage = ({ onLoginSuccess, sessionExpired}) => {
             required={true}
           />
           <Button text="Submit" type="submit" />
-          {successMessage && <div className="success-message">{successMessage}</div>}
+          {successMessage && (
+            <div className="success-message">{successMessage}</div>
+          )}
         </form>
       </Modal>
-  
+
       {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );

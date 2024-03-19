@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingAnimation from '../../components/LoadingAnimation';
+import backgroundImage from "../../Images/backgroundImage.webp";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -83,7 +84,13 @@ const HomePage = () => {
   }
 
   return (
-    <div>
+    <div style={{ 
+      backgroundImage: `url(${backgroundImage})`, 
+      backgroundSize: 'cover', 
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      width: '100%' }}>
+        
       <h1>Welcome to the Home Page</h1>
       <p>Account Balance: {accountData.accountBalance}</p>
       <p>Total Value of Stocks: {accountData.totalStockValue.toFixed(2)}</p>
