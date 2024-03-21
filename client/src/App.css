@@ -24,13 +24,28 @@
 }
 
 .form-container {
-  background-color: rgba(255, 255, 255, 0.8); 
+  background-color: rgba(0, 0, 0, 0.8); 
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 300px;
+  height: 300px;
+  margin-bottom: 350px;
+}
+
+.form-control {
+  margin-bottom: 15px; /* Space between fields */
+  background-color: #5e5858; /* Background color */
+  width: 290px; 
+  height: 20px;
+}
+
+::placeholder {
+  color:rgb(202, 187, 118);
+  font-size: 16px;
 }
 
 .login-form {
@@ -38,17 +53,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 40px; 
 }
 
 .login-button, .create-account-button {
   margin-top: 10px;
   width: 100%; /* Makes buttons full width of form */
-  /* Additional styling */
+  height: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color:rgb(202, 187, 118);
+  background-color: rgb(25, 24, 24);
+  
 }
 
 .or-text {
   margin: 20px 0;
+  color:rgb(202, 187, 118);
+  font-size: 20px;
+  font-weight: 600;
   /* Styling for 'or' text */
 }
+
+
 
 

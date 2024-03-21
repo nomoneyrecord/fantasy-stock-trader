@@ -170,7 +170,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
       )}
 
       <Modal show={modalOpen} onClose={handleModalClose}>
-        <form onSubmit={handleSignUpSubmit}>
+        <form onSubmit={handleSignUpSubmit} className="login-form">
           <InputField
             type="text"
             name="Sign Up Email"
