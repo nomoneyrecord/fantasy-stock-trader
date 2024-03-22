@@ -48,7 +48,7 @@
   font-size: 16px;
 }
 
-.login-form {
+.auth-form {
   width: 100%; /* Adjust as necessary */
   display: flex;
   flex-direction: column;
@@ -74,6 +74,15 @@
   font-size: 20px;
   font-weight: 600;
   /* Styling for 'or' text */
+}
+
+.modal-close-button {
+  background-color: rgba(0, 0, 0, 0.8); 
+  margin-top: 10px;
+  color:rgb(202, 187, 118);
+  border: 0;
+  font-size: 22px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 

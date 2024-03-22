@@ -145,7 +145,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
 
       {!modalOpen && (
         <div className="form-container">
-          <form onSubmit={handleLogin} className="login-form">
+          <form onSubmit={handleLogin} className="auth-form">
             <InputField
               type="text"
               name="email"
@@ -163,36 +163,43 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
               required={true}
             />
             <Button text="Login" type="submit" className="login-button" />
-            <div className="or-text" >or</div>
-            <Button text="Create Account" onClick={handleModalOpen} type="button" className="create-account-button"/>
+            <div className="or-text">or</div>
+            <Button
+              text="Create Account"
+              onClick={handleModalOpen}
+              type="button"
+              className="create-account-button"
+            />
           </form>
         </div>
       )}
 
       <Modal show={modalOpen} onClose={handleModalClose}>
-        <form onSubmit={handleSignUpSubmit} className="login-form">
-          <InputField
-            type="text"
-            name="Sign Up Email"
-            value={signUpEmail}
-            onChange={handleSignUpEmailChange}
-            placeholder="Email"
-            required={true}
-          />
-          {emailError && <div className="error">{emailError}</div>}
-          <InputField
-            type="password"
-            name="Sign Up Password"
-            value={signUpPassword}
-            onChange={handleSignUpPasswordChange}
-            placeholder="Password"
-            required={true}
-          />
-          <Button text="Submit" type="submit" />
-          {successMessage && (
-            <div className="success-message">{successMessage}</div>
-          )}
-        </form>
+        <div className="form-container">
+          <form onSubmit={handleSignUpSubmit} className="auth-form">
+            <InputField
+              type="text"
+              name="Sign Up Email"
+              value={signUpEmail}
+              onChange={handleSignUpEmailChange}
+              placeholder="Email"
+              required={true}
+            />
+            {emailError && <div className="error">{emailError}</div>}
+            <InputField
+              type="password"
+              name="Sign Up Password"
+              value={signUpPassword}
+              onChange={handleSignUpPasswordChange}
+              placeholder="Password"
+              required={true}
+            />
+            <Button text="Submit" type="submit" />
+            {successMessage && (
+              <div className="success-message">{successMessage}</div>
+            )}
+          </form>
+        </div>
       </Modal>
 
       {errorMessage && <div className="error-message">{errorMessage}</div>}
