@@ -194,7 +194,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
               placeholder="Password"
               required={true}
             />
-            <Button text="Submit" type="submit" />
+            <Button text="Submit" type="submit" className="submit-button"/>
             {successMessage && (
               <div className="success-message">{successMessage}</div>
             )}
