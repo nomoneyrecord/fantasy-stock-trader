@@ -26,10 +26,17 @@ body {
 .description-container {
   /* Style for the description text */
   text-align: center;
-  margin-bottom: 20px;
+  text-shadow:
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     2px  2px 0 #000;
+  margin-top: -50px;
+  margin-bottom: 40px;
   color:rgb(202, 187, 118);  
   font-size: 32px;
   font-weight: 900;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding-top: 90px;
 }
 
@@ -51,11 +58,12 @@ body {
   background-color: #5e5858; /* Background color */
   width: 290px; 
   height: 20px;
+  border-radius: 5px;
 }
 
 ::placeholder {
   color:rgb(202, 187, 118);
-  font-size: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .auth-form {

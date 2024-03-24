@@ -203,6 +203,9 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
       </Modal>
 
       {errorMessage && <div className="error-message">{errorMessage}</div>}
+      <footer className="footer">
+        
+      </footer>
     </div>
   );
 };
