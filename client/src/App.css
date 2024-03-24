@@ -1,3 +1,8 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .error-message {
   color: red;
   margin-top: 10px;
@@ -23,7 +28,7 @@
   padding-top: 90px;
 }
 
-.form-container {
+.form-container, .modal-content {
   background-color: rgba(0, 0, 0, 0.8); 
   padding: 40px;
   border-radius: 8px;
@@ -33,7 +38,7 @@
   align-items: center;
   width: 300px;
   height: 300px;
-  margin-bottom: 350px;
+  position: relative; /* For positioning the exit button */
 }
 
 .form-control {
@@ -65,7 +70,7 @@
   font-weight: 800;
   color:rgb(202, 187, 118);
   background-color: rgb(25, 24, 24);
-  
+  border-radius: 10px;
 }
 
 .or-text {
@@ -77,14 +82,36 @@
 }
 
 .modal-close-button {
-  background-color: rgba(0, 0, 0, 0.8); 
-  margin-top: 10px;
-  color:rgb(202, 187, 118);
-  border: 0;
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  color: rgb(202, 187, 118); /* Yellow color */
+  background-color: transparent;
+  border: none;
   font-size: 22px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Or your desired backdrop color */
 }
 
+@media (max-width: 600px) {
+  .form-container, .modal-content {
+    width: 90%; /* Adjust width for smaller screens */
+    padding: 20px; /* Adjust padding */
+    height: auto; /* Adjust height */
+  }
 
-
-
+  .description-container {
+    font-size: 24px; /* Smaller font size */
+    padding-top: 30px; /* Adjust padding */
+  }
+}

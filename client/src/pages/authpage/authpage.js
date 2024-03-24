@@ -132,7 +132,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
         width: "100%",
         display: "flex",
         flexDirection: "column", // Stack children vertically
-        justifyContent: "space-between", // Center children vertically
+        justifyContent: "flex-start", // Center children vertically
         alignItems: "center", // Center children horizontally
       }}
     >
