@@ -84,6 +84,15 @@ body {
   color:rgb(202, 187, 118);
   background-color: rgb(25, 24, 24);
   border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.create-account-button:hover {
+  background-color: rgb(83, 59, 0);
+}
+
+.login-button:hover {
+  background-color: rgb(83, 59, 0);
 }
 
 .submit-button {
@@ -128,6 +137,51 @@ body {
   background-color: rgba(0, 0, 0, 0.5); /* Or your desired backdrop color */
 }
 
+.footer {
+  background-color: rgba(18, 18, 18, 0.8);
+  color:rgb(202, 187, 118);
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  font-size: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around; /* Distributes space evenly */
+  align-items: center;
+  flex-wrap: wrap; /* Ensures responsiveness */
+}
+
+.footer a {
+  color:rgb(202, 187, 118);
+  text-decoration: none;
+}
+
+/* Add responsiveness or additional styling as needed */
+
+.footer-button {
+  background-color: #444; /* Button background color */
+  color:rgb(202, 187, 118);
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s;
+}
+
+.footer-button:hover {
+  background-color: rgb(0, 0, 0); /* Darken on hover */
+}
+
+
 @media (max-width: 600px) {
   .form-container, .modal-content {
     width: 90%; /* Adjust width for smaller screens */
@@ -138,5 +192,9 @@ body {
   .description-container {
     font-size: 24px; /* Smaller font size */
     padding-top: 30px; /* Adjust padding */
+  }
+
+  .footer-content {
+    flex-direction: column;
   }
 }
