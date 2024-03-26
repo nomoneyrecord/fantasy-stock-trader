@@ -31,7 +31,6 @@ body {
      1px -1px 0 #000,
     -1px  1px 0 #000,
      2px  2px 0 #000;
-  margin-top: -50px;
   margin-bottom: 40px;
   color:rgb(202, 187, 118);  
   font-size: 32px;
@@ -48,6 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 120px;
   width: 300px;
   height: 300px;
   position: relative; /* For positioning the exit button */
@@ -120,17 +120,33 @@ body {
   /* Styling for 'or' text */
 }
 
-.modal {
+.registration-modal-content {
+  background-color: rgba(0, 0, 0, 0.8); 
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Or your desired backdrop color */
+  margin-top: 120px;
+  width: 300px;
+  height: 300px;
+  position: relative; /* For positioning the exit button */
 }
+
+.modal-header {
+  position: relative; /* Essential for the absolute positioning of the button */
+  /* Minimize or remove padding/margin that might affect layout */
+}
+
+
+.modal-close-button {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  z-index: 10;
+}
+
 
 .footer {
   background-color: rgba(18, 18, 18, 0.8);

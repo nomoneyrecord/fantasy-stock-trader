@@ -175,7 +175,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
       )}
 
       <Modal show={modalOpen} onClose={handleModalClose}>
-        <div className="form-container">
+        <div className="registration-modal-content">
           <form onSubmit={handleSignUpSubmit} className="auth-form">
             <InputField
               type="text"
