@@ -64,6 +64,7 @@ body {
 ::placeholder {
   color:rgb(202, 187, 118);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
 }
 
 .auth-form {
@@ -85,6 +86,7 @@ body {
   background-color: rgb(25, 24, 24);
   border-radius: 10px;
   transition: background-color 0.3s;
+  cursor: pointer; 
 }
 
 .create-account-button:hover {
@@ -106,6 +108,7 @@ body {
   background-color: rgb(25, 24, 24);
   border-radius: 10px;
   transition: background-color 0.3s;
+  cursor: pointer;
 }
 
 .submit-button:hover {
@@ -145,6 +148,12 @@ body {
   top: 10px; /* Adjust as needed */
   right: 10px; /* Adjust as needed */
   z-index: 10;
+  color: rgb(202, 187, 118);
+  background-color: transparent;
+  border: none; 
+  font-size: 24px;
+  cursor: pointer; 
+  
 }
 
 
@@ -194,7 +203,7 @@ body {
 
 
 @media (max-width: 600px) {
-  .form-container, .modal-content {
+  .form-container, .registration-modal-content {
     width: 90%; /* Adjust width for smaller screens */
     padding: 20px; /* Adjust padding */
     height: auto; /* Adjust height */

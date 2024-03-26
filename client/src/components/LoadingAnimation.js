@@ -1,6 +1,7 @@
 import React from 'react';
 import Lottie from 'react-lottie';
 import animationData from '../animations/Animation.json';
+import backgroundImage from "../Images/backgroundImage.webp"; // Import the background image
 
 const LoadingAnimation = () => {
   const defaultOption = {
@@ -8,10 +9,24 @@ const LoadingAnimation = () => {
     autoplay: true,
     animationData: animationData,
     renderSettings: {
-      preserveAspectRation: 'xMidYMid slice'
+      preserveAspectRatio: 'xMidYMid slice'
     }
   };
-  return <Lottie options={defaultOption} height={400} width={400} />;
+
+  return (
+    <div style={{ 
+      backgroundImage: `url(${backgroundImage})`, 
+      backgroundSize: 'cover', 
+      backgroundPosition: 'center',
+      minHeight: '100vh',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center', 
+      alignItems: 'center'
+    }}>
+      <Lottie options={defaultOption} height={400} width={400} />
+    </div>
+  );
 };
 
-export default LoadingAnimation; 
+export default LoadingAnimation;
