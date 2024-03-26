@@ -88,11 +88,11 @@ body {
 }
 
 .create-account-button:hover {
-  background-color: rgb(83, 59, 0);
+  background-color: rgb(62, 62, 62);
 }
 
 .login-button:hover {
-  background-color: rgb(83, 59, 0);
+  background-color: rgb(62, 62, 62);
 }
 
 .submit-button {
@@ -105,6 +105,11 @@ body {
   color:rgb(202, 187, 118);
   background-color: rgb(25, 24, 24);
   border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: rgb(62, 62, 62);
 }
 
 .or-text {
@@ -166,7 +171,7 @@ body {
 /* Add responsiveness or additional styling as needed */
 
 .footer-button {
-  background-color: #444; /* Button background color */
+  background-color: rgb(36, 36, 36);
   color:rgb(202, 187, 118);
   border: none;
   padding: 5px 10px;
@@ -178,7 +183,7 @@ body {
 }
 
 .footer-button:hover {
-  background-color: rgb(0, 0, 0); /* Darken on hover */
+  background-color: rgb(51, 51, 51); /* Darken on hover */
 }
 
 
