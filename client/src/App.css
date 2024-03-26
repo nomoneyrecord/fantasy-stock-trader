@@ -40,7 +40,7 @@ body {
   padding-top: 90px;
 }
 
-.form-container, .modal-content {
+.form-container {
   background-color: rgba(0, 0, 0, 0.8); 
   padding: 40px;
   border-radius: 8px;
@@ -120,16 +120,6 @@ body {
   /* Styling for 'or' text */
 }
 
-.modal-close-button {
-  position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
-  color: rgb(202, 187, 118); /* Yellow color */
-  background-color: transparent;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-}
 .modal {
   display: flex;
   justify-content: center;
