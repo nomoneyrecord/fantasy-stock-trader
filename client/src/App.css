@@ -13,6 +13,38 @@ body {
   margin-top: 10px;
 }
 
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 60px; /* Fixed height */
+  background-color: #333; /* Background color */
+  color: white;
+}
+
+.navbar a, .navbar button {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px; /* Spacing between links */
+}
+
+.navbar a.active {
+  border-bottom: 2px solid #fff; /* Underline for active link */
+}
+
+/* Additional styling for your logo and app name */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 40px; /* Logo size */
+  margin-right: 10px;
+}
+
+
 .success-message {
   color: green;
   margin-top: 10px; 
