@@ -22,9 +22,11 @@ const LoadingAnimation = () => {
       width: '100%',
       display: 'flex',
       justifyContent: 'center', 
-      alignItems: 'center'
+      alignItems: 'center',
     }}>
-      <Lottie options={defaultOption} height={400} width={400} />
+      <Lottie options={defaultOption} height={300} width={300} style={{
+        marginBottom: "200px"
+      }}/>
     </div>
   );
 };
