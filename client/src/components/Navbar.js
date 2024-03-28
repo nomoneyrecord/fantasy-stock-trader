@@ -8,7 +8,7 @@ const Navbar = ({ onLogout }) => {
     <nav className='navbar'>
       <div className="logo">
         <img src={logoImage} alt="Logo" />
-        <span>StockLab</span>
+        <span className="navbar-appname">StockLab</span>
       </div>
       <div>
         <NavLink to='/home' activeClassName="active">Home</NavLink>
