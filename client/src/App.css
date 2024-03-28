@@ -26,17 +26,31 @@ body {
   color: rgb(202, 187, 118);
   text-decoration: none;
   margin-left: 20px; /* Spacing between links */
+  font-weight: 600;
 }
 
 .navbar-appname {
   color:rgb(202, 187, 118);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 20px;
-  font-weight: ;
+  font-weight: 700;
+  margin-left: -15px;
 }
 
 .navbar a.active {
-  border-bottom: 2px solid #fff; /* Underline for active link */
+  border-bottom: 2px solid rgb(248, 204, 28); /* Underline for active link */
+}
+
+.logout-button {
+  height: 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color:rgb(202, 187, 118);
+  background-color: rgb(25, 24, 24);
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  cursor: pointer; 
 }
 
 /* Additional styling for your logo and app name */
