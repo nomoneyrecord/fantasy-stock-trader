@@ -4,8 +4,11 @@ html {
 }
 
 body {
-  overflow: auto;
-  height: 100%;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Keeps the background image fixed */
 }
 
 .error-message {
@@ -208,6 +211,36 @@ body {
   
 }
 
+.account-content {
+  background-color: rgba(0, 0, 0, 0.8); /* Opaque background */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 600px; /* Adjust as needed */
+  margin: 30px auto; /* Centering */
+  color:rgb(251, 226, 115);
+  margin-top: -5px; 
+}
+
+.holdings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.holdings-table th, .holdings-table td {
+  border: 1px solid #ddd; /* Adjust as needed */
+  padding: 8px;
+}
+
+.holdings-table tr:nth-child(even){background-color: #f2f2f2;} /* For striped effect */
+.holdings-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #333; /* Adjust header background */
+  color: white;
+}
+
 
 .footer {
   background-color: rgba(18, 18, 18, 0.8);
@@ -255,6 +288,9 @@ body {
 
 
 @media (max-width: 600px) {
+  body {
+    background-size: auto 100%; 
+  }
   .form-container, .registration-modal-content {
     width: 90%; /* Adjust width for smaller screens */
     padding: 20px; /* Adjust padding */

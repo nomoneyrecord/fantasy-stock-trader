@@ -113,7 +113,7 @@ const HomePage = () => {
       }}
     >
       <div className="account-content">
-        <h1>Welcome to the Home Page</h1>
+        <h1>Portfolio</h1>
         <p>Account Balance: {accountData.accountBalance}</p>
         <p>Total Value of Stocks: {accountData.totalStockValue.toFixed(2)}</p>
         <h2>Your Stock Holdings</h2>
