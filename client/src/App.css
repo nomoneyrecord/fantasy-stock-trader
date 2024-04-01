@@ -212,33 +212,108 @@ body {
 }
 
 .account-content {
-  background-color: rgba(0, 0, 0, 0.8); /* Opaque background */
+  background-color: rgba(0, 0, 0, 0.9); /* Opaque background */
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  height: 550px; 
+  width: 600px; 
   max-width: 600px; /* Adjust as needed */
-  margin: 30px auto; /* Centering */
-  color:rgb(251, 226, 115);
-  margin-top: -5px; 
+  margin: auto; /* Center horizontally */
+  position: absolute; /* Absolute positioning */
+  top: 50%; /* Position 50% from top */
+  left: 50%; /* Position 50% from left */
+  transform: translate(-50%, -50%); /* Adjust for exact centering */
+  color:rgb(202, 187, 118)
 }
+
 
 .holdings-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 100px;
 }
 
 .holdings-table th, .holdings-table td {
-  border: 1px solid #ddd; /* Adjust as needed */
   padding: 8px;
+  text-align: left;
 }
 
-.holdings-table tr:nth-child(even){background-color: #f2f2f2;} /* For striped effect */
+.holdings-table tr:nth-child(even){background-color: #221e1e;} /* For striped effect */
 .holdings-table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
   background-color: #333; /* Adjust header background */
-  color: white;
+  color: rgb(255, 225, 0);
+}
+
+.portfolio-header {
+  font-size: 38px;
+}
+
+.holdings-section {
+  margin-top: 70px;
+  margin-bottom: 10px;
+}
+
+.holdings-header {
+  font-size: 30px;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: calc(100vh - 60px); /* Adjust based on navbar height */
+  padding-top: 60px; /* Match this with your navbar height */
+}
+
+
+.search-results-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  max-width: 600px;
+}
+
+.search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.search-result-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.search-results-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 10px;
+  max-width: 600px;
+}
+
+.results {
+  max-height: 500px; /* Adjust to your preference */
+  overflow-y: auto;
+}
+
+
+
+.button-buy {
+  background-color: green;
+  /* Additional button styling */
+}
+
+.button-sell {
+  background-color: red;
+  /* Additional button styling */
 }
 
 

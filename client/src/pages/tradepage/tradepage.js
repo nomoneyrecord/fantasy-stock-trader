@@ -259,13 +259,15 @@ const TradePage = () => {
     showBuyModal || showSellModal ? "disable-interaction" : "";
 
   return (
-    <div style={{ 
-      backgroundImage: `url(${backgroundImage})`, 
-      backgroundSize: 'cover', 
-      backgroundPosition: 'center',
-      minHeight: '100vh',
-      width: '100%' }}>
-        
+    <div
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        width: "100%",
+      }}
+    >
       {showBuyModal ||
         (showSellModal && (
           <Backdrop
@@ -275,28 +277,43 @@ const TradePage = () => {
             }}
           />
         ))}
-
-      <div className={disableInteractionClass}>
-        <form onSubmit={handleSearch}>
-          <InputField
-            type="text"
-            name="searchSymbol"
-            value={searchSymbol}
-            onChange={(e) => setSearchSymbol(e.target.value)}
-            placeholder="Enter Stock Symbol"
-          />
-          <Button text="Search" onClick={handleSearch} />
-        </form>
-
-        {searchResults.map((stock) => (
-          <div key={stock.symbol}>
-            <p>
-              Symbol: {stock.symbol}, Name: {stock.name}
-            </p>
-            <Button text="Buy" onClick={() => openBuyModal(stock)} />
-            <Button text="Sell" onClick={() => openSellModal(stock)} />
+      <div className="center-container">
+        <div className={disableInteractionClass}>
+          <div className="search-results-container">
+            <h3>Search for Stocks</h3>
+            <form onSubmit={handleSearch}>
+              <InputField
+                type="text"
+                name="searchSymbol"
+                value={searchSymbol}
+                onChange={(e) => setSearchSymbol(e.target.value)}
+                placeholder="Enter Stock Symbol"
+              />
+              <Button text="Search" />
+            </form>
+            <div className="results">
+              {searchResults.map((stock) => (
+                <div className="search-result-item" key={stock.symbol}>
+                  <p>
+                    Symbol: {stock.symbol}, Name: {stock.name}
+                  </p>
+                  <div>
+                    <Button
+                      className="button-buy"
+                      text="Buy"
+                      onClick={() => openBuyModal(stock)}
+                    />
+                    <Button
+                      className="button-sell"
+                      text="Sell"
+                      onClick={() => openSellModal(stock)}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
+        </div>
       </div>
 
       {showBuyModal && (
@@ -336,7 +353,8 @@ const TradePage = () => {
         <div className="footer-content">
           Created By: Gary Hughes Jr
           <div>
-            <button className="footer-button"
+            <button
+              className="footer-button"
               onClick={() =>
                 (window.location.href = "mailto:3rdeye.ghj@gmail.com")
               }
@@ -345,14 +363,16 @@ const TradePage = () => {
             </button>
           </div>
           <div>
-            <button className="footer-button"
+            <button
+              className="footer-button"
               onClick={() => window.open("https://garyhughesjr.netlify.app/")}
             >
               My Website
             </button>
           </div>
           <div>
-            <button className="footer-button"
+            <button
+              className="footer-button"
               onClick={() => window.open("https://github.com/nomoneyrecord")}
             >
               GitHub

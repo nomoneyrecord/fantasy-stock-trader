@@ -113,20 +113,34 @@ const HomePage = () => {
       }}
     >
       <div className="account-content">
-        <h1>Portfolio</h1>
+        <h1 className="portfolio-header">Portfolio</h1>
         <p>Account Balance: {accountData.accountBalance}</p>
         <p>Total Value of Stocks: {accountData.totalStockValue.toFixed(2)}</p>
-        <h2>Your Stock Holdings</h2>
-        <ul>
-          {accountData.stockHoldings.map((holding, index) => (
-            <li key={index}>
-              Symbol: {holding.symbol}, Price: $
-              {(holding.currentValue / holding.quantity).toFixed(2)}, Quantity:{" "}
-              {holding.quantity}, Total Value: $
-              {holding.currentValue.toFixed(2)}
-            </li>
-          ))}
-        </ul>
+        <div className="holdings-section">
+          <h2 className="holdings-header">Your Stock Holdings</h2>
+          <table className="holdings-table">
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {accountData.stockHoldings.map((holding, index) => (
+                <tr key={index}>
+                  <td>{holding.symbol}</td>
+                  <td>
+                    ${(holding.currentValue / holding.quantity).toFixed(2)}
+                  </td>
+                  <td>{holding.quantity}</td>
+                  <td>${holding.currentValue.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <footer className="footer">
         <div className="footer-content">
