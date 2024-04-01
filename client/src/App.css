@@ -299,33 +299,35 @@ body {
 }
 
 .search-results-container {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.9);
   padding: 20px;
   margin: 20px auto;
   border-radius: 10px;
-  max-width: 600px;
+  max-width: 730px;
 }
 
 .results {
   max-height: 700px; /* Adjust to your preference */
   overflow-y: auto;
+  
 }
 
 /* Style the scrollbar itself (the track) */
 .results::-webkit-scrollbar {
-  width: 14px;  /* scrollbar width */
+  width: 8px;  /* scrollbar width */
 }
 
 /* Style the handle (thumb) */
 .results::-webkit-scrollbar-thumb {
-  background-color: #888; /* thumb color */
+  background-color:rgb(223, 180, 51);
   border-radius: 6px; /* rounded corners for the thumb */
-  border: 3px solid #f5f5f5; /* creates padding around the thumb */
+  cursor: pointer;
 }
 
 /* Handle on hover */
 .results::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+  background-color: rgb(252, 203, 57);
+  
 }
 
 
@@ -346,16 +348,28 @@ body {
   cursor: pointer; 
 }
 
-.button-buy {
-  background-color: green;
-  /* Additional button styling */
+.buy-sell-button-container {
+  display: flex; /* Enables flexbox layout */
+  justify-content: flex-start; /* Aligns children to the start */
+  gap: 5px; /* Space between buttons */
 }
 
-.button-sell {
-  background-color: red;
-  /* Additional button styling */
+.button-buy, .button-sell {
+  flex: 1;
+  width: 50%; /* Makes buttons full width of form */
+  margin-left: 0; /* Adjust or remove if necessary */
+  padding-top: 0; /* Corrected from negative value */
+  padding-bottom: 8px;
+  height: 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color:rgb(202, 187, 118);
+  background-color: rgb(25, 24, 24);
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  cursor: pointer;
 }
-
 
 .footer {
   background-color: rgba(18, 18, 18);

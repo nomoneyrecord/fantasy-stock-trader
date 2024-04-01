@@ -297,7 +297,7 @@ const TradePage = () => {
                   <p>
                     Symbol: {stock.symbol}, Name: {stock.name}
                   </p>
-                  <div>
+                  <div className="buy-sell-button-container">
                     <Button
                       className="button-buy"
                       text="Buy"
