@@ -114,6 +114,8 @@ body {
   width: 290px; 
   height: 20px;
   border-radius: 5px;
+  color:rgb(202, 187, 118);
+  font-size: 16px;
 }
 
 ::placeholder {
@@ -245,7 +247,7 @@ body {
   padding-bottom: 12px;
   text-align: left;
   background-color: #333; /* Adjust header background */
-  color: rgb(255, 225, 0);
+  color:rgb(202, 187, 118);
 }
 
 .portfolio-header {
@@ -273,10 +275,15 @@ body {
 
 .search-results-container {
   background-color: rgba(0, 0, 0, 0.7);
+  color:rgb(202, 187, 118);
   padding: 20px;
   margin: 20px auto;
   border-radius: 10px;
   max-width: 600px;
+}
+
+.trade-input {
+  color:rgb(202, 187, 118);
 }
 
 .search-result-item {
@@ -300,7 +307,7 @@ body {
 }
 
 .results {
-  max-height: 500px; /* Adjust to your preference */
+  max-height: 700px; /* Adjust to your preference */
   overflow-y: auto;
 }
 
@@ -318,7 +325,7 @@ body {
 
 
 .footer {
-  background-color: rgba(18, 18, 18, 0.8);
+  background-color: rgba(18, 18, 18);
   color:rgb(202, 187, 118);
   text-align: center;
   padding: 10px;

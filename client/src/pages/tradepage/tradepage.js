@@ -289,7 +289,7 @@ const TradePage = () => {
                 onChange={(e) => setSearchSymbol(e.target.value)}
                 placeholder="Enter Stock Symbol"
               />
-              <Button text="Search" />
+              <Button className="trade-search-button" text="Search" />
             </form>
             <div className="results">
               {searchResults.map((stock) => (
