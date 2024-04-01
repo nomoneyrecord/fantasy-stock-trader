@@ -281,15 +281,17 @@ const TradePage = () => {
         <div className={disableInteractionClass}>
           <div className="search-results-container">
             <h3>Search for Stocks</h3>
-            <form onSubmit={handleSearch}>
-              <InputField
-                type="text"
-                name="searchSymbol"
-                value={searchSymbol}
-                onChange={(e) => setSearchSymbol(e.target.value)}
-                placeholder="Enter Stock Symbol"
-              />
-              <Button className="trade-search-button" text="Search" />
+            <form onSubmit={handleSearch} className="search-form">
+              <div className="search-field-container">
+                <InputField
+                  type="text"
+                  name="searchSymbol"
+                  value={searchSymbol}
+                  onChange={(e) => setSearchSymbol(e.target.value)}
+                  placeholder="Enter Stock Symbol"
+                />
+                <Button className="trade-search-button" text="Search" />
+              </div>
             </form>
             <div className="results">
               {searchResults.map((stock) => (
