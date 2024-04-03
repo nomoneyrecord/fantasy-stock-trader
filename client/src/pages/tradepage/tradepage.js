@@ -5,7 +5,7 @@ import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Backdrop from "../../components/Backdrop";
 import LoadingAnimation from "../../components/LoadingAnimation";
-import backgroundImage from "../../Images/backgroundImage.webp";
+
 
 const TradePage = () => {
   const navigate = useNavigate();
@@ -259,15 +259,7 @@ const TradePage = () => {
     showBuyModal || showSellModal ? "disable-interaction" : "";
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        width: "100%",
-      }}
-    >
+    <div className="background-container">
       {showBuyModal ||
         (showSellModal && (
           <Backdrop

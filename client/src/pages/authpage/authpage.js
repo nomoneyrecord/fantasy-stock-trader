@@ -4,7 +4,7 @@ import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "../../components/Backdrop";
-import backgroundImage from "../../Images/backgroundImage.webp";
+
 
 const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
   const [email, setEmail] = useState("");
@@ -123,19 +123,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column", // Stack children vertically
-        justifyContent: "flex-start", // Center children vertically
-        alignItems: "center", // Center children horizontally
-      }}
-    >
+    <div className="background-container">
       {modalOpen && <Backdrop onClick={handleModalClose} />}
 
       <div className="description-container">
