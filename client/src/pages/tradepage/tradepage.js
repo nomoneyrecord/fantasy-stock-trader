@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Backdrop from "../../components/Backdrop";
 import LoadingAnimation from "../../components/LoadingAnimation";
+import Footer from "../../components/Footer";
 
 
 const TradePage = () => {
@@ -343,37 +344,6 @@ const TradePage = () => {
           <Button text="Confirm Sale" onClick={confirmSale} />
         </Modal>
       )}
-      <footer className="footer">
-        <div className="footer-content">
-          Created By: Gary Hughes Jr
-          <div>
-            <button
-              className="footer-button"
-              onClick={() =>
-                (window.location.href = "mailto:3rdeye.ghj@gmail.com")
-              }
-            >
-              Contact
-            </button>
-          </div>
-          <div>
-            <button
-              className="footer-button"
-              onClick={() => window.open("https://garyhughesjr.netlify.app/")}
-            >
-              My Website
-            </button>
-          </div>
-          <div>
-            <button
-              className="footer-button"
-              onClick={() => window.open("https://github.com/nomoneyrecord")}
-            >
-              GitHub
-            </button>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };

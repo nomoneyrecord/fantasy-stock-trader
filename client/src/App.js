@@ -6,6 +6,7 @@ import HomePage from './pages/homepage/homepage';
 import TradePage from './pages/tradepage/tradepage';
 import Navbar from './components/Navbar';
 import './App.css';
+import Footer from './components/Footer';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
@@ -56,6 +57,7 @@ function App() {
         <Route path="/home" element={isLoggedIn ? <HomePage /> : <Navigate replace to="/" />} />
         <Route path="/trade" element={isLoggedIn ? <TradePage /> : <Navigate replace to="/" />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }
