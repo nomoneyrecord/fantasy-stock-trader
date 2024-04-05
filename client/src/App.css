@@ -447,6 +447,7 @@
     /* Positioning the form containers at the top to give space for the footer */
     position: static;
     margin-top: 10vh; /* Adjust the top margin to give some space from the top */
+    margin-bottom: 5vh;
   }
 
   /* Text and input sizes */
@@ -463,6 +464,7 @@
   .footer {
     position: absolute; /* Keep the footer at the end of content */
     padding: 10px 0; /* Adjust padding to reduce height on smaller screens */
+    margin-bottom: -20px;
   }
 
   /* Container and text alignment */
