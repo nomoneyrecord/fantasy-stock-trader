@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 100vh;
+  min-height: calc(100vh - 35px);
   width: 100%;
   overflow-x: hidden;
   align-items: center;
@@ -103,7 +103,7 @@
   flex-direction: column;
   align-items: center;
   margin: auto;
-  margin-top: 5vh;
+  margin-top: 10vh;
   width: 300px;
   height: 300px;
   position: relative; /* For positioning the exit button */
@@ -192,7 +192,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 120px;
+  margin-top: 121px;
   width: 300px;
   height: 300px;
   position: relative; /* For positioning the exit button */
@@ -389,8 +389,8 @@
 .footer {
   background-color: rgba(18, 18, 18);
   color:rgb(202, 187, 118);
+  position: relative;
   text-align: center;
-  padding: 10px;
   left: 0;
   bottom: 0;
   width: 100%;
