@@ -124,7 +124,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
   };
 
   return (
-    <div className="background-container">
+    <div className="background-container-authpage">
       {modalOpen && <Backdrop onClick={handleModalClose} />}
 
       <div className="description-container">

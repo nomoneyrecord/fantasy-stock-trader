@@ -103,7 +103,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className="background-container">
+    <div className="background-container-homepage">
     
       <div className="account-content">
         <h1 className="portfolio-header">Portfolio</h1>

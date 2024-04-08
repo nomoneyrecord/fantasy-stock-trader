@@ -258,7 +258,7 @@ const TradePage = () => {
     showBuyModal || showSellModal ? "disable-interaction" : "";
 
   return (
-    <div className="background-container">
+    <div className="background-container-tradepage">
       {showBuyModal ||
         (showSellModal && (
           <Backdrop
@@ -310,37 +310,49 @@ const TradePage = () => {
       </div>
 
       {showBuyModal && (
-        <Modal show={showBuyModal} onClose={() => setShowBuyModal(false)}>
-          <h2>Buy {selectedStock?.symbol}</h2>
-          <p>Price: {selectedStock?.price}</p>
-          <p>Owned Shares: {selectedStock?.ownedQuantity}</p>
-          <InputField
-            type="number"
-            name="buyQuantity"
-            value={buyQuantity.toString()}
-            onChange={handleBuyChange}
-            placeholder="Enter quantity"
-            min="0"
-          />
-          <Button text="Confirm Purchase" onClick={confirmPurchase} />
-        </Modal>
+        <div className="trade-modal-wrapper">
+          <Modal
+            show={showBuyModal}
+            onClose={() => setShowBuyModal(false)}
+            className="trade-modal"
+          >
+            <h2>Buy {selectedStock?.symbol}</h2>
+            <p>Price: {selectedStock?.price}</p>
+            <p>Owned Shares: {selectedStock?.ownedQuantity}</p>
+            <InputField
+              type="number"
+              name="buyQuantity"
+              value={buyQuantity.toString()}
+              onChange={handleBuyChange}
+              placeholder="Enter quantity"
+              min="0"
+            />
+            <Button text="Confirm Purchase" onClick={confirmPurchase} />
+          </Modal>
+        </div>
       )}
 
       {showSellModal && (
-        <Modal show={showSellModal} onClose={() => setShowSellModal(false)}>
-          <h2>Sell {selectedStock?.symbol}</h2>
-          <p>Price: {selectedStock?.price}</p>
-          <p>Owned Shares: {selectedStock?.ownedQuantity}</p>
-          <InputField
-            type="number"
-            name="sellQuantity"
-            value={sellQuantity.toString()}
-            onChange={handleSellChange}
-            placeholder="Enter quantity"
-            min="0"
-          />
-          <Button text="Confirm Sale" onClick={confirmSale} />
-        </Modal>
+        <div className="trade-modal-wrapper">
+          <Modal
+            show={showSellModal}
+            onClose={() => setShowSellModal(false)}
+            className="trade-modal"
+          >
+            <h2>Sell {selectedStock?.symbol}</h2>
+            <p>Price: {selectedStock?.price}</p>
+            <p>Owned Shares: {selectedStock?.ownedQuantity}</p>
+            <InputField
+              type="number"
+              name="sellQuantity"
+              value={sellQuantity.toString()}
+              onChange={handleSellChange}
+              placeholder="Enter quantity"
+              min="0"
+            />
+            <Button text="Confirm Sale" onClick={confirmSale} />
+          </Modal>
+        </div>
       )}
     </div>
   );

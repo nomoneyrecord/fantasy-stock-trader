@@ -18,7 +18,7 @@ const LoadingAnimation = () => {
       backgroundImage: `url(${backgroundImage})`, 
       backgroundSize: 'cover', 
       backgroundPosition: 'center',
-      minHeight: '100vh',
+      minHeight: "calc(100vh - 95px)",
       width: '100%',
       display: 'flex',
       justifyContent: 'center', 

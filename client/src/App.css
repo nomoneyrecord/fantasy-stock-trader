@@ -14,7 +14,7 @@ body::-webkit-scrollbar-thumb:hover {
   background: rgb(255, 217, 102); /* A slightly different color on hover */
 }
 
-.background-container {
+.background-container-authpage {
   background-image: url("Images/backgroundImage.webp"); /* Adjust the path as necessary */
   background-size: cover;
   background-position: center;
@@ -22,6 +22,32 @@ body::-webkit-scrollbar-thumb:hover {
   flex-direction: column;
   justify-content: flex-start;
   min-height: calc(100vh - 35px);
+  width: 100%;
+  overflow-x: hidden;
+  align-items: center;
+}
+
+.background-container-homepage {
+  background-image: url("Images/backgroundImage.webp"); /* Adjust the path as necessary */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: calc(100vh - 95px);
+  width: 100%;
+  overflow-x: hidden;
+  align-items: center;
+}
+
+.background-container-tradepage {
+  background-image: url("Images/backgroundImage.webp"); /* Adjust the path as necessary */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: calc(100vh - 95px);
   width: 100%;
   overflow-x: hidden;
   align-items: center;
@@ -331,7 +357,6 @@ body::-webkit-scrollbar-thumb:hover {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: calc(100vh - 60px); /* Adjust based on navbar height */
   padding-top: 60px; /* Match this with your navbar height */
 }
 
@@ -444,6 +469,21 @@ body::-webkit-scrollbar-thumb:hover {
   transition: background-color 0.3s;
   cursor: pointer;
 }
+
+.trade-modal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* This positions the wrapper in relation to the viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* This centers the modal correctly */
+  width: auto; /* Adjust width as needed, or remove for content-based width */
+  height: auto; /* Adjust height as needed, or remove for content-based height */
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+}
+
 
 .footer {
   background-color: rgba(18, 18, 18);
