@@ -1,3 +1,19 @@
+body::-webkit-scrollbar {
+  width: 5px; /* Adjust the width of the scrollbar */
+  background-color: #221e1e;
+}
+
+/* Style for the scrollbar handle */
+body::-webkit-scrollbar-thumb {
+  background: rgb(223, 180, 51); /* Adjust the color to match your theme */
+  border-radius: 5px; /* Optional: rounded corners for the scrollbar handle */
+}
+
+/* Style for the scrollbar handle on hover */
+body::-webkit-scrollbar-thumb:hover {
+  background: rgb(255, 217, 102); /* A slightly different color on hover */
+}
+
 .background-container {
   background-image: url("Images/backgroundImage.webp"); /* Adjust the path as necessary */
   background-size: cover;
@@ -12,8 +28,19 @@
 }
 
 .error-message {
-  color: red;
-  margin-top: 10px;
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color:rgb(202, 187, 118)
+}
+
+.success-message {
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color:rgb(202, 187, 118)
 }
 
 .navbar {
@@ -65,12 +92,6 @@
 .logo img {
   height: 60px; /* Logo size */
   margin-right: 10px;
-}
-
-
-.success-message {
-  color: green;
-  margin-top: 10px; 
 }
 
 .disable-interaction {
@@ -473,6 +494,8 @@
   .footer-content {
     text-align: center; /* Center the text for a cleaner look on small screens */
   }
+
+  
   
   /* Hamburger menu adjustments */
   /* Here you can add or remove styles related to how the hamburger menu should behave */

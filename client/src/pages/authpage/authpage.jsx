@@ -61,7 +61,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
     if (!validateEmail(event.target.value)) {
-      setEmailError("Invalid email format");
+      setEmailError("Invalid. Please try again");
     } else {
       setEmailError("");
     }
@@ -98,9 +98,9 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
       });
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Sign up failed");
+        throw new Error(errorData.message || "Invalid credentials. Try again");
       }
-      setSuccessMessage("You've successfully registered! Let's log in!");
+      setSuccessMessage("Success! Login to trade");
       setErrorMessage("");
     } catch (error) {
       setErrorMessage(error.message);
@@ -186,11 +186,12 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
             {successMessage && (
               <div className="success-message">{successMessage}</div>
             )}
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
           </form>
         </div>
       </Modal>
 
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
+      
     </div>
   );
 };

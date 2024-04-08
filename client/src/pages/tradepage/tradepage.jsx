@@ -5,8 +5,6 @@ import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Backdrop from "../../components/Backdrop";
 import LoadingAnimation from "../../components/LoadingAnimation";
-import Footer from "../../components/Footer";
-
 
 const TradePage = () => {
   const navigate = useNavigate();
