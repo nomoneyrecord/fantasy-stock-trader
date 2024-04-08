@@ -37,6 +37,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .success-message {
   margin-top: 20px;
+  margin-bottom: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 18px;
   font-weight: 800;
@@ -213,7 +214,7 @@ body::-webkit-scrollbar-thumb:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 121px;
+  margin-top: 105px;
   width: 300px;
   height: 400px;
   position: relative; /* For positioning the exit button */
@@ -245,6 +246,10 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .registration-modal-logo {
+  position: absolute;
+  top: 202px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
   display: block;
   margin: 0, auto;
   max-width: 200px; /* Adjust as needed */
