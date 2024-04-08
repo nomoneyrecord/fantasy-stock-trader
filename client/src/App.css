@@ -126,7 +126,7 @@ body::-webkit-scrollbar-thumb:hover {
   margin: auto;
   margin-top: 10vh;
   width: 300px;
-  height: 300px;
+  height: 400px;
   position: relative; /* For positioning the exit button */
 }
 
@@ -235,8 +235,22 @@ body::-webkit-scrollbar-thumb:hover {
   border: none; 
   font-size: 24px;
   cursor: pointer; 
-  
 }
+
+.auth-page-logo {
+  display: block;
+  margin: 0, auto;
+  max-width: 200px; /* Adjust as needed */
+  height: 200px; /* Maintain aspect ratio */
+}
+
+.registration-modal-logo {
+  display: block;
+  margin: 0, auto;
+  max-width: 200px; /* Adjust as needed */
+  height: 200px; /* Maintain aspect ratio */
+}
+
 
 .account-content {
   background-color: rgba(0, 0, 0, 0.9); /* Opaque background */

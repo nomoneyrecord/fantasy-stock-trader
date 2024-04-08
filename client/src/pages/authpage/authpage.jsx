@@ -4,6 +4,7 @@ import InputField from "../../components/InputField";
 import Modal from "../../components/Modal";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "../../components/Backdrop";
+import Logo from "../../components/Logo";
 
 
 const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
@@ -158,6 +159,7 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
               type="button"
               className="create-account-button"
             />
+            <Logo className="auth-page-logo" />
           </form>
         </div>
       )}
@@ -188,10 +190,9 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
             )}
             {errorMessage && <div className="error-message">{errorMessage}</div>}
           </form>
+          <Logo className='registration-modal-logo' />
         </div>
-      </Modal>
-
-      
+      </Modal>      
     </div>
   );
 };
