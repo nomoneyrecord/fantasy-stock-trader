@@ -138,8 +138,26 @@ body::-webkit-scrollbar-thumb:hover {
   height: 20px;
   border-radius: 5px;
   color:rgb(202, 187, 118);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
   font-weight: 600;
+}
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover, 
+.form-control:-webkit-autofill:focus, 
+.form-control:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px rgba(58, 56, 56, 0.8) inset !important;
+  -webkit-text-fill-color: rgb(202, 187, 118) !important;
+  -webkit-text-font-size: 16px;
+  font-weight: 600; 
+}
+
+/* For the placeholder of the autofilled input */
+.form-control:-webkit-autofill::placeholder {
+  color: rgb(202, 187, 118);
+  font-size: 16px;
+  font-weight: 600; 
 }
 
 ::placeholder {
@@ -214,7 +232,7 @@ body::-webkit-scrollbar-thumb:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 105px;
+  margin-top: 121px;
   width: 300px;
   height: 400px;
   position: relative; /* For positioning the exit button */
