@@ -314,7 +314,6 @@ const TradePage = () => {
           <Modal
             show={showBuyModal}
             onClose={() => setShowBuyModal(false)}
-            className="trade-modal"
           >
             <h2>Buy {selectedStock?.symbol}</h2>
             <p>Price: {selectedStock?.price}</p>
@@ -327,7 +326,7 @@ const TradePage = () => {
               placeholder="Enter quantity"
               min="0"
             />
-            <Button text="Confirm Purchase" onClick={confirmPurchase} />
+            <Button text="Buy" onClick={confirmPurchase} className="confirm-buy-button"/>
           </Modal>
         </div>
       )}
@@ -337,7 +336,6 @@ const TradePage = () => {
           <Modal
             show={showSellModal}
             onClose={() => setShowSellModal(false)}
-            className="trade-modal"
           >
             <h2>Sell {selectedStock?.symbol}</h2>
             <p>Price: {selectedStock?.price}</p>
@@ -350,7 +348,7 @@ const TradePage = () => {
               placeholder="Enter quantity"
               min="0"
             />
-            <Button text="Confirm Sale" onClick={confirmSale} />
+            <Button text="Sell" onClick={confirmSale} className="confirm-sell-button"/>
           </Modal>
         </div>
       )}

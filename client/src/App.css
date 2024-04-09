@@ -23,7 +23,6 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: flex-start;
   min-height: calc(100vh - 35px);
   width: 100%;
-  overflow-x: hidden;
   align-items: center;
 }
 
@@ -36,7 +35,6 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: flex-start;
   min-height: calc(100vh - 95px);
   width: 100%;
-  overflow-x: hidden;
   align-items: center;
 }
 
@@ -49,7 +47,6 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: flex-start;
   min-height: calc(100vh - 95px);
   width: 100%;
-  overflow-x: hidden;
   align-items: center;
 }
 
@@ -110,6 +107,10 @@ body::-webkit-scrollbar-thumb:hover {
   cursor: pointer; 
 }
 
+.logout-button:hover {
+  background-color:rgba(255, 255, 255, 0.1)
+}
+
 /* Additional styling for your logo and app name */
 .logo {
   display: flex;
@@ -139,28 +140,28 @@ body::-webkit-scrollbar-thumb:hover {
   font-size: 32px;
   font-weight: 900;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding-top: 90px;
+  padding-top: 10%;
 }
 
 .form-container {
   background-color: rgba(0, 0, 0, 0.8); 
   padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: auto;
   margin-top: 10vh;
-  width: 300px;
-  height: 400px;
+  width: 45%;
+  height: 50%;
   position: relative; /* For positioning the exit button */
 }
 
 .form-control {
   margin-bottom: 15px; /* Space between fields */
   background-color: #5e5858; /* Background color */
-  width: 290px; 
+  width: 70%; 
   height: 20px;
   border-radius: 5px;
   color:rgb(202, 187, 118);
@@ -202,9 +203,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 .login-button, .create-account-button {
   margin-top: 10px;
-  width: 100%; /* Makes buttons full width of form */
-  max-width: 200px;
-  height: 30px;
+  width: 60%; /* Makes buttons full width of form */
+  height: 20%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 15px;
   font-weight: 800;
@@ -250,7 +250,7 @@ body::-webkit-scrollbar-thumb:hover {
   /* Styling for 'or' text */
 }
 
-.registration-modal-content {
+.registration-modal {
   background-color: rgba(0, 0, 0, 0.8); 
   padding: 40px;
   border-radius: 8px;
@@ -258,7 +258,7 @@ body::-webkit-scrollbar-thumb:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 121px;
+  margin-top: 113px;
   width: 300px;
   height: 400px;
   position: relative; /* For positioning the exit button */
@@ -272,8 +272,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 .modal-close-button {
   position: absolute;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
+  left: 150px;
+  bottom: 2px;
   z-index: 10;
   color: rgb(202, 187, 118);
   background-color: transparent;
@@ -284,9 +284,8 @@ body::-webkit-scrollbar-thumb:hover {
 
 .auth-page-logo {
   display: block;
-  margin: 0, auto;
-  max-width: 200px; /* Adjust as needed */
-  height: 200px; /* Maintain aspect ratio */
+  max-width: 60%; /* Adjust as needed */
+  height: 60%; /* Maintain aspect ratio */
 }
 
 .registration-modal-logo {
@@ -307,9 +306,8 @@ body::-webkit-scrollbar-thumb:hover {
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-  height: 550px; 
-  width: 600px; 
-  max-width: 600px; /* Adjust as needed */
+  height: 50%; 
+  width: 80%; 
   margin: auto; /* Center horizontally */
   position: absolute; /* Absolute positioning */
   top: 50%; /* Position 50% from top */
@@ -321,6 +319,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .holdings-table {
   width: 100%;
+  height: 50%;
   border-collapse: collapse;
   margin-top: 100px;
 }
@@ -372,6 +371,10 @@ body::-webkit-scrollbar-thumb:hover {
 
 .trade-input {
   color:rgb(202, 187, 118);
+}
+
+.trade-search-button:hover {
+  background-color:rgb(62, 62, 62);
 }
 
 .search-result-item {
@@ -470,18 +473,66 @@ body::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
 }
 
+.button-sell:hover {
+  background-color:rgba(0, 0, 0, 1);
+}
+
+.button-buy:hover {
+  background-color:rgba(0, 0, 0, 1);
+}
+
 .trade-modal-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed; /* This positions the wrapper in relation to the viewport */
+  color: rgb(202, 187, 118);
+  border-radius: 10px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* This centers the modal correctly */
-  width: auto; /* Adjust width as needed, or remove for content-based width */
-  height: auto; /* Adjust height as needed, or remove for content-based height */
+  width: 425px; /* Adjust width as needed, or remove for content-based width */
+  height: 265px; /* Adjust height as needed, or remove for content-based height */
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 1); /* Semi-transparent background */
+}
+
+.confirm-buy-button {
+  margin-top: 10px;
+  width: 25%; /* Makes buttons full width of form */
+  margin-top: 1px;
+  height: 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color:rgb(202, 187, 118);
+  background-color: rgb(25, 24, 24);
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.confirm-buy-button:hover {
+  background-color: rgb(62, 62, 62);
+}
+
+.confirm-sell-button {
+  margin-top: 10px;
+  width: 25%; /* Makes buttons full width of form */
+  margin-top: 1px;
+  height: 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color:rgb(202, 187, 118);
+  background-color: rgb(25, 24, 24);
+  border-radius: 10px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.confirm-sell-button:hover {
+  background-color: rgb(62, 62, 62);
 }
 
 
@@ -539,7 +590,7 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .form-container,
-  .registration-modal-content {
+  .registration-modal {
     /* Adjust the width and centering for smaller screens */
     max-width: none; /* Remove max-width if set */
     margin: 0 auto; /* Center the containers */
@@ -553,6 +604,7 @@ body::-webkit-scrollbar-thumb:hover {
   .description-container,
   .form-container,
   .auth-form input,
+  .footer,
   .footer-button,
   .login-button,
   .create-account-button,
