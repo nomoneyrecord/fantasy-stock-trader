@@ -154,7 +154,7 @@ body::-webkit-scrollbar-thumb:hover {
   margin: auto;
   margin-top: 10vh;
   width: 45%;
-  height: 50%;
+  height: 400px;
   position: relative; /* For positioning the exit button */
 }
 
@@ -283,7 +283,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .auth-page-logo {
-  display: block;
+  margin-top: 10px;
   max-width: 60%; /* Adjust as needed */
   height: 60%; /* Maintain aspect ratio */
 }
