@@ -314,6 +314,7 @@ const TradePage = () => {
           <Modal
             show={showBuyModal}
             onClose={() => setShowBuyModal(false)}
+            className="trade-modal"
           >
             <h2>Buy {selectedStock?.symbol}</h2>
             <p>Price: {selectedStock?.price}</p>
@@ -336,6 +337,7 @@ const TradePage = () => {
           <Modal
             show={showSellModal}
             onClose={() => setShowSellModal(false)}
+            className="trade-modal"
           >
             <h2>Sell {selectedStock?.symbol}</h2>
             <p>Price: {selectedStock?.price}</p>

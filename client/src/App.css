@@ -530,6 +530,17 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: rgb(62, 62, 62);
 }
 
+.trade-modal .modal-close-button {
+  /* Custom styles for the close button of the trade modal */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color:rgba(0, 0, 0, 0.7);
+  border: none;
+  color:rgb(202, 187, 118);
+  font-size: 22px;
+}
+
 
 .footer {
   background-color: rgba(18, 18, 18);
@@ -576,54 +587,46 @@ body::-webkit-scrollbar-thumb:hover {
 
 
 @media (max-width: 600px) {
-  .background-container {
-    /* Full screen background */
+  .background-container-authpage {
     background-size: cover;
-    /* Enable scrolling if content is larger than the screen */
     overflow-y: auto; 
     padding: 10px 0;
   }
 
-  .form-container,
-  .registration-modal {
-    /* Adjust the width and centering for smaller screens */
-    max-width: none; /* Remove max-width if set */
+  .form-container, .registration-modal-content {
+    max-width: none;
+    width: 90%; /* Adjust width for smaller screens */
     margin: 0 auto; /* Center the containers */
-    /* Positioning the form containers at the top to give space for the footer */
-    position: static;
-    margin-top: 10vh; /* Adjust the top margin to give some space from the top */
+    margin-top: 10vh;
     margin-bottom: 5vh;
+    padding: 20px; /* Adjust padding as necessary */
+    height: auto; /* Adjust height to content */
   }
 
-  /* Text and input sizes */
+  .auth-form {
+    font-size: 14px; /* Smaller font size for inputs and buttons */
+  }
+
   .description-container,
-  .form-container,
-  .auth-form input,
   .footer,
   .footer-button,
   .login-button,
   .create-account-button,
   .submit-button {
-    font-size: 14px; /* Smaller font size for better readability on small screens */
+    font-size: 14px; /* Smaller font size for text */
   }
 
-  /* Footer adjustments */
   .footer {
-    position: absolute; /* Keep the footer at the end of content */
-    padding: 10px 0; /* Adjust padding to reduce height on smaller screens */
+    position: absolute;
+    padding: 10px 0;
     margin-bottom: -20px;
   }
 
-  /* Container and text alignment */
   .description-container,
   .auth-form,
   .footer-content {
-    text-align: center; /* Center the text for a cleaner look on small screens */
+    text-align: center;
   }
 
-  
-  
-  /* Hamburger menu adjustments */
-  /* Here you can add or remove styles related to how the hamburger menu should behave */
+  /* Here you can add or remove styles related to the hamburger menu */
 }
-
