@@ -162,7 +162,7 @@ body::-webkit-scrollbar-thumb:hover {
   margin-bottom: 15px; /* Space between fields */
   background-color: #5e5858; /* Background color */
   width: 70%; 
-  height: 20px;
+  height: 20%;
   border-radius: 5px;
   color:rgb(202, 187, 118);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -204,7 +204,7 @@ body::-webkit-scrollbar-thumb:hover {
 .login-button, .create-account-button {
   margin-top: 10px;
   width: 60%; /* Makes buttons full width of form */
-  height: 20%;
+  height: 60%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 15px;
   font-weight: 800;
@@ -227,7 +227,7 @@ body::-webkit-scrollbar-thumb:hover {
   margin-top: 10px;
   width: 100%; /* Makes buttons full width of form */
   max-width: 200px;
-  height: 30px;
+  height: 28%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 15px;
   font-weight: 800;
@@ -243,49 +243,44 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .or-text {
-  margin: 10px 0;
+  margin: 15px 0;
   color:rgb(202, 187, 118);
   font-size: 20px;
   font-weight: 600;
-  /* Styling for 'or' text */
 }
 
-.registration-modal {
-  background-color: rgba(0, 0, 0, 0.8); 
+.registration-modal-content {
+  /* Same dimensions and styling as form-container */
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+  top: 122px;
+  right: 40px; 
+  width: 110%;
+  height: 400px;
+  margin: auto; /* Center the modal */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 113px;
-  width: 300px;
-  height: 400px;
-  position: relative; /* For positioning the exit button */
 }
 
-.modal-header {
-  position: relative; /* Essential for the absolute positioning of the button */
-  /* Minimize or remove padding/margin that might affect layout */
-}
-
-
-.modal-close-button {
+.registration-modal-content .modal-close-button {
   position: absolute;
-  left: 150px;
-  bottom: 2px;
-  z-index: 10;
+  top: 10px;
+  right: 10px;
   color: rgb(202, 187, 118);
   background-color: transparent;
-  border: none; 
+  border: none;
   font-size: 24px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .auth-page-logo {
   margin-top: 10px;
-  max-width: 60%; /* Adjust as needed */
-  height: 60%; /* Maintain aspect ratio */
+  max-width: 60%; 
+  height: 60%; 
 }
 
 .registration-modal-logo {
