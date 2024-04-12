@@ -612,7 +612,8 @@ body::-webkit-scrollbar-thumb:hover {
   .footer-button,
   .login-button,
   .create-account-button,
-  .submit-button {
+  .submit-button,
+  .holdings-table {
     font-size: 14px; /* Smaller font size for text */
   }
 
