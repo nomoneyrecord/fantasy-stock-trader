@@ -5,32 +5,12 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from flask_bcrypt import Bcrypt;
 from dotenv import load_dotenv;
 from datetime import timedelta;
-from config import DevelopmentConfig, ProductionConfig, TestingConfig
 import os
 import requests
 
 load_dotenv()
 
-db = SQLAlchemy()
-bcrypt = Bcrypt()
-jwt = JWTManager()
-
-def create_app(config_name=None):
-    app = Flask(__name__)
-    if config_name is None:
-        config_name = os.getenv("FLASK-ENV", "development")
-
-    if config_name =="production":
-        app.config.from_object(ProductionConfig())
-    elif config_name == "testing":
-        app.config.from_object(TestingConfig())
-    else:
-        app.config.from_object(DevelopmentConfig())
-
-    
-    db.init_app(app)
-    return app 
-
+app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:4RkreatoR2%40@localhost:5432/fantasy_stock_trader'
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
