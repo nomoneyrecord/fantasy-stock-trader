@@ -11,6 +11,8 @@ StockLab is an application that allows users to simulate stock trading. It's des
 - Integration of current stock news feeds.
 - Addition of a trend ticker.
 - Development of portfolio analytics including pie charts and growth trends.
+- Refined media boundaries for resizing
+- Hamburger menu
 
 ## Technologies Used
 - **Frontend:** React

@@ -1,33 +1,36 @@
-from flask import Flask, request, jsonify;
-from flask_cors import CORS; 
-from flask_sqlalchemy import SQLAlchemy;
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity;
-from flask_bcrypt import Bcrypt;
-from dotenv import load_dotenv;
-from datetime import timedelta;
+from flask import Flask, send_from_directory, request, jsonify
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_bcrypt import Bcrypt
+from dotenv import load_dotenv
+from datetime import timedelta
 import os
 import requests
 
 load_dotenv()
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../client/build')
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 db = SQLAlchemy(app)
-bcrypt=Bcrypt(app)
+bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(128))
 
+
 class Account(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     balance = db.Column(db.Float, nullable=False, default=100000.00)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('account', lazy=True))
+
 
 class StockHoldings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -36,6 +39,16 @@ class StockHoldings(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('holding', lazy=True))
 
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
+
 @app.route('/api/register', methods=['POST'])
 def register_user():
     """
@@ -43,31 +56,33 @@ def register_user():
     Consider implementing caching to enhance performance as this data does not change frequently.
     """
     try:
-      new_user_data = request.get_json()
-      print("Recieved data:", new_user_data)
-      email = new_user_data['signUpEmail']
-      password = new_user_data['signUpPassword']
+        new_user_data = request.get_json()
+        print("Recieved data:", new_user_data)
+        email = new_user_data['signUpEmail']
+        password = new_user_data['signUpPassword']
 
-      existing_user = User.query.filter_by(email=email).first()
-      print("Existing user check:", existing_user)
-      if existing_user:
-          return jsonify({'msg': 'This email already exists'}), 400
+        existing_user = User.query.filter_by(email=email).first()
+        print("Existing user check:", existing_user)
+        if existing_user:
+            return jsonify({'msg': 'This email already exists'}), 400
 
-      hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-      new_user = User(email=email, password=hashed_password)
-      db.session.add(new_user)
-      db.session.commit()
-      print("New user added:", new_user)
+        hashed_password = bcrypt.generate_password_hash(
+            password).decode('utf-8')
+        new_user = User(email=email, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        print("New user added:", new_user)
 
-      new_account = Account(user_id=new_user.id)
-      db.session.add(new_account)
-      db.session.commit()
+        new_account = Account(user_id=new_user.id)
+        db.session.add(new_account)
+        db.session.commit()
 
-      return jsonify({'id': new_user.id, 'email': new_user.email}), 201
+        return jsonify({'id': new_user.id, 'email': new_user.email}), 201
 
     except Exception as e:
         print("Error:", e)
         return jsonify({'msg': 'Error creating user'}), 500
+
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -83,10 +98,12 @@ def login():
     user = User.query.filter_by(email=email).first()
 
     if user and bcrypt.check_password_hash(user.password, password):
-        access_token = create_access_token(identity={'email': email}, expires_delta=timedelta(minutes=15))
+        access_token = create_access_token(
+            identity={'email': email}, expires_delta=timedelta(minutes=15))
         return jsonify(access_token=access_token, user_id=user.id), 200
 
     return jsonify({'msg': 'Please use valid email and password'}), 401
+
 
 @jwt.expired_token_loader
 def my_expired_token_callback(jwt_header, jwt_payload):
@@ -119,6 +136,7 @@ def account():
         print("user not found for email:", current_user('email'))
         return jsonify({'msg': 'User not found'}), 404
 
+
 def fetch_all_stock_data():
     api_key = os.getenv('REACT_APP_API_KEY')
     api_url = f"https://financialmodelingprep.com/api/v3/stock/list?apikey={api_key}"
@@ -128,6 +146,7 @@ def fetch_all_stock_data():
     else:
         print("Failed to fetch stock data from external API")
         return None
+
 
 @app.route('/api/search_stocks', methods=['GET'])
 @jwt_required()
@@ -147,12 +166,13 @@ def search_stocks():
             'price': stock['price'],
             'exchange': stock.get('exchange', 'N/A')
         }
-        for stock in all_stocks_data 
+        for stock in all_stocks_data
         if (stock['symbol'] and search_query.lower() in stock['symbol'].lower())
         or (stock['name'] and search_query.lower() in stock['name'].lower())
     ]
 
     return jsonify(filtered_stocks), 200
+
 
 @app.route('/api/stock_price', methods=['GET'])
 @jwt_required()
@@ -165,7 +185,8 @@ def stock_price():
     if all_stocks_data is None:
         return jsonify({'msg': 'Failed to fetch stock data'}), 500
 
-    stock_data = next((item for item in all_stocks_data if item['symbol'] == symbol), None)
+    stock_data = next(
+        (item for item in all_stocks_data if item['symbol'] == symbol), None)
     if stock_data:
         return jsonify({'currentPrice': stock_data['price']}), 200
     else:
@@ -187,7 +208,8 @@ def holdings():
         holdings_data = []
 
         for holding in user_holdings:
-            stock_data = next((item for item in all_stocks_data if item['symbol'] == holding.symbol), None)
+            stock_data = next(
+                (item for item in all_stocks_data if item['symbol'] == holding.symbol), None)
             current_price = stock_data['price'] if stock_data else 0
             currentValue = current_price * holding.quantity
 
@@ -200,9 +222,6 @@ def holdings():
         return jsonify(holdings_data), 200
     else:
         return jsonify({'msg': 'User not found'}), 404
-
-
-
 
 
 @app.route('/api/buy_stock', methods=['POST'])
@@ -231,16 +250,17 @@ def buy_stock():
     user_account.balance -= total_cost
 
     # Update or add stock holdings
-    existing_holding = StockHoldings.query.filter_by(user_id=user.id, symbol=stock_symbol).first()
+    existing_holding = StockHoldings.query.filter_by(
+        user_id=user.id, symbol=stock_symbol).first()
     if existing_holding:
         existing_holding.quantity += quantity
     else:
-        new_holding = StockHoldings(symbol=stock_symbol, quantity=quantity, user_id=user.id)
+        new_holding = StockHoldings(
+            symbol=stock_symbol, quantity=quantity, user_id=user.id)
         db.session.add(new_holding)
 
     db.session.commit()
     return jsonify({'msg': 'Stock purchased successfully', 'new_balance': user_account.balance}), 200
-
 
 
 @app.route('/api/sell_stock', methods=['POST'])
@@ -257,8 +277,9 @@ def sell_stock():
     quantity = int(data['quantity'])
     stock_price = float(data['price'])
 
-    existing_holding = StockHoldings.query.filter_by(user_id=user.id, symbol=stock_symbol).first()
-    
+    existing_holding = StockHoldings.query.filter_by(
+        user_id=user.id, symbol=stock_symbol).first()
+
     if not existing_holding or existing_holding.quantity < quantity:
         return jsonify({'msg': 'Insufficient stock holdings'}), 400
 
@@ -276,8 +297,5 @@ def sell_stock():
     return jsonify({'msg': 'Stock sold successfully', 'new_balance': user_account.balance}), 200
 
 
-
-
 if __name__ == '__main__':
     app.run(debug=True)
-

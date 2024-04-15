@@ -120,6 +120,7 @@ const TradePage = () => {
   const openBuyModal = (stock) => {
     // Close sell modal if open
     setShowSellModal(false);
+    
 
     // Find owned quantity and open buy modal
     const ownedQuantity =
