@@ -28,7 +28,7 @@ npm install
 
 3. **Install backend dependencies**:
 
-- pip3 install -r reruirements.txt
+- pip3 install -r requirements.txt
 
 
 4. **Set up environment variables**:
@@ -46,14 +46,15 @@ Create a `.env` file in both the `client` and `server` directories. Add the foll
   ```
 
 5. **Start the backend server**:
+- flask run
 
 
-6. Start the fronend client:
-npm start
+6. **Start the frontend client**:
+- npm start
 
 
 ## Usage
-Detailed usage instructions and screenshots here.
+
 
 ## Contributing
 Contributions are welcome! For major changes, please open an issue first to discuss what you would like to change.
