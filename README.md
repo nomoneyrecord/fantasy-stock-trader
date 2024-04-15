@@ -5,13 +5,24 @@ Fantasy Stock Trader is an application that allows users to simulate stock tradi
 
 ## Features
 - Real-time stock data simulation
-- Portfolio management
+- Portfolio log
+
+## Future Updates
+- Access to current stock news 
+- Trend ticker
+- Portfolio pie chart and growth trends
 
 ## Technologies Used
-- Frontend: React
-- Backend: Flask, SQLAlchemy
-- Database: PostgreSQL, hosted on ElephantSQL
-- Deployment: Render
+- **Frontend:** React
+- **Backend:** Flask, SQLAlchemy
+- **Database:** PostgreSQL, hosted on ElephantSQL
+- **API:** Finnhub - This free API is used to fetch real-time data for stock prices. For more information about this API, visit https://finnhub.io/
+- **Deployment:** Render
+
+- **Note on API Keys**:
+  - You will need to register for an API key to use Finnhub endpoints.
+  - Ensure to store your API key securely and do not expose it in public repositories. Use environment variables to manage API keys securely.
+
 
 ## Installation and Setup
 
