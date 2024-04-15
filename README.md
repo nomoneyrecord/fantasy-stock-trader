@@ -56,12 +56,6 @@ Create a `.env` file in both the `client` and `server` directories. Add the foll
 ## Usage
 
 
-## Contributing
-Contributions are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
-
 ## Contact
-Email us at [support@example.com](mailto:support@example.com)
+Email me at 3rdeye.ghj@gmail.com
 
