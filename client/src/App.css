@@ -1,3 +1,4 @@
+
 body::-webkit-scrollbar {
   width: 5px; /* Adjust the width of the scrollbar */
   background-color: #221e1e;
@@ -280,7 +281,7 @@ body::-webkit-scrollbar-thumb:hover {
 .auth-page-logo {
   margin-top: 10px;
   max-width: 60%; 
-  height: 60%; 
+  height: auto; 
 }
 
 .registration-modal-logo {
