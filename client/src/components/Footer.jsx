@@ -24,7 +24,7 @@ const Footer = () => {
         <div>
           <button
             className="footer-button"
-            onClick={() => window.open("https://github.com/nomoneyrecord")}
+            onClick={() => window.open("https://github.com/nomoneyrecord/fantasy-stock-trader.git")}
           >
             GitHub
           </button>

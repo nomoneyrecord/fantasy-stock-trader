@@ -251,9 +251,11 @@ const TradePage = () => {
       });
   };
 
+
   if (isLoading) {
     return <LoadingAnimation />;
   }
+
 
   const disableInteractionClass =
     showBuyModal || showSellModal ? "disable-interaction" : "";
@@ -314,7 +316,7 @@ const TradePage = () => {
         <div className="trade-modal-wrapper">
           <Modal
             show={showBuyModal}
-            onClose={() => setShowBuyModal(false)}
+            onClose={() => closeModal('buy')}
             className="trade-modal"
           >
             <h2>Buy {selectedStock?.symbol}</h2>
@@ -337,7 +339,7 @@ const TradePage = () => {
         <div className="trade-modal-wrapper">
           <Modal
             show={showSellModal}
-            onClose={() => setShowSellModal(false)}
+            onClose={() => closeModal('sell')}
             className="trade-modal"
           >
             <h2>Sell {selectedStock?.symbol}</h2>
