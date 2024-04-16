@@ -76,6 +76,6 @@ Here's a look at the Homepage of StockLab where you can see your portfolio:
 Execute trades in real-time with a basic stock search, buy, and sell options:
 ![Tradepage](/client/src/Images/Tradepage-results.png)
 
-## **Contact and Feeback**
-For inquiries, feeback, or further information, feel free to email me at [3rdeye.ghj@gmail.com](mailto:3rdeye.ghj@gmail.com).
+## **Contact and Feedback**
+For inquiries, feedback, or further information, feel free to email me at [3rdeye.ghj@gmail.com](mailto:3rdeye.ghj@gmail.com).
 
