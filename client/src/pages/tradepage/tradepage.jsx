@@ -256,6 +256,19 @@ const TradePage = () => {
     return <LoadingAnimation />;
   }
 
+  const closeModal = (modalType) => {
+    console.log(`Closing ${modalType} modal...`);
+    if (modalType === 'buy') {
+        setShowBuyModal(false);
+        setBuyQuantity(0);
+        console.log('Buy quantity after reset:', buyQuantity);
+    } else if (modalType === 'sell') {
+        setShowSellModal(false);
+        setSellQuantity(0);
+        console.log('Sell quantity after reset:', sellQuantity);
+    }
+};
+
 
   const disableInteractionClass =
     showBuyModal || showSellModal ? "disable-interaction" : "";
@@ -339,7 +352,7 @@ const TradePage = () => {
         <div className="trade-modal-wrapper">
           <Modal
             show={showSellModal}
-            onClose={() => closeModal('sell')}
+            onClose={() => setShowSellModal(false)}
             className="trade-modal"
           >
             <h2>Sell {selectedStock?.symbol}</h2>
