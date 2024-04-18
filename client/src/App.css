@@ -142,21 +142,22 @@ body::-webkit-scrollbar-thumb:hover {
   font-weight: 900;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding-top: 10%;
+  font-size: clamp(1rem, 2.5vw, 32px);
 }
 
 .form-container {
-  background-color: rgba(0, 0, 0, 0.8); 
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 40px;
+  box-sizing: border-box;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
-  margin-top: 10vh;
-  width: 45%;
-  height: 400px;
-  position: relative; /* For positioning the exit button */
+  margin: 10vh auto 5vh; /* top, right-left, bottom */
+  max-width: 500px; /* max-width for control */
+  min-height: 10%; /* min-height for a little flexibility */
+  width: 80%; /* starting width */
 }
 
 .form-control {
@@ -195,11 +196,11 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .auth-form {
-  width: 100%; /* Adjust as necessary */
+  width: 90%; /* allows for padding inside the form-container */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px; 
+  margin-top: 20px; /* spacing from the top of the container */
 }
 
 .login-button, .create-account-button {
@@ -587,48 +588,43 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 
+/* Small devices (phones) */
 @media (max-width: 600px) {
-  .background-container-authpage {
-    background-size: cover;
-    overflow-y: auto; 
-    padding: 10px 0;
+  .background-container-authpage,
+  .background-container-homepage,
+  .background-container-tradepage {
+    padding: 10px;
   }
 
-  .form-container, .registration-modal-content {
-    max-width: none;
-    width: 90%; /* Adjust width for smaller screens */
-    margin: 0 auto; /* Center the containers */
+  .form-container, .registration-modal-content, .auth-form {
+    width: 90%;
     margin-top: 10vh;
     margin-bottom: 5vh;
-    padding: 20px; /* Adjust padding as necessary */
-    height: auto; /* Adjust height to content */
+    padding: 20px;
+    height: auto; /* Height adjusts to content */
+    max-width: 500px; /* Max-width to control sizing on larger phones */
   }
 
-  .auth-form {
-    font-size: 14px; /* Smaller font size for inputs and buttons */
+  .auth-page-logo {
+    max-width: 50%; /* Adjust based on visual preference */
+    height: auto;
   }
 
-  .description-container,
-  .footer,
-  .footer-button,
-  .login-button,
-  .create-account-button,
-  .submit-button,
-  .holdings-table {
-    font-size: 14px; /* Smaller font size for text */
-  }
-
-  .footer {
-    position: absolute;
-    padding: 10px 0;
-    margin-bottom: -20px;
-  }
-
-  .description-container,
-  .auth-form,
-  .footer-content {
-    text-align: center;
-  }
-
-  /* Here you can add or remove styles related to the hamburger menu */
+  /* Rest of your styles for small devices */
 }
+
+/* Medium devices (tablets) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .form-container, .registration-modal-content, .auth-form {
+    width: 80%; /* Slightly larger width for tablets */
+    max-width: 600px; /* Control max-width on intermediate devices */
+  }
+
+  .auth-page-logo {
+    max-width: 40%;
+  }
+
+  /* Adjust font sizes and other styles for intermediate screen sizes */
+}
+
+
