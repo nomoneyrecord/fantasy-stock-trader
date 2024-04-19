@@ -103,7 +103,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .logo img {
-  height: 60px; /* Logo size */
+  height: 60px; 
   margin-right: 10px;
 }
 
@@ -345,11 +345,18 @@ body::-webkit-scrollbar-thumb:hover {
   width: 100%;
   height: 100%;
   border-collapse: collapse;
+  font-size: clamp(0.8rem, 2vw, 1rem);
 }
 
 .holdings-table th, .holdings-table td {
   padding: 8px;
   text-align: left;
+}
+
+.holdings-table,
+.holdings-table th,
+.holdings-table td {
+  font-size: clamp(0.8rem, 2vw, 1rem);
 }
 
 .holdings-table tr:nth-child(even){background-color: #221e1e;} 
@@ -650,11 +657,55 @@ body::-webkit-scrollbar-thumb:hover {
   .or-text {
     font-size: clamp(1rem, 5vw, 18px); 
   }
+
+  .account-content {
+    width: 90%; /* Full width with a little margin */
+    padding: 10px; /* Smaller padding */
+    transform: translate(-50%, -10%); /* Adjusted to better position the content */
+    top: 10%;
+    height: auto; /* Let content dictate height */
+  }
+  
+  .holdings-table th,
+  .holdings-table td {
+    padding: 4px; /* Smaller padding for cells */
+  }
+
+  .portfolio-header,
+  .holdings-header {
+    font-size: 5vw; /* Larger font size for headers */
+  }
+
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0; /* Vertical padding only */
+  }
+
+  .navbar a, .navbar button {
+    font-size: 14px;
+    margin: 5px 0; /* Reduce margin for a tighter layout */
+    padding: 5px; /* Larger tap targets */
+  }
+
+  .navbar-appname {
+    font-size: 18px; /* Slightly smaller to fit the space */
+  }
+
+  .logo img {
+    height: 40px; /* Smaller logo size */
+  }
+
+  /* Adjust the logout button if necessary */
+  .logout-button {
+    font-size: 14px; /* Match the font size of other navbar elements */
+  }
+
 }
 
 /* Medium devices (tablets) */
 @media (min-width: 601px) and (max-width: 1024px) {
-  .form-container, .registration-modal-content {
+  .form-container, .registration-modal-content, .holding-table {
     width: 80%; 
     max-width: 600px; 
   }
@@ -684,6 +735,23 @@ body::-webkit-scrollbar-thumb:hover {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .account-content {
+    width: 85%; /* A bit more padding for tablets */
+    padding: 15px;
+  }
+  
+  .holdings-table th,
+  .holdings-table td {
+    padding: 6px; /* Slightly larger padding for cells */
+  }
+
+  .portfolio-header,
+  .holdings-header {
+    font-size: 4vw; /* Adjust font size for tablet */
+  }
+
+  
 }
 
 @media (min-width: 1025px) {
@@ -694,6 +762,22 @@ body::-webkit-scrollbar-thumb:hover {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .account-content {
+    width: 70%; /* Fixed width for larger screens */
+    padding: 20px;
+  }
+  
+  .holdings-table th,
+  .holdings-table td {
+    padding: 8px; /* Comfortable padding for larger screens */
+  }
+
+  .portfolio-header,
+  .holdings-header {
+    font-size: 1.5rem; /* Fixed font size for desktops */
+  }
+
 }
 
 
