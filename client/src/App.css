@@ -201,6 +201,10 @@ body::-webkit-scrollbar-thumb:hover {
   cursor: pointer; 
 }
 
+.login-button {
+  margin-bottom: 5px;
+}
+
 .create-account-button:hover {
   background-color: rgb(62, 62, 62);
 }
@@ -251,19 +255,23 @@ body::-webkit-scrollbar-thumb:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px; /* Or any value to position it as needed inside the modal */
-  width: 100%; /* It will take the full width of its parent, which is the modal in this case */
+  margin-top: 20px; 
+  width: 100%;
 }
 
 .registration-form .form-control,
 .registration-form .submit-button {
-  /* Reuse the same styles as .form-control and .submit-button from the auth form, or customize as necessary */
+  width: 90%; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; 
 }
 
 
 .submit-button {
   margin-top: 10px;
-  width: 102%; /* Makes buttons full width of form */
+  width: 102%; 
   max-width: 228px;
   height: 28%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

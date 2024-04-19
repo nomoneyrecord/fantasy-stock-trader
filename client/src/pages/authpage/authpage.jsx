@@ -190,7 +190,6 @@ const AuthPage = ({ onLoginSuccess, sessionExpired }) => {
             )}
             {errorMessage && <div className="error-message">{errorMessage}</div>}
           </form>
-          <Logo className='registration-modal-logo' />
         </div>
       </Modal>      
     </div>
