@@ -1,22 +1,23 @@
+/* Styling for scroll bar */ 
 
 body::-webkit-scrollbar {
-  width: 5px; /* Adjust the width of the scrollbar */
+  width: 5px; 
   background-color: #221e1e;
 }
 
-/* Style for the scrollbar handle */
 body::-webkit-scrollbar-thumb {
-  background: rgb(223, 180, 51); /* Adjust the color to match your theme */
-  border-radius: 5px; /* Optional: rounded corners for the scrollbar handle */
+  background: rgb(223, 180, 51); 
+  border-radius: 5px; 
 }
 
-/* Style for the scrollbar handle on hover */
 body::-webkit-scrollbar-thumb:hover {
-  background: rgb(255, 217, 102); /* A slightly different color on hover */
+  background: rgb(255, 217, 102); 
 }
+
+/* Background containers for every page */
 
 .background-container-authpage {
-  background-image: url("Images/backgroundImage.webp"); /* Adjust the path as necessary */
+  background-image: url("Images/backgroundImage.webp"); 
   background-size: cover;
   background-position: center;
   display: flex;
@@ -28,8 +29,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .background-container-homepage {
-  background-image: url("Images/backgroundImage.webp"); /* Adjust the path as necessary */
-  background-size: cover;
+  background-image: url("Images/backgroundImage.webp"); 
   background-position: center;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .background-container-tradepage {
-  background-image: url("Images/backgroundImage.webp"); /* Adjust the path as necessary */
+  background-image: url("Images/backgroundImage.webp");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -51,36 +51,21 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
 }
 
-.error-message {
-  margin-top: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color:rgb(202, 187, 118)
-}
-
-.success-message {
-  margin-top: 20px;
-  margin-bottom: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color:rgb(202, 187, 118)
-}
+/* Navbar styling */
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  height: 60px; /* Fixed height */
-  background-color: rgb(21, 21, 21); /* Background color */
+  height: 60px; 
+  background-color: rgb(21, 21, 21); 
 }
 
 .navbar a, .navbar button {
   color: rgb(202, 187, 118);
   text-decoration: none;
-  margin-left: 20px; /* Spacing between links */
+  margin-left: 20px; 
   font-weight: 600;
 }
 
@@ -93,7 +78,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .navbar a.active {
-  border-bottom: 2px solid rgb(248, 204, 28); /* Underline for active link */
+  border-bottom: 2px solid rgb(248, 204, 28); 
 }
 
 .logout-button {
@@ -112,7 +97,6 @@ body::-webkit-scrollbar-thumb:hover {
   background-color:rgba(255, 255, 255, 0.1)
 }
 
-/* Additional styling for your logo and app name */
 .logo {
   display: flex;
   align-items: center;
@@ -128,8 +112,9 @@ body::-webkit-scrollbar-thumb:hover {
   opacity: 0.4;
 }
 
+/* Login container and authform styling */
+
 .description-container {
-  /* Style for the description text */
   text-align: center;
   text-shadow:
     -1px -1px 0 #000,  
@@ -182,7 +167,6 @@ body::-webkit-scrollbar-thumb:hover {
   font-weight: 600; 
 }
 
-/* For the placeholder of the autofilled input */
 .form-control:-webkit-autofill::placeholder {
   color: rgb(202, 187, 118);
   font-size: 16px;
@@ -196,16 +180,16 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .auth-form {
-  width: 90%; /* allows for padding inside the form-container */
+  width: 90%; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px; /* spacing from the top of the container */
+  margin-top: 20px; 
 }
 
 .login-button, .create-account-button {
   margin-top: 10px;
-  width: 60%; /* Makes buttons full width of form */
+  width: 60%; 
   height: 60%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 15px;
@@ -224,6 +208,58 @@ body::-webkit-scrollbar-thumb:hover {
 .login-button:hover {
   background-color: rgb(62, 62, 62);
 }
+
+.auth-page-logo {
+  margin-top: 10px;
+  max-width: 60%; 
+  height: auto; 
+}
+
+
+/* Registration modal styling */
+
+.registration-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;  
+  max-width: 500px; 
+  padding: 20px; 
+  box-sizing: border-box; 
+  border-radius: 8px; 
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); 
+}
+
+.registration-modal-content .modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: rgb(202, 187, 118);
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; /* Or any value to position it as needed inside the modal */
+  width: 100%; /* It will take the full width of its parent, which is the modal in this case */
+}
+
+.registration-form .form-control,
+.registration-form .submit-button {
+  /* Reuse the same styles as .form-control and .submit-button from the auth form, or customize as necessary */
+}
+
 
 .submit-button {
   margin-top: 10px;
@@ -251,40 +287,6 @@ body::-webkit-scrollbar-thumb:hover {
   font-weight: 600;
 }
 
-.registration-modal-content {
-  /* Same dimensions and styling as form-container */
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-  top: 121px;
-  right: 74px; 
-  width: 123%;
-  height: 400px;
-  margin: auto; /* Center the modal */
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.registration-modal-content .modal-close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: rgb(202, 187, 118);
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.auth-page-logo {
-  margin-top: 10px;
-  max-width: 60%; 
-  height: auto; 
-}
-
 .registration-modal-logo {
   position: absolute;
   top: 208px; /* Adjust as needed */
@@ -297,22 +299,39 @@ body::-webkit-scrollbar-thumb:hover {
   margin-top: 83px;
 }
 
+.error-message {
+  margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color:rgb(202, 187, 118)
+}
+
+.success-message {
+  margin-top: 20px;
+  margin-bottom: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color:rgb(202, 187, 118)
+}
+
+/* Homepage styling */
 
 .account-content {
-  background-color: rgba(0, 0, 0, 0.9); /* Opaque background */
+  background-color: rgba(0, 0, 0, 0.9); 
   padding: 20px;
   border-radius: 10px;
   text-align: center;
   height: 50%; 
   width: 80%; 
-  margin: auto; /* Center horizontally */
-  position: absolute; /* Absolute positioning */
-  top: 50%; /* Position 50% from top */
-  left: 50%; /* Position 50% from left */
-  transform: translate(-50%, -50%); /* Adjust for exact centering */
+  margin: auto; 
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
   color:rgb(202, 187, 118)
 }
-
 
 .holdings-table {
   width: 100%;
@@ -326,12 +345,12 @@ body::-webkit-scrollbar-thumb:hover {
   text-align: left;
 }
 
-.holdings-table tr:nth-child(even){background-color: #221e1e;} /* For striped effect */
+.holdings-table tr:nth-child(even){background-color: #221e1e;} 
 .holdings-table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #333; /* Adjust header background */
+  background-color: #333; 
   color:rgb(202, 187, 118);
 }
 
@@ -355,7 +374,6 @@ body::-webkit-scrollbar-thumb:hover {
   justify-content: flex-start;
   padding-top: 60px; /* Match this with your navbar height */
 }
-
 
 .search-results-container {
   background-color: rgba(0, 0, 0, 0.7);
@@ -394,46 +412,38 @@ body::-webkit-scrollbar-thumb:hover {
   max-width: 730px;
 }
 
-
 .search-field-container {
-  display: flex; /* Enables flexbox layout */
-  gap: 5px; /* Space between input and button */
+  display: flex; 
+  gap: 5px; 
 }
 
-/* If your InputField and Button components have specific classes or styles, adjust them to fit in the flex container */
 .input-field, .search-button {
-  flex: 1; /* Adjust this value as needed to fit the layout */
+  flex: 1; 
 }
-
 
 .results {
-  max-height: 700px; /* Adjust to your preference */
+  max-height: 700px; 
   overflow-y: auto;
   
 }
 
-/* Style the scrollbar itself (the track) */
 .results::-webkit-scrollbar {
-  width: 8px;  /* scrollbar width */
+  width: 8px; 
 }
 
-/* Style the handle (thumb) */
 .results::-webkit-scrollbar-thumb {
   background-color:rgb(223, 180, 51);
-  border-radius: 6px; /* rounded corners for the thumb */
+  border-radius: 6px; 
   cursor: pointer;
 }
 
-/* Handle on hover */
 .results::-webkit-scrollbar-thumb:hover {
   background-color: rgb(252, 203, 57);
-  
 }
-
 
 .trade-search-button {
   margin-top: 10px;
-  width: 25%; /* Makes buttons full width of form */
+  width: 25%; 
   margin-left: 5px;
   margin-top: 1px;
   height: 25px;
@@ -448,16 +458,16 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .buy-sell-button-container {
-  display: flex; /* Enables flexbox layout */
-  justify-content: flex-start; /* Aligns children to the start */
-  gap: 5px; /* Space between buttons */
+  display: flex; 
+  justify-content: flex-start; 
+  gap: 5px; 
 }
 
 .button-buy, .button-sell {
   flex: 1;
-  width: 50%; /* Makes buttons full width of form */
-  margin-left: 0; /* Adjust or remove if necessary */
-  padding-top: 0; /* Corrected from negative value */
+  width: 50%; 
+  margin-left: 0; 
+  padding-top: 0; 
   padding-bottom: 8px;
   height: 25px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -482,21 +492,21 @@ body::-webkit-scrollbar-thumb:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed; /* This positions the wrapper in relation to the viewport */
+  position: fixed; 
   color: rgb(202, 187, 118);
   border-radius: 10px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* This centers the modal correctly */
-  width: 425px; /* Adjust width as needed, or remove for content-based width */
-  height: 265px; /* Adjust height as needed, or remove for content-based height */
+  transform: translate(-50%, -50%); 
+  width: 425px; 
+  height: 265px; 
   z-index: 10;
-  background-color: rgba(0, 0, 0, 1); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 1); 
 }
 
 .confirm-buy-button {
   margin-top: 10px;
-  width: 25%; /* Makes buttons full width of form */
+  width: 25%; 
   margin-top: 1px;
   height: 25px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -515,7 +525,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .confirm-sell-button {
   margin-top: 10px;
-  width: 25%; /* Makes buttons full width of form */
+  width: 25%; 
   margin-top: 1px;
   height: 25px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -533,7 +543,6 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .trade-modal .modal-close-button {
-  /* Custom styles for the close button of the trade modal */
   position: absolute;
   top: 10px;
   right: 10px;
@@ -559,17 +568,15 @@ body::-webkit-scrollbar-thumb:hover {
 
 .footer-content {
   display: flex;
-  justify-content: space-around; /* Distributes space evenly */
+  justify-content: space-around; 
   align-items: center;
-  flex-wrap: wrap; /* Ensures responsiveness */
+  flex-wrap: wrap;
 }
 
 .footer a {
   color:rgb(202, 187, 118);
   text-decoration: none;
 }
-
-/* Add responsiveness or additional styling as needed */
 
 .footer-button {
   background-color: rgb(36, 36, 36);
@@ -584,47 +591,112 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .footer-button:hover {
-  background-color: rgb(51, 51, 51); /* Darken on hover */
+  background-color: rgb(51, 51, 51);
 }
 
-
-/* Small devices (phones) */
 @media (max-width: 600px) {
   .background-container-authpage,
   .background-container-homepage,
-  .background-container-tradepage {
+  .background-container-tradepage, 
+  .footer {
     padding: 10px;
   }
 
-  .form-container, .registration-modal-content, .auth-form {
+  .form-container, .registration-modal-content {
     width: 90%;
     margin-top: 10vh;
     margin-bottom: 5vh;
     padding: 20px;
     height: auto; /* Height adjusts to content */
-    max-width: 500px; /* Max-width to control sizing on larger phones */
+    max-width: 500px; /* Control the max-width for larger phones */
+  }
+
+  .registration-modal-content {
+    /* Ensures that the modal content is not wider than its container */
+    width: 90%; 
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    padding: 20px;
+    /* Remove fixed height to allow content to dictate the size */
+    height: auto; 
+    /* Set a reasonable max-width for the content on small devices */
+    max-width: 500px;
+    /* Use transform to center the modal on small screens */
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .auth-form {
+    width: 100%; /* Let the form fill the container */
+    margin-top: 20px; /* Space from the top of the container */
   }
 
   .auth-page-logo {
-    max-width: 50%; /* Adjust based on visual preference */
+    max-width: 80%; /* Larger max-width for better fit */
     height: auto;
   }
 
-  /* Rest of your styles for small devices */
+  .description-container,
+  .form-control,
+  .login-button,
+  .create-account-button,
+  .submit-button,
+  .or-text {
+    font-size: clamp(1rem, 5vw, 18px); /* Responsive font size */
+  }
 }
 
 /* Medium devices (tablets) */
 @media (min-width: 601px) and (max-width: 1024px) {
-  .form-container, .registration-modal-content, .auth-form {
-    width: 80%; /* Slightly larger width for tablets */
+  .form-container, .registration-modal-content {
+    width: 80%; /* Adjust the width for tablets */
     max-width: 600px; /* Control max-width on intermediate devices */
   }
 
   .auth-page-logo {
-    max-width: 40%;
+    max-width: 60%; /* Adjust the logo max-width for tablets */
+    height: auto;
   }
 
   /* Adjust font sizes and other styles for intermediate screen sizes */
+  .description-container,
+  .form-control,
+  .login-button,
+  .create-account-button,
+  .submit-button,
+  .or-text {
+    font-size: clamp(1rem, 3vw, 22px); /* Slightly larger font sizes for tablets */
+  }
+
+  .registration-modal-content {
+    /* Ensures that the modal content is not wider than its container */
+    width: 90%; 
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    padding: 20px;
+    /* Remove fixed height to allow content to dictate the size */
+    height: auto; 
+    /* Set a reasonable max-width for the content on small devices */
+    max-width: 500px;
+    /* Use transform to center the modal on small screens */
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
+
+@media (min-width: 1025px) {
+  .registration-modal-content {
+    /* Adjustments for larger screens */
+    width: 50%; /* You can adjust this based on your design */
+    max-width: 800px; /* Max width for larger screens */
+    /* Maintain the centering as before */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 
 
