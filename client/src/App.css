@@ -574,8 +574,6 @@ body::-webkit-scrollbar-thumb:hover {
   color:rgb(202, 187, 118);
   position: relative;
   text-align: center;
-  left: 0;
-  bottom: 0;
   width: 100%;
   font-size: 16px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -658,49 +656,46 @@ body::-webkit-scrollbar-thumb:hover {
     font-size: clamp(1rem, 5vw, 18px); 
   }
 
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+
+  /* Scale down navbar items */
+  .navbar a, .navbar button {
+    font-size: 14px;
+    margin: 5px 0;
+    padding: 5px;
+  }
+
+  .navbar-appname {
+    font-size: 18px;
+  }
+
+  .logo img {
+    height: 40px; /* Scaled down logo size */
+  }
+
   .account-content {
-    width: 90%; /* Full width with a little margin */
-    padding: 10px; /* Smaller padding */
-    transform: translate(-50%, -10%); /* Adjusted to better position the content */
-    top: 10%;
-    height: auto; /* Let content dictate height */
+    width: 85%; /* A bit more padding for tablets */
+    padding: 15px;
   }
   
   .holdings-table th,
   .holdings-table td {
-    padding: 4px; /* Smaller padding for cells */
+    padding: 6px; /* Slightly larger padding for cells */
   }
 
   .portfolio-header,
   .holdings-header {
-    font-size: 5vw; /* Larger font size for headers */
+    font-size: 4vw; /* Adjust font size for tablet */
   }
 
-  .navbar {
+  .footer {
     flex-direction: column;
-    height: auto;
-    padding: 10px 0; /* Vertical padding only */
   }
-
-  .navbar a, .navbar button {
-    font-size: 14px;
-    margin: 5px 0; /* Reduce margin for a tighter layout */
-    padding: 5px; /* Larger tap targets */
-  }
-
-  .navbar-appname {
-    font-size: 18px; /* Slightly smaller to fit the space */
-  }
-
-  .logo img {
-    height: 40px; /* Smaller logo size */
-  }
-
-  /* Adjust the logout button if necessary */
-  .logout-button {
-    font-size: 14px; /* Match the font size of other navbar elements */
-  }
-
+  
 }
 
 /* Medium devices (tablets) */
