@@ -609,13 +609,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 @media (max-width: 600px) {
-  .background-container-authpage,
-  .background-container-homepage,
-  .background-container-tradepage, 
-  .footer {
-    padding: 10px;
-  }
-
+ 
   .form-container, .registration-modal-content {
     width: 90%;
     margin-top: 10vh;
