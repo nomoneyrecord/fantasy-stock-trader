@@ -66,7 +66,7 @@ const HomePage = () => {
     }
 
     // Fetch account balance
-    fetch("http://localhost:5000/api/account", {
+    fetch("/api/account", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -81,7 +81,7 @@ const HomePage = () => {
       .catch(handleError);
 
     // Fetch stock holdings
-    fetch("http://localhost:5000/api/holdings", {
+    fetch("/api/holdings", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

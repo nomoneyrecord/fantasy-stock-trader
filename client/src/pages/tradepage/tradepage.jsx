@@ -20,7 +20,7 @@ const TradePage = () => {
 
   const fetchHoldings = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/holdings", {
+      const response = await fetch("/api/holdings", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -97,7 +97,7 @@ const TradePage = () => {
     setIsLoading(true);
 
     // Use your backend endpoint to search for stocks
-    fetch(`http://localhost:5000/api/search_stocks?query=${searchQuery}`, {
+    fetch(`/api/search_stocks?query=${searchQuery}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -161,7 +161,7 @@ const TradePage = () => {
     }
 
     // Fetch user's current account balance
-    fetch("http://localhost:5000/api/account", {
+    fetch("/api/account", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -184,7 +184,7 @@ const TradePage = () => {
           return;
         }
 
-        fetch("http://localhost:5000/api/buy_stock", {
+        fetch("/api/buy_stock", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -226,7 +226,7 @@ const TradePage = () => {
       return;
     }
 
-    fetch("http://localhost:5000/api/sell_stock", {
+    fetch("/api/sell_stock", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
