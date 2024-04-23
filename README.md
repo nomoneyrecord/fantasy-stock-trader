@@ -68,6 +68,8 @@ Create a `.env` file in both the `client` and `server` directories. Add the foll
 
 ## Usage
 
+### **Test it out here** 
+https://fantasy-stock-trader.onrender.com/
 ### **Homepage Overview**
 Here's a look at the Homepage of StockLab where you can see your portfolio:
 ![Homepage](/client/src/Images/Homepage.png)
