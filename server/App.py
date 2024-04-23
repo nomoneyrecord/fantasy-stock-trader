@@ -11,7 +11,7 @@ import requests
 load_dotenv()
 
 app = Flask(__name__, static_folder='../client/build')
-CORS(app, resources={r"/api/*": {"origins": "https://"}})
+CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "https://fantasy-stock-trader.onrender.com"]}})
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 db = SQLAlchemy(app)
@@ -43,10 +43,12 @@ class StockHoldings(db.Model):
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
+    if path.startswith("api/"):
+        # If the path starts with api/, return a 404 because these routes should be handled by the API functions
+        return "API route not found", 404
     if path and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory(app.static_folder, 'index.html')
 
 
 @app.route('/api/register', methods=['POST'])
